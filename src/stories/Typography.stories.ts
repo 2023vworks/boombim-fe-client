@@ -9,8 +9,23 @@ const meta = {
   },
   tags: ['autodocs'],
   argTypes: {
-    text: {
-      name: 'text',
+    children: {
+      name: 'CHILDREN',
+    },
+    size: {
+      name: 'SIZE',
+    },
+    color: {
+      name: 'COLOR',
+    },
+    lineHeight: {
+      name: 'LINE_HEIGHT',
+    },
+    fontWeight: {
+      name: 'FONT_WEIGHT',
+    },
+    fontFamily: {
+      name: 'FONT_FAMILY',
     },
   },
 } satisfies Meta<typeof Typography>
@@ -18,11 +33,59 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Basic: Story = {
+export const H1: Story = {
   args: {
-    text: 'Button',
-    width: 320,
-    height: 42,
-    buttonType: 'PRIMARY',
+    children: '타이포그래피',
+    fontWeight: 600,
+    size: 'H1',
+    color: 'mainColor',
+  },
+}
+export const H2: Story = {
+  args: {
+    children: '타이포그래피',
+    fontWeight: 600,
+    size: 'H2',
+    color: 'mainColor',
+  },
+}
+export const H3: Story = {
+  args: {
+    children: '타이포그래피',
+    fontWeight: 600,
+    size: 'H3',
+    color: 'mainColor',
+  },
+}
+export const H4: Story = {
+  args: {
+    children: '타이포그래피',
+    fontWeight: 600,
+    size: 'H4',
+    color: 'mainColor',
+  },
+}
+export const H5: Story = {
+  args: {
+    children: '타이포그래피',
+    fontWeight: 600,
+    size: 'H5',
+    color: 'mainColor',
+  },
+}
+export const P: Story = {
+  args: {
+    children: '타이포그래피',
+    fontWeight: 600,
+    size: 'P',
+    color: 'mainColor',
+  },
+}
+export const SMALL: Story = {
+  args: {
+    children: '타이포그래피',
+    fontWeight: 600,
+    size: 'SMALL',
+    color: 'mainColor',
   },
 }

@@ -3,7 +3,7 @@ import * as Styles from './Typography.styles'
 import { useCallback } from 'react'
 
 interface Props {
-  children: React.ReactNode
+  children: React.ReactNode | string
   size: FONT_SIZE
   color?: keyof COLOR_TYPE
   lineHeight?: string
