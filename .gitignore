@@ -36,3 +36,6 @@ dist-ssr
 !.yarn/sdks
 !.yarn/versions
 
+yarn/cache
+node_modules
+

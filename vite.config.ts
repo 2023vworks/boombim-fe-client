@@ -1,11 +1,13 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
+import VitePluginHtmlEnv from 'vite-plugin-html-env'
 import path from 'path'
 
 export default defineConfig({
   plugins: [
     react(),
+    VitePluginHtmlEnv(),
     VitePWA({
       registerType: 'autoUpdate',
       devOptions: {

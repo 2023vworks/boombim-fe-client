@@ -1,10 +1,11 @@
 const theme = {
-  mainColor: '#6ABD8C',
-  mainColorLight: '#CCDFB0',
-  backgroundColor: '#F6F9F0',
-  darkGray: '#595959',
-  lightGray: '#939292',
-  superLightGray: '#F1F2F5',
+  color: {
+    mainColor: '#ff4222',
+    black: '#000000',
+    white: '#ffffff',
+  },
 }
 
 export default theme
+
+export type COLOR_TYPE = typeof theme.color
