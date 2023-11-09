@@ -1,5 +1,17 @@
+import { Map } from './components/template/Map/Map'
+
+declare global {
+  interface Window {
+    kakao: any
+  }
+}
+
 function App(): JSX.Element {
-  return <h1>Hello World</h1>
+  return (
+    <>
+      <Map />
+    </>
+  )
 }
 
 export default App
