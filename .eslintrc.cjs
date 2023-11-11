@@ -27,6 +27,7 @@ module.exports = {
     '@typescript-eslint/space-before-function-paren': 'off',
     'comma-dangle': 'off',
     '@typescript-eslint/comma-dangle': 'off',
+    '@typescript-eslint/strict-boolean-expressions': 'off',
     '@typescript-eslint/member-delimiter-style': [
       'error',
       {

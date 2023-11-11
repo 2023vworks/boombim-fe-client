@@ -1,10 +1,16 @@
-import { Map } from './components/template/Map/Map'
+import { useEffect } from 'react'
+import { setScreenSize } from './utils/screen'
+import { Route, Routes } from 'react-router-dom'
+import { MainPage } from './pages/main/MainPage'
 
 function App(): JSX.Element {
+  useEffect(() => {
+    setScreenSize()
+  }, [])
   return (
-    <>
-      <Map />
-    </>
+    <Routes>
+      <Route path='/' element={<MainPage />} />
+    </Routes>
   )
 }
 

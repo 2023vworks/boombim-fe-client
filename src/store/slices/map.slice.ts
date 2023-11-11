@@ -6,16 +6,24 @@ interface MapInitialState {
   height: string
 }
 
-const initialState: MapInitialState = { width: '500px', height: '500px' }
+export interface MapSize {
+  width?: string
+  height?: string
+}
+
+const initialState: MapInitialState = { width: '100%', height: '100%' }
 
 const mapSlice = createSlice({
   name: 'mapSlice',
   initialState,
   reducers: {
-    setMapSize(state, action: PayloadAction<{ width: string; height: string }>) {
-      console.log('hitslice', action)
-      state.width = action.payload.width
-      state.height = action.payload.height
+    setMapSize(state, action: PayloadAction<MapSize>) {
+      if (action.payload.width) {
+        state.width = action.payload.width
+      }
+      if (action.payload.height) {
+        state.height = action.payload.height
+      }
     },
   },
 })
