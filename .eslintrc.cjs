@@ -27,6 +27,19 @@ module.exports = {
     '@typescript-eslint/space-before-function-paren': 'off',
     'comma-dangle': 'off',
     '@typescript-eslint/comma-dangle': 'off',
+    '@typescript-eslint/member-delimiter-style': [
+      'error',
+      {
+        multiline: {
+          delimiter: 'none', // 'none' or 'semi' or 'comma'
+          requireLast: true,
+        },
+        singleline: {
+          delimiter: 'semi', // 'semi' or 'comma'
+          requireLast: false,
+        },
+      },
+    ],
   },
   ignorePatterns: ['.eslintrc.cjs', 'vite.config.ts', 'vite-env.d.ts', 'manifest.js'],
 }

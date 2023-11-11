@@ -55,6 +55,7 @@ const RAW_RUNTIME_STATE =
           ["eslint-plugin-react-hooks", "virtual:8830f40320fc282079ce9d6b8589510b22fc1ac742d47baf5e159c0af3d32930a1e7383a7aceb87f563d2ca1da43225b21454780f1a52ede12eeb64a2e15758d#npm:4.6.0"],\
           ["eslint-plugin-react-refresh", "virtual:8830f40320fc282079ce9d6b8589510b22fc1ac742d47baf5e159c0af3d32930a1e7383a7aceb87f563d2ca1da43225b21454780f1a52ede12eeb64a2e15758d#npm:0.4.4"],\
           ["eslint-plugin-storybook", "virtual:8830f40320fc282079ce9d6b8589510b22fc1ac742d47baf5e159c0af3d32930a1e7383a7aceb87f563d2ca1da43225b21454780f1a52ede12eeb64a2e15758d#npm:0.6.15"],\
+          ["kakao.maps.d.ts", "npm:0.1.39"],\
           ["prettier", "npm:3.0.3"],\
           ["react", "npm:18.2.0"],\
           ["react-dom", "virtual:8830f40320fc282079ce9d6b8589510b22fc1ac742d47baf5e159c0af3d32930a1e7383a7aceb87f563d2ca1da43225b21454780f1a52ede12eeb64a2e15758d#npm:18.2.0"],\
@@ -11315,6 +11316,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["kakao.maps.d.ts", [\
+      ["npm:0.1.39", {\
+        "packageLocation": "../../../../.yarn/berry/cache/kakao.maps.d.ts-npm-0.1.39-333b43bbc2-10c0.zip/node_modules/kakao.maps.d.ts/",\
+        "packageDependencies": [\
+          ["kakao.maps.d.ts", "npm:0.1.39"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["keyv", [\
       ["npm:4.5.4", {\
         "packageLocation": "../../../../.yarn/berry/cache/keyv-npm-4.5.4-4c8e2cf7f7-10c0.zip/node_modules/keyv/",\
@@ -15272,6 +15282,7 @@ const RAW_RUNTIME_STATE =
           ["eslint-plugin-react-hooks", "virtual:8830f40320fc282079ce9d6b8589510b22fc1ac742d47baf5e159c0af3d32930a1e7383a7aceb87f563d2ca1da43225b21454780f1a52ede12eeb64a2e15758d#npm:4.6.0"],\
           ["eslint-plugin-react-refresh", "virtual:8830f40320fc282079ce9d6b8589510b22fc1ac742d47baf5e159c0af3d32930a1e7383a7aceb87f563d2ca1da43225b21454780f1a52ede12eeb64a2e15758d#npm:0.4.4"],\
           ["eslint-plugin-storybook", "virtual:8830f40320fc282079ce9d6b8589510b22fc1ac742d47baf5e159c0af3d32930a1e7383a7aceb87f563d2ca1da43225b21454780f1a52ede12eeb64a2e15758d#npm:0.6.15"],\
+          ["kakao.maps.d.ts", "npm:0.1.39"],\
           ["prettier", "npm:3.0.3"],\
           ["react", "npm:18.2.0"],\
           ["react-dom", "virtual:8830f40320fc282079ce9d6b8589510b22fc1ac742d47baf5e159c0af3d32930a1e7383a7aceb87f563d2ca1da43225b21454780f1a52ede12eeb64a2e15758d#npm:18.2.0"],\

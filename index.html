@@ -3,9 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#485EEE" />
     <link rel="icon" href="/icons/favicon.ico" />
     <link rel="apple-touch-icon-precomposed" sizes="180x180" href="/public/icons/ios/180.png" type="image/png" />
+
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=<{VITE_APP_KAKAO_MAP_KEY}>"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker
+          .register('/sw.js')
+          .then((registration) => {
+            console.log('Service worker registration succeeded:', registration)
+          })
+          .catch((err) => {
+            console.log('Service worker registration failed:', error)
+          })
+      } else {
+        console.log('Service workers are not supported.')
+      }
+    </script>
     <title><{VITE_APP_TITLE}></title>
   </head>
   <body>

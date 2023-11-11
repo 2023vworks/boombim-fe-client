@@ -1,8 +1,9 @@
 import { type AnyAction, type ThunkDispatch, configureStore } from '@reduxjs/toolkit'
 import { type TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
+import mapSlice from './slices/map.slice'
 
 const store = configureStore({
-  reducer: {},
+  reducer: { map: mapSlice },
 })
 
 export default store

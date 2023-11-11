@@ -1,16 +1,18 @@
+import useMaps, { MAP_ID } from '@/hooks/useMaps'
+import { useAppSelector } from '@/store/store'
 import { useEffect } from 'react'
 
 export const Map = (): React.ReactNode => {
+  const { containerRef, map } = useMaps()
+  const { width, height } = useAppSelector((state) => state.map)
+
   useEffect(() => {
-    const options = {
-      center: new window.kakao.maps.LatLng(33.450701, 126.570667),
-      level: 3,
+    console.log(width, height)
+    console.log('hit ')
+    if (map !== null) {
+      map.relayout()
     }
-    const container = document.getElementById('map')
-    const map = new window.kakao.maps.Map(container, options)
-  }, [])
+  }, [width, height])
 
-  // const mapRef = useRef<HTMLDivElement | null>(null)
-
-  return <div id='map' style={{ width: '500px', height: '500px' }}></div>
+  return <div id={MAP_ID} ref={containerRef} style={{ width, height }}></div>
 }
