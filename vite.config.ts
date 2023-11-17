@@ -2,12 +2,18 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 import VitePluginHtmlEnv from 'vite-plugin-html-env'
+import svgr from 'vite-plugin-svgr'
 import path from 'path'
 
 export default defineConfig({
   plugins: [
     react(),
     VitePluginHtmlEnv(),
+    svgr({
+      svgrOptions: {
+        icon: true,
+      },
+    }),
     VitePWA({
       registerType: 'autoUpdate',
       devOptions: {
@@ -701,6 +707,15 @@ export default defineConfig({
     alias: [
       { find: '@', replacement: path.resolve(__dirname, 'src') },
       { find: '@pages', replacement: path.resolve(__dirname, 'src/pages') },
+      { find: '@bds', replacement: path.resolve(__dirname, 'src/bds') },
+      { find: '@components', replacement: path.resolve(__dirname, 'src/components') },
+      { find: '@hooks', replacement: path.resolve(__dirname, 'src/hooks') },
+      { find: '@store', replacement: path.resolve(__dirname, 'src/store') },
+      { find: '@stories', replacement: path.resolve(__dirname, 'src/stories') },
+      { find: '@styles', replacement: path.resolve(__dirname, 'src/styles') },
+      { find: '@types', replacement: path.resolve(__dirname, 'src/types') },
+      { find: '@utils', replacement: path.resolve(__dirname, 'src/utils') },
+      { find: '@assets', replacement: path.resolve(__dirname, 'src/assets') },
     ],
   },
   cacheDir: './.vite',
