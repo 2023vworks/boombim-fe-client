@@ -32,7 +32,6 @@ export const FNBContainer = styled.section`
   height: 90px;
   position: sticky;
   bottom: 0;
-  background-color: red;
 `
 
 export const DrawerContainer = styled.section`

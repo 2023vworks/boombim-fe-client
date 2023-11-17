@@ -9,7 +9,11 @@ export default defineConfig({
   plugins: [
     react(),
     VitePluginHtmlEnv(),
-    svgr(),
+    svgr({
+      svgrOptions: {
+        icon: true,
+      },
+    }),
     VitePWA({
       registerType: 'autoUpdate',
       devOptions: {
