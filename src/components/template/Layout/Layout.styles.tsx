@@ -13,7 +13,6 @@ export const MainContainer = styled.section`
   width: 600px;
   height: 100%;
   position: relative;
-  background-color: grey;
 `
 
 export const MainBody = styled.section`
@@ -25,10 +24,8 @@ export const MainBody = styled.section`
 
 export const GNBContainer = styled.section`
   width: 100%;
-  height: 80px;
   position: sticky;
   top: 0;
-  background-color: red;
 `
 export const FNBContainer = styled.section`
   width: 100%;

@@ -1,9 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
+interface Region {
+  bupRegion: string
+  hangRegoin: string
+}
+
 interface MapInitialState {
   width: string
   height: string
+  currentRegion: Region
 }
 
 export interface MapSize {
@@ -11,7 +17,11 @@ export interface MapSize {
   height?: string
 }
 
-const initialState: MapInitialState = { width: '100%', height: '100%' }
+const initialState: MapInitialState = {
+  width: '100%',
+  height: '100%',
+  currentRegion: { bupRegion: '', hangRegoin: '' },
+}
 
 const mapSlice = createSlice({
   name: 'mapSlice',
@@ -25,8 +35,11 @@ const mapSlice = createSlice({
         state.height = action.payload.height
       }
     },
+    setRegion(state, action: PayloadAction<Region>) {
+      state.currentRegion = { bupRegion: action.payload.bupRegion, hangRegoin: action.payload.hangRegoin }
+    },
   },
 })
 
-export const { setMapSize } = mapSlice.actions
+export const { setMapSize, setRegion } = mapSlice.actions
 export default mapSlice.reducer
