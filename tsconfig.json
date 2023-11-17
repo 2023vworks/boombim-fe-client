@@ -4,7 +4,15 @@
     "types": ["kakao.maps.d.ts"],
     "paths": {
       "@/*": ["src/*"],
-      "@pages/*": ["src/pages/*"]
+      "@pages/*": ["src/pages/*"],
+      "@bds/*": ["src/bds/*"],
+      "@components/*": ["src/components/*"],
+      "@hooks/*": ["src/hooks/*"],
+      "@store/*": ["src/store/*"],
+      "@stories/*": ["src/stories/*"],
+      "@styles/*": ["src/styles/*"],
+      "@types/*": ["src/types/*"],
+      "@utils/*": ["src/utils/*"]
     },
     "target": "ES2020",
     "useDefineForClassFields": true,
