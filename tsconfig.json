@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "types": ["kakao.maps.d.ts"],
+    "types": ["kakao.maps.d.ts", "vite-plugin-svgr/client"],
     "paths": {
       "@/*": ["src/*"],
       "@pages/*": ["src/pages/*"],
@@ -12,7 +12,8 @@
       "@stories/*": ["src/stories/*"],
       "@styles/*": ["src/styles/*"],
       "@types/*": ["src/types/*"],
-      "@utils/*": ["src/utils/*"]
+      "@utils/*": ["src/utils/*"],
+      "@assets/*": ["src/assets/*"]
     },
     "target": "ES2020",
     "useDefineForClassFields": true,
@@ -30,6 +31,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"],
+  "include": ["src", "svg.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

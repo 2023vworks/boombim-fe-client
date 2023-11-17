@@ -2,12 +2,14 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 import VitePluginHtmlEnv from 'vite-plugin-html-env'
+import svgr from 'vite-plugin-svgr'
 import path from 'path'
 
 export default defineConfig({
   plugins: [
     react(),
     VitePluginHtmlEnv(),
+    svgr(),
     VitePWA({
       registerType: 'autoUpdate',
       devOptions: {
@@ -709,6 +711,7 @@ export default defineConfig({
       { find: '@styles', replacement: path.resolve(__dirname, 'src/styles') },
       { find: '@types', replacement: path.resolve(__dirname, 'src/types') },
       { find: '@utils', replacement: path.resolve(__dirname, 'src/utils') },
+      { find: '@assets', replacement: path.resolve(__dirname, 'src/assets') },
     ],
   },
   cacheDir: './.vite',
