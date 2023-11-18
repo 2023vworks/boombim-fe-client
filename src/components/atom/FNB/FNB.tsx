@@ -4,6 +4,7 @@ import Icon, { type ICON_TYPE } from '@/bds/Icon/Icon'
 import { useAppDispatch } from '@/store/store'
 import theme from '@/styles/theme'
 import { useMemo } from 'react'
+import { openDrawer } from '@/store/slices/drawer.slice'
 
 interface FNBNavigation {
   icon: {
@@ -26,7 +27,7 @@ export const FNB = () => {
           height: '24px',
         },
         onClick: () => {
-          console.log('share')
+          handleOpenModal()
         },
       },
       {
@@ -78,6 +79,9 @@ export const FNB = () => {
   )
 
   const dispatch = useAppDispatch()
+  const handleOpenModal = () => {
+    dispatch(openDrawer({ props: 'dk' }))
+  }
   const handleButton = () => {
     dispatch(
       openModal({
