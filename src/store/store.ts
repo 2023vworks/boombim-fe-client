@@ -3,9 +3,10 @@ import { type TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux
 import mapSlice from './slices/map.slice'
 import modalSlice from './slices/modal.slice'
 import { boombimApi } from '@/store/asyncSlice/asyncSlice'
+import drawerSlice from './slices/drawer.slice'
 
 const store = configureStore({
-  reducer: { map: mapSlice, modal: modalSlice, [boombimApi.reducerPath]: boombimApi.reducer },
+  reducer: { map: mapSlice, modal: modalSlice, drawer: drawerSlice, [boombimApi.reducerPath]: boombimApi.reducer },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false }).concat(boombimApi.middleware),
 })
