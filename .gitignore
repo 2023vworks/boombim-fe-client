@@ -39,3 +39,4 @@ dist-ssr
 yarn/cache
 node_modules
 
+.env
