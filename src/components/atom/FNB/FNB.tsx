@@ -1,5 +1,7 @@
+import { openModal } from '@/store/slices/modal.slice'
 import * as Styles from './FNB.styles'
 import Icon, { type ICON_TYPE } from '@/bds/Icon/Icon'
+import { useAppDispatch } from '@/store/store'
 import theme from '@/styles/theme'
 import { useMemo } from 'react'
 
@@ -46,7 +48,7 @@ export const FNB = () => {
           height: '40px',
         },
         onClick: () => {
-          console.log('share')
+          handleButton()
         },
       },
       {
@@ -74,6 +76,30 @@ export const FNB = () => {
     ],
     [],
   )
+
+  const dispatch = useAppDispatch()
+  const handleButton = () => {
+    dispatch(
+      openModal({
+        modalType: 'CONFIRM',
+        props: {
+          title: <>hi</>,
+          confirmOption: {
+            text: '계속 작성하기',
+            onClick: () => {
+              console.log('hit')
+            },
+          },
+          cancleOption: {
+            text: '작성 중단하기',
+            onClick: () => {
+              console.log('중단하기')
+            },
+          },
+        },
+      }),
+    )
+  }
 
   return (
     <Styles.Container>
