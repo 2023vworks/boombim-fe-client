@@ -2,9 +2,12 @@ import { type AnyAction, type ThunkDispatch, configureStore } from '@reduxjs/too
 import { type TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import mapSlice from './slices/map.slice'
 import modalSlice from './slices/modal.slice'
+import { boombimApi } from '@/store/asyncSlice/asyncSlice'
 
 const store = configureStore({
-  reducer: { map: mapSlice, modal: modalSlice },
+  reducer: { map: mapSlice, modal: modalSlice, [boombimApi.reducerPath]: boombimApi.reducer },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({ serializableCheck: false }).concat(boombimApi.middleware),
 })
 
 export default store
