@@ -14,5 +14,5 @@ export interface GetGeoMarksResponseDTO {
   x: number
   y: number
   type: string
-  activity?: number
+  activity: number
 }

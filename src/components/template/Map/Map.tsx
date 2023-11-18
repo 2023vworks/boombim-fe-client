@@ -1,7 +1,13 @@
 import { MAP_ID, type Marker } from '@/hooks/useMaps'
 import { useAppSelector } from '@/store/store'
+import { type Position } from '@/types/map'
 import { type GetGeoMarksResponseDTO } from '@/types/marker'
 import { useEffect } from 'react'
+import marker_level_1 from '@/assets/images/marker_level_1.png'
+import marker_level_2 from '@/assets/images/marker_level_2.png'
+import marker_level_3 from '@/assets/images/marker_level_3.png'
+import marker_level_4 from '@/assets/images/marker_level_4.png'
+import marker_level_5 from '@/assets/images/marker_level_5.png'
 
 interface Props {
   minLevel?: number
@@ -94,12 +100,34 @@ export const Map = ({
     markers.forEach((marker) => {
       setMarker({
         position: { lat: marker.y, lng: marker.x },
+        img: selectMarkerImage(marker.activity),
         onClick: () => {
-          console.log('click Marker')
+          handleClickMarker(map, { lat: marker.y, lng: marker.x })
         },
       })
     })
   }, [markers, map])
+
+  const handleClickMarker = (map: kakao.maps.Map, position: Position) => {
+    const newPosition = new kakao.maps.LatLng(position.lat, position.lng)
+    map.panTo(newPosition)
+  }
+
+  const selectMarkerImage = (activity: number) => {
+    const imageSize = new kakao.maps.Size(25, 30)
+    switch (activity) {
+      case 1:
+        return new kakao.maps.MarkerImage(marker_level_1, imageSize)
+      case 2:
+        return new kakao.maps.MarkerImage(marker_level_2, imageSize)
+      case 3:
+        return new kakao.maps.MarkerImage(marker_level_3, imageSize)
+      case 4:
+        return new kakao.maps.MarkerImage(marker_level_4, imageSize)
+      case 5:
+        return new kakao.maps.MarkerImage(marker_level_5, imageSize)
+    }
+  }
 
   return <div id={MAP_ID} ref={containerRef} onClick={onClick} style={{ width, height }}></div>
 }

@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react'
 
 export const MainPage = (): React.ReactNode => {
   // State
-  const { map, containerRef, movePosition } = useMaps()
+  const { map, containerRef, movePosition, setMarker } = useMaps()
   const [currentBounds, setCurrentBounds] = useState<BoundPosition>()
   const [currentCenterPosition, setCurrentCenterPosition] = useState<Position>()
   const currentGeoLocation = useAppSelector((state) => state.map.currentGeoLocation)
@@ -47,7 +47,6 @@ export const MainPage = (): React.ReactNode => {
         maxY: currentBounds.northEastPosition.lat,
       },
     }).unwrap()
-
     console.log(result)
   }, [map, currentBounds, currentCenterPosition])
 
