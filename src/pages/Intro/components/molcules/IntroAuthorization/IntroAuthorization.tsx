@@ -1,12 +1,51 @@
+/* eslint-disable @typescript-eslint/no-confusing-void-expression */
 import { Button } from '@/bds/Button/Button'
 import * as Styles from './IntroAuthorization.styles'
 import { Typography } from '@/bds/Typography/Typography'
+import { useAppDispatch } from '@/store/store'
+import { setRegion } from '@/store/slices/map.slice'
+import { convertKorRegion, type coord2RegionCodeReturnType } from '@/utils/map'
 
 interface Props {
   onNext: () => void
 }
 
 export const IntroAuthorization = ({ onNext }: Props): React.ReactNode => {
+  const dispatch = useAppDispatch()
+
+  const regionCallbackHandler = (res: coord2RegionCodeReturnType[]) => {
+    dispatch(setRegion({ bupRegion: res[0].region_3depth_name, hangRegoin: res[1].region_3depth_name }))
+  }
+
+  const requestAuthorization = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          convertKorRegion(
+            {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            },
+            regionCallbackHandler,
+          )
+        },
+        () => alert('위치 권한 허용을 하지 않는다면, 앱 이용에 제한이 있을 수 있습니다.'),
+      )
+    } else {
+      alert('위치 권한 허용을 하지 않는다면, 앱 이용에 제한이 있을 수 있습니다.')
+    }
+
+    if (navigator.mediaDevices) {
+      navigator.mediaDevices
+        .getUserMedia({
+          video: { width: 400, height: 400 },
+        })
+        .catch((e) => alert('위치 권한 허용을 하지 않는다면, 앱 이용에 제한이 있을 수 있습니다.'))
+    }
+
+    onNext()
+  }
+
   return (
     <Styles.Container>
       <Styles.DescriptionSection>
@@ -38,7 +77,7 @@ export const IntroAuthorization = ({ onNext }: Props): React.ReactNode => {
         </Styles.Detail>
       </Styles.DescriptionSection>
       <Styles.ButtonSection>
-        <Button text='권한 동의하기' onClick={onNext} width={320} height={42} buttonType='PRIMARY' />
+        <Button text='권한 동의하기' onClick={requestAuthorization} width={320} height={42} buttonType='PRIMARY' />
       </Styles.ButtonSection>
     </Styles.Container>
   )

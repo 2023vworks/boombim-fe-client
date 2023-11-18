@@ -1,24 +1,28 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+/* eslint-disable @typescript-eslint/no-confusing-void-expression */
 /* eslint-disable multiline-ternary */
 import { useState } from 'react'
 import * as Styles from './IntroLogin.styles'
 import { Button } from '@/bds/Button/Button'
 import { Typography } from '@/bds/Typography/Typography'
+import { INITIAL_USER, setCookie, setToken } from '@/utils/storage'
+import { useAppDispatch } from '@/store/store'
+import { openModal } from '@/store/slices/modal.slice'
 
 interface Props {
   onNext: () => void
 }
 
 export const IntroLogin = ({ onNext }: Props): React.ReactNode => {
-  //   const dispatch = useDispatch()
-  //   const [loginTrigger, _login] = useLoginMutation()
-
   const [checkTerm, setCheckTerm] = useState(false)
   const [mbtiEI, setMbtiEI] = useState('E')
   const [mbtiSN, setMbtiSN] = useState('S')
   const [mbtiFT, setMbtiFT] = useState('T')
   const [mbtiPJ, setMbtiPJ] = useState('P')
 
-  function handleSelect(e: React.ChangeEvent<HTMLSelectElement>) {
+  const dispatch = useAppDispatch()
+
+  const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value
 
     switch (value) {
@@ -41,25 +45,36 @@ export const IntroLogin = ({ onNext }: Props): React.ReactNode => {
     }
   }
 
-  function handleCheck() {
+  const handleCheck = () => {
     setCheckTerm(!checkTerm)
   }
 
-  function login() {
-    // checkTerm &&
-    //   loginTrigger({ mbtiType: `${mbtiEI + mbtiSN + mbtiFT + mbtiPJ}` })
-    //     .unwrap()
-    //     .then(
-    //       (res) => (
-    //         res?.data && setToken(res.data.token),
-    //         res?.data && setUserInfo(res.data.nickname, res.data.mbtiType),
+  const processAfterLogin = () => {
+    setCookie({ key: INITIAL_USER, value: 'false', expires: 1 })
     onNext()
-    //         dispatch(modalSlice.actions.closeModal())
-    //       ),
-    //     )
-    //     .catch(
-    //       () => (alert('로그인에 실패하였습니다. 관리자에게 문의바랍니다.'), dispatch(modalSlice.actions.closeModal())),
-    //     )
+    dispatch(
+      openModal({
+        modalType: 'ALERT',
+        props: {
+          title: (
+            <div>
+              <span style={{ fontWeight: 700 }}>붐빔</span>에 오신 것을 환영합니다!
+            </div>
+          ),
+          description: `현재 내 주위에 궁금한 것이나, 재밌는 일 등 
+여러가지 일어나고 있는 일에 대해
+지도상에 표시하며 즐겨봐요! 😍`,
+        },
+      }),
+    )
+  }
+
+  const login = () => {
+    checkTerm &&
+      loginTrigger({ mbti: `${mbtiEI + mbtiSN + mbtiFT + mbtiPJ}`, agreementTerms: checkTerm })
+        .unwrap()
+        .then((res) => setToken(res), processAfterLogin())
+        .catch(() => alert('로그인에 실패하였습니다. 관리자에게 문의바랍니다.'))
   }
   return (
     <Styles.Container>

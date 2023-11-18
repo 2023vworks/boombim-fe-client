@@ -1,10 +1,11 @@
-import React, { useCallback, useState } from 'react'
+import * as Styles from './IntroPage.styles'
+import React, { useCallback, useEffect, useState } from 'react'
 import { IntroStart } from './components/molcules/IntroStart/IntroStart'
 import { IntroDescription } from './components/molcules/IntroDescription/IntroDescription'
 import { IntroAuthorization } from './components/molcules/IntroAuthorization/IntroAuthorization'
 import { IntroLogin } from './components/molcules/IntroLogin/IntroLogin'
 import { useNavigate } from 'react-router-dom'
-import * as Styles from './IntroPage.styles'
+import { getCookie, INITIAL_USER } from '../../utils/storage'
 
 export const IntroPage = (): React.ReactNode => {
   const navigate = useNavigate()
@@ -28,6 +29,12 @@ export const IntroPage = (): React.ReactNode => {
         return <IntroStart onNext={() => setStep('DESCRIPTION')} />
     }
   }, [step])
+
+  useEffect(() => {
+    if (getCookie(INITIAL_USER) === 'false') {
+      navigate('/')
+    }
+  }, [])
 
   return (
     <Styles.Container>
