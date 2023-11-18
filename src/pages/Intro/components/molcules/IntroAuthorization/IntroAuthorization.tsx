@@ -40,7 +40,7 @@ export const IntroAuthorization = ({ onNext }: Props): React.ReactNode => {
         .getUserMedia({
           video: { width: 400, height: 400 },
         })
-        .catch((e) => alert('위치 권한 허용을 하지 않는다면, 앱 이용에 제한이 있을 수 있습니다.'))
+        .catch((e) => alert('카메라 권한 허용을 하지 않는다면, 앱 이용에 제한이 있을 수 있습니다.'))
     }
 
     onNext()

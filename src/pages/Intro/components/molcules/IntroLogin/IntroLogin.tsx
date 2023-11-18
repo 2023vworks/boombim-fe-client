@@ -5,9 +5,8 @@ import { useState } from 'react'
 import * as Styles from './IntroLogin.styles'
 import { Button } from '@/bds/Button/Button'
 import { Typography } from '@/bds/Typography/Typography'
-import { INITIAL_USER, setCookie, setToken } from '@/utils/storage'
-import { useAppDispatch } from '@/store/store'
-import { openModal } from '@/store/slices/modal.slice'
+import { INITIAL_USER, setCookie, setToken, setUserInfo } from '@/utils/storage'
+import { usePostUserMutation } from '@/store/asyncSlice/asyncSlice'
 
 interface UserMbti {
   EI: 'E' | 'I'
@@ -18,7 +17,7 @@ interface UserMbti {
 
 interface HandleLogin {
   userMbti: UserMbti
-  agreementTerm: boolean
+  agreementTerms: boolean
 }
 
 interface Props {
@@ -34,7 +33,7 @@ export const IntroLogin = ({ onNext }: Props): React.ReactNode => {
     PJ: 'P',
   })
 
-  const dispatch = useAppDispatch()
+  const [postUserTrigger, _postUser] = usePostUserMutation()
 
   const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>): void => {
     const value = e.target.value
@@ -72,31 +71,20 @@ export const IntroLogin = ({ onNext }: Props): React.ReactNode => {
     setCheckTerm(value)
   }
 
-  const processAfterLogin = (): void => {
+  const processAfterPostUser = (): void => {
     setCookie({ key: INITIAL_USER, value: 'false', expires: 1 })
     onNext()
-    dispatch(
-      openModal({
-        modalType: 'ALERT',
-        props: {
-          title: (
-            <div>
-              <span style={{ fontWeight: 700 }}>붐빔</span>에 오신 것을 환영합니다!
-            </div>
-          ),
-          description: `현재 내 주위에 궁금한 것이나, 재밌는 일 등 
-여러가지 일어나고 있는 일에 대해
-지도상에 표시하며 즐겨봐요! 😍`,
-        },
-      }),
-    )
   }
 
   const handleLogin = ({ userMbti, agreementTerms }: HandleLogin): void => {
     agreementTerms &&
-      loginTrigger({ mbti: `${userMbti.EI + userMbti.SN + userMbti.TF + userMbti.PJ}`, agreementTerms })
+      postUserTrigger({ mbti: `${userMbti.EI + userMbti.SN + userMbti.TF + userMbti.PJ}`, agreementTerms })
         .unwrap()
-        .then((res) => setToken(res), processAfterLogin())
+        .then((res) => {
+          setToken(res.data.token)
+          setUserInfo(res.data.nickname, res.data.mbti)
+          processAfterPostUser()
+        })
         .catch(() => alert('로그인에 실패하였습니다. 관리자에게 문의바랍니다.'))
   }
   return (
@@ -147,7 +135,7 @@ export const IntroLogin = ({ onNext }: Props): React.ReactNode => {
           {checkTerm ? (
             <Button
               text='등록완료'
-              onClick={() => handleLogin({ userMbti: mbti, agreementTerm: checkTerm })}
+              onClick={() => handleLogin({ userMbti: mbti, agreementTerms: checkTerm })}
               width={320}
               height={42}
               buttonType='PRIMARY'

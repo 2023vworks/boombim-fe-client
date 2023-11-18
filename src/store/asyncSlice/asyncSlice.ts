@@ -22,6 +22,8 @@ import {
 } from '@/types/api'
 import { getAccessToken } from '@/utils/auth'
 
+import { getAccessToken } from '@/utils/storage'
+
 import { type BaseQueryFn, createApi, type FetchArgs, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 const baseUrl = 'https://api.boomb.im/api'

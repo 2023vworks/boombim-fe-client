@@ -1,5 +1,8 @@
+import getMbtiName from '@/utils/user'
+
 export const INITIAL_USER = 'initialUser'
 const TOKEN_NAME = 'ATK'
+const USER_INFO = 'USER'
 
 interface setCookieParameter {
   key: string
@@ -44,4 +47,16 @@ export function checkLogin(): boolean {
 
 export function logout(): void {
   deleteAccessToken()
+}
+
+export function setUserInfo(name: string, mbti: string): void {
+  localStorage.setItem(USER_INFO, getMbtiName({ mbti, nickname: name }))
+}
+
+export function resetUserInfo() {
+  localStorage.removeItem(USER_INFO)
+}
+
+export function getUserInfo(): string | null {
+  return localStorage.getItem(USER_INFO)
 }
