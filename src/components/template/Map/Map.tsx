@@ -1,5 +1,6 @@
 import { MAP_ID, type Marker } from '@/hooks/useMaps'
 import { useAppSelector } from '@/store/store'
+import { type GetGeoMarksResponseDTO } from '@/types/marker'
 import { useEffect } from 'react'
 
 interface Props {
@@ -7,7 +8,7 @@ interface Props {
   maxLevel?: number
   currentZoomLevel?: number
   draggable?: boolean
-  markers?: Marker[]
+  markers?: GetGeoMarksResponseDTO[]
   containerRef: React.RefObject<HTMLDivElement> | null
   map: kakao.maps.Map | null
 
@@ -91,7 +92,12 @@ export const Map = ({
   useEffect(() => {
     if (!markers || !map) return
     markers.forEach((marker) => {
-      setMarker({ position: { lat: marker.position.lat, lng: marker.position.lng }, onClick: marker.onClick })
+      setMarker({
+        position: { lat: marker.y, lng: marker.x },
+        onClick: () => {
+          console.log('click Marker')
+        },
+      })
     })
   }, [markers, map])
 

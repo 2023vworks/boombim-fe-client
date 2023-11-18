@@ -20,6 +20,7 @@ import {
   type getUserResultType,
   type postUploadRequestType,
 } from '@/types/api'
+import { getAccessToken } from '@/utils/auth'
 
 import { type BaseQueryFn, createApi, type FetchArgs, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
@@ -130,7 +131,7 @@ export const boombimApi = createApi({
     }),
     // [Marker] 관련 get api
     getMarks: builder.query<getMarkersResultType, getMarkersRequestType>({
-      query: (params) => {
+      query: ({ params }) => {
         return {
           url: 'geo-marks/',
           params,
@@ -188,4 +189,5 @@ export const {
   useGetUserQuery,
   usePostUserMutation,
   usePostUploadImagesMutation,
+  useLazyGetMarksQuery,
 } = boombimApi

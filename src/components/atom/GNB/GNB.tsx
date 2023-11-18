@@ -3,7 +3,7 @@ import * as Styles from './GNB.styles'
 import useGeoLocation from '@/hooks/useGeoLocation'
 import { useEffect } from 'react'
 import { convertKorRegion, type coord2RegionCodeReturnType } from '@/utils/map'
-import { setRegion } from '@/store/slices/map.slice'
+import { setCurrentGeoLocation, setRegion } from '@/store/slices/map.slice'
 import { useAppDispatch, useAppSelector } from '@/store/store'
 
 export const GNB = (): React.ReactNode => {
@@ -19,6 +19,7 @@ export const GNB = (): React.ReactNode => {
     if (error) return
 
     convertKorRegion(location, regionCallbackHandler)
+    dispatch(setCurrentGeoLocation(location))
   }, [location])
 
   return (
