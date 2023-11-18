@@ -2,11 +2,11 @@
 import { useAppSelector } from '@/store/store'
 import { useCallback } from 'react'
 import ReactDOM from 'react-dom'
-import Modal from '../Modal/Modal'
+import Modal from '../Modal'
 import { AlertModal } from '../AlertModal/AlertModal'
 import { ConfirmModal } from '../ConfirmModal/ConfirmModal'
 
-export const PortalModal = () => {
+const PortalModal = () => {
   const { modalType, isOpen, props } = useAppSelector((state) => state.modal)
 
   const ModalComponent = useCallback(() => {
@@ -29,3 +29,4 @@ export const PortalModal = () => {
       )
     : null
 }
+export default PortalModal
