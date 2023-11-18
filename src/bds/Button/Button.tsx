@@ -3,6 +3,7 @@ import * as Styles from './Button.styles'
 const BUTTON_TYPE = {
   PRIMARY: 'PRIMARY',
   OUTLINE: 'OUTLINE',
+  UNAVALIAVE: 'UNAVALIAVE',
 } as const
 
 export type BUTTON_TYPE_ENUM = (typeof BUTTON_TYPE)[keyof typeof BUTTON_TYPE]
