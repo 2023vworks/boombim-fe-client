@@ -8,26 +8,33 @@ export const Container = styled.div`
   flex-direction: column;
 `
 
-export const DescriptionSection = styled.div`
+export const Wrapper = styled.div`
   width: 320px;
   height: 287px;
   margin-top: 94px;
+`
+
+export const Title = styled.p`
+  margin-bottom: 22px;
+`
+
+export const DescriptionSection = styled.section`
   line-height: 21px;
 `
 
-export const SubTitle = styled.div`
-  margin-top: 22px;
+export const DetailTitle = styled.p`
+  margin-bottom: 8px;
 `
 
-export const TitleOption = styled.span`
+export const OptionalTitle = styled.span`
   font-weight: 300;
 `
 
-export const Detail = styled.div`
-  margin-top: 8px;
+export const DetailDescriptionSection = styled.section`
+  margin-bottom: 23px;
 `
 
-export const ButtonSection = styled.div`
+export const ButtonSection = styled.section`
   height: 42px;
   position: fixed;
   bottom: 76px;

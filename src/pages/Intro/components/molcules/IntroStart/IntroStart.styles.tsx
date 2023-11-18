@@ -18,7 +18,7 @@ export const Wrapper = styled.div`
   flex-direction: column;
 `
 
-export const DescriptionSection = styled.div`
+export const DescriptionSection = styled.section`
   margin-bottom: 52px;
   text-align: center;
   line-height: 21px;

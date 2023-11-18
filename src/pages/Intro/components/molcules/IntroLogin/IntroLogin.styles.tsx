@@ -8,10 +8,13 @@ export const Container = styled.div`
   flex-direction: column;
 `
 
-export const DescriptionSection = styled.div`
+export const Wrapper = styled.div`
+  margin-top: 94px;
+`
+
+export const DescriptionSection = styled.section`
   width: 320px;
   height: 287px;
-  margin-top: 94px;
   line-height: 21px;
 `
 
@@ -19,8 +22,15 @@ export const BoldTypo = styled.span`
   font-weight: 700;
 `
 
-export const ContentSection = styled.section`
-  width: 100%;
+export const SelectBoxSection = styled.section`
+  width: 320px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+
+export const SelectBoxWrapper = styled.div`
   margin-bottom: 10px;
   display: flex;
   flex-direction: row;
@@ -28,7 +38,7 @@ export const ContentSection = styled.section`
   gap: 5px;
 `
 
-export const Select = styled.select`
+export const SelectBox = styled.select`
   width: 56px;
   height: 92px;
   border-radius: 15px;
@@ -38,12 +48,12 @@ export const Select = styled.select`
   appearance: none;
 `
 
-export const ButtonSection = styled.div`
+export const ButtonSection = styled.section`
   position: fixed;
   bottom: 76px;
 `
 
-export const CheckSection = styled.section`
+export const CheckboxWrapper = styled.div`
   margin-bottom: 14px;
   display: flex;
   flex-direction: row;

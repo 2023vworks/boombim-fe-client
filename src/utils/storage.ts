@@ -1,18 +1,24 @@
 export const INITIAL_USER = 'initialUser'
 const TOKEN_NAME = 'ATK'
 
-export const setCookie = ({ key, value, expires }: { key: string; value: string | number; expires: number }) => {
+interface setCookieParameter {
+  key: string
+  value: string | number
+  expires: number
+}
+
+export const setCookie = ({ key, value, expires }: setCookieParameter): void => {
   const date = new Date()
   date.setTime(date.getTime() + expires * 24 * 60 * 60 * 1000)
   document.cookie = `${key}=${value}; expires=${date.toDateString()} `
 }
 
-export const getCookie = (key: string) => {
+export const getCookie = (key: string): string | null => {
   const cookies = document.cookie.match('(^|;) ?' + key + '=([^;]*)(;|$)')
   return cookies ? cookies[2] : null
 }
 
-export const deleteCookie = (key: string) => {
+export const deleteCookie = (key: string): void => {
   document.cookie = `${key}=; expires=Thu, 01 Jan 1970 00:00:00 UTC;`
 }
 
