@@ -14,7 +14,7 @@ interface ResponseType {
 
 export interface Marker {
   position: Position
-  img?: string
+  img?: kakao.maps.MarkerImage
   clickable?: boolean
   onClick: () => void
 }

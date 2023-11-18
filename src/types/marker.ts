@@ -4,7 +4,7 @@ export interface GetGeoMarksRequestDTO {
   minY: number
   maxY: number
   size: number
-  nextCursor: number
+  nextCursor?: number
 }
 
 export interface GetGeoMarksResponseDTO {
@@ -14,5 +14,5 @@ export interface GetGeoMarksResponseDTO {
   x: number
   y: number
   type: string
-  activity?: number
+  activity: number
 }
