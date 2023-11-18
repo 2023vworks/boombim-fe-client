@@ -107,9 +107,7 @@ export interface postUserResultType {
   data: PostUsersResponseDTO
 }
 
-export interface postUserRequestType {
-  body: PostUsersRequestDTO
-}
+export interface postUserRequestType extends PostUsersRequestDTO {}
 
 // upload post
 
