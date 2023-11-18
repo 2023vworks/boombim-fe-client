@@ -1,9 +1,10 @@
 import { type AnyAction, type ThunkDispatch, configureStore } from '@reduxjs/toolkit'
 import { type TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import mapSlice from './slices/map.slice'
+import modalSlice from './slices/modal.slice'
 
 const store = configureStore({
-  reducer: { map: mapSlice },
+  reducer: { map: mapSlice, modal: modalSlice },
 })
 
 export default store

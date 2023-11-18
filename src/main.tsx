@@ -8,6 +8,7 @@ import store from './store/store.ts'
 import { Provider } from 'react-redux'
 import { Layout } from './components/template/Layout/Layout.tsx'
 import { BrowserRouter } from 'react-router-dom'
+import { PortalModal } from './bds/Modal/PortalModal.tsx/PortalModal.tsx'
 
 const root = document.getElementById('root') as HTMLElement
 
@@ -20,6 +21,7 @@ ReactDOM.createRoot(root).render(
           <Layout>
             <App />
           </Layout>
+          <PortalModal />
         </ThemeProvider>
       </Provider>
     </BrowserRouter>

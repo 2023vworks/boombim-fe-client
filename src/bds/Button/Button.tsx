@@ -8,14 +8,14 @@ const BUTTON_TYPE = {
 export type BUTTON_TYPE_ENUM = (typeof BUTTON_TYPE)[keyof typeof BUTTON_TYPE]
 
 interface Props {
-  text: string
+  text?: string
   width: number
-  height: number
+  height?: number
   buttonType: BUTTON_TYPE_ENUM
-  onClick: () => void
+  onClick?: () => void
 }
 
-export const Button = ({ text, width, height, buttonType = 'PRIMARY', onClick }: Props): React.ReactNode => {
+export const Button = ({ text, width, height = 42, buttonType = 'PRIMARY', onClick }: Props): React.ReactNode => {
   return (
     <Styles.StyleButton onClick={onClick} $width={width} $height={height} $buttonType={buttonType}>
       {text}
