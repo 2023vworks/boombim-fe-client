@@ -20,8 +20,6 @@ import {
   type getUserResultType,
   type postUploadRequestType,
 } from '@/types/api'
-import { getAccessToken } from '@/utils/auth'
-
 import { getAccessToken } from '@/utils/storage'
 
 import { type BaseQueryFn, createApi, type FetchArgs, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
@@ -45,7 +43,7 @@ export const boombimApi = createApi({
         return {
           url: '/feeds',
           method: 'GET',
-          params,
+          params: { ...params },
         }
       },
       providesTags: (result, id) => [{ type: 'PostFeed' }],
@@ -80,7 +78,7 @@ export const boombimApi = createApi({
         return {
           url: `/feeds/${id}/comments`,
           method: 'GET',
-          params,
+          params: { ...params },
         }
       },
       providesTags: (result, id) => [{ type: 'PostComment' }],
@@ -91,7 +89,7 @@ export const boombimApi = createApi({
         return {
           url: '/feeds',
           method: 'POST',
-          body,
+          body: { ...body },
         }
       },
       invalidatesTags: ['PostFeed'],
@@ -101,7 +99,7 @@ export const boombimApi = createApi({
         return {
           url: `feeds/${id}/comments`,
           method: 'POST',
-          body,
+          body: { ...body },
         }
       },
       invalidatesTags: ['PostComment'],
@@ -127,17 +125,17 @@ export const boombimApi = createApi({
         return {
           url: `/feeds/${id}/report`,
           method: 'POST',
-          body,
+          body: { ...body },
         }
       },
     }),
     // [Marker] 관련 get api
     getMarks: builder.query<getMarkersResultType, getMarkersRequestType>({
-      query: ({ params }) => {
+      query: (params) => {
         return {
           url: 'geo-marks/',
-          params,
           method: 'GET',
+          params: { ...params },
         }
       },
     }),
@@ -156,7 +154,7 @@ export const boombimApi = createApi({
         return {
           url: '/users',
           method: 'POST',
-          body,
+          body: { ...body },
         }
       },
     }),
@@ -169,7 +167,7 @@ export const boombimApi = createApi({
           },
           url: `/feeds/${id}/images`,
           method: 'POST',
-          body,
+          body: { ...body },
         }
       },
     }),

@@ -31,9 +31,7 @@ export interface GetFeedsResultType {
   data: GetFeedsResponseDTO[]
 }
 
-export interface GetFeedsRequestType {
-  params: GetFeedsRequsetDTO
-}
+export interface GetFeedsRequestType extends GetFeedsRequsetDTO {}
 
 export interface GetFeedDetailResultType {
   data: GetFeedResponseDTO[]
@@ -58,10 +56,7 @@ export interface PostFeedResultType {
   data: PostFeedResponseDTO
 }
 
-export interface PostFeedRequestType {
-  id: number
-  body: PostFeedRequestDTO
-}
+export interface PostFeedRequestType extends PostFeedRequestDTO {}
 
 export interface PostFeedCommentResultType {
   data: PostFeedCommentReponseDTO
@@ -91,9 +86,7 @@ export interface getMarkersResultType {
   data: GetGeoMarksResponseDTO[]
 }
 
-export interface getMarkersRequestType {
-  params: GetGeoMarksRequestDTO
-}
+export interface getMarkersRequestType extends GetGeoMarksRequestDTO {}
 
 // 유저 get
 
