@@ -158,6 +158,14 @@ export const boombimApi = createApi({
         }
       },
     }),
+    deleteUser: builder.mutation<null, void>({
+      query: () => {
+        return {
+          url: '/users/me',
+          method: 'DELETE',
+        }
+      },
+    }),
     // [Upload] 관련 post api
     postUploadImages: builder.mutation<null, postUploadRequestType>({
       query: ({ id, body }) => {
@@ -188,6 +196,7 @@ export const {
   useGetMarksQuery,
   useGetUserQuery,
   usePostUserMutation,
+  useDeleteUserMutation,
   usePostUploadImagesMutation,
   useLazyGetMarksQuery,
 } = boombimApi

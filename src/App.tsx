@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom'
 import { MainPage } from './pages/main/MainPage'
 import { IntroPage } from './pages/Intro/IntroPage'
 import { FeedList } from '@/pages/FeedList/FeedList'
+import { MyPage } from '@/pages/myPage/MyPage'
 
 function App(): JSX.Element {
   useEffect(() => {
@@ -14,6 +15,7 @@ function App(): JSX.Element {
       <Route path='/' element={<MainPage />} />
       <Route path='/intro' element={<IntroPage />} />
       <Route path='/feed-list' element={<FeedList />} />
+      <Route path='/my-page' element={<MyPage />} />
     </Routes>
   )
 }
