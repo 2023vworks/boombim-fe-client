@@ -17,7 +17,7 @@ const initialState: DrawerInitialState = {
   drawerType: null,
 }
 
-const modalSlice = createSlice({
+const drawerSlice = createSlice({
   name: 'drawerSlice',
   initialState,
   reducers: {
@@ -33,5 +33,5 @@ const modalSlice = createSlice({
   },
 })
 
-export const { openDrawer, closeDrawer } = modalSlice.actions
-export default modalSlice.reducer
+export const { openDrawer, closeDrawer } = drawerSlice.actions
+export default drawerSlice.reducer
