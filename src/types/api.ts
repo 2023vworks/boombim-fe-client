@@ -30,7 +30,9 @@ export interface ErrorResponseDTO {
   status: number
 }
 
-// 피드 get
+/**
+ * @GET : FEED
+ */
 
 export interface GetFeedsResultType {
   data: GetFeedsResponseDTO[]
@@ -55,7 +57,9 @@ export interface GetFeedCommentsRequestType {
   params: GetCommentsRequestDTO
 }
 
-// 피드 post
+/**
+ * @POST : FEED
+ */
 
 export interface PostFeedResultType {
   data: PostFeedResponseDTO
@@ -85,7 +89,9 @@ export interface PostFeedReportRequestType {
   body: PostFeedReportRequestDTO
 }
 
-// 마커 post
+/**
+ * @GET : MARKER
+ */
 
 export interface GetMarkersResultType {
   data: GetGeoMarksResponseDTO[]
@@ -93,7 +99,9 @@ export interface GetMarkersResultType {
 
 export interface GetMarkersRequestType extends GetGeoMarksRequestDTO {}
 
-// 유저 get
+/**
+ * @GET : USER
+ */
 
 export interface GetUserResultType {
   data: GetUserResponseDTO
@@ -106,6 +114,9 @@ export interface GetUserFeedsResultType {
 export interface GetUserFeedsRequestType extends GetUserFeedsRequestDTO {}
 
 // 유저 post
+/**
+ * @POST : USER
+ */
 
 export interface PostUserResultType {
   data: PostUsersResponseDTO
@@ -113,7 +124,9 @@ export interface PostUserResultType {
 
 export interface PostUserRequestType extends PostUsersRequestDTO {}
 
-// upload post
+/**
+ * @POST : UPLOAD
+ */
 
 export interface PostUploadRequestType {
   id: number

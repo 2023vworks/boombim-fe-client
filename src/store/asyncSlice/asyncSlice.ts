@@ -40,7 +40,12 @@ export const boombimApi = createApi({
   }) as BaseQueryFn<string | FetchArgs, unknown, ErrorResponseDTO>,
   tagTypes: ['PostComment', 'PostFeed'],
   endpoints: (builder) => ({
-    // [Feed] 관련 get apis
+    /**
+     * * FEED DOMAIN
+     */
+    /**
+     * @ Feed List 조회
+     */
     getFeeds: builder.query<GetFeedsResultType, GetFeedsRequestType>({
       query: (params) => {
         return {
@@ -51,6 +56,10 @@ export const boombimApi = createApi({
       },
       providesTags: (result, id) => [{ type: 'PostFeed' }],
     }),
+
+    /**
+     * @ Feed 상세 조회(FeedID로 조회)
+     */
     getFeedDetail: builder.query<GetFeedDetailResultType, number>({
       query: (id) => {
         return {
@@ -59,6 +68,10 @@ export const boombimApi = createApi({
         }
       },
     }),
+
+    /**
+     * @ Feed 상세 조회 (GeoMarkId로 조회)
+     */
     getFeedDetailByMarkerId: builder.query<GetFeedDetailResultType, number>({
       query: (id) => {
         return {
@@ -68,6 +81,10 @@ export const boombimApi = createApi({
         }
       },
     }),
+
+    /**
+     * @ Feed 활성 시간 조회
+     */
     getFeedActivationTime: builder.query<GetFeedActivationTimeResultType, number>({
       query: (id) => {
         return {
@@ -76,6 +93,10 @@ export const boombimApi = createApi({
         }
       },
     }),
+
+    /**
+     * @ Feed Detail > Comment List 조회
+     */
     getFeedComments: builder.query<GetFeedCommentResultType, GetFeedCommentsRequestType>({
       query: ({ id, params }) => {
         return {
@@ -86,7 +107,10 @@ export const boombimApi = createApi({
       },
       providesTags: (result, id) => [{ type: 'PostComment' }],
     }),
-    // [Feed] 관련 post apis
+
+    /**
+     * @ Feed 생성
+     */
     postFeed: builder.mutation<PostFeedResultType, PostFeedRequestType>({
       query: (body) => {
         return {
@@ -97,6 +121,10 @@ export const boombimApi = createApi({
       },
       invalidatesTags: ['PostFeed'],
     }),
+
+    /**
+     * @ Feed Detail > Comments 생성
+     */
     postFeedComments: builder.mutation<PostFeedCommentResultType, PostFeedCommentRequestType>({
       query: ({ id, body }) => {
         return {
@@ -107,6 +135,10 @@ export const boombimApi = createApi({
       },
       invalidatesTags: ['PostComment'],
     }),
+
+    /**
+     * @ Feed 추천
+     */
     postFeedRecommend: builder.mutation<PostFeedRecommendResultType, number>({
       query: (id) => {
         return {
@@ -115,6 +147,10 @@ export const boombimApi = createApi({
         }
       },
     }),
+
+    /**
+     * @ Feed 비추천
+     */
     postFeedUnRecommend: builder.mutation<PostFeedUnRecommendResultType, number>({
       query: (id) => {
         return {
@@ -123,6 +159,10 @@ export const boombimApi = createApi({
         }
       },
     }),
+
+    /**
+     * @ Feed 신고
+     */
     postFeedReport: builder.mutation<null, PostFeedReportRequestType>({
       query: ({ id, body }) => {
         return {
@@ -132,7 +172,14 @@ export const boombimApi = createApi({
         }
       },
     }),
-    // [Marker] 관련 get api
+
+    /**
+     * * MARK DOMAIN
+     */
+
+    /**
+     * @ 활성화된 Mark List 조회
+     */
     getMarks: builder.query<GetMarkersResultType, GetMarkersRequestType>({
       query: (params) => {
         return {
@@ -142,8 +189,15 @@ export const boombimApi = createApi({
         }
       },
     }),
-    // [User] 관련 get api
-    getUser: builder.query<GetUserResultType, void>({
+
+    /**
+     * * USER DOMAIN
+     */
+
+    /**
+     * @ User 조회
+     */
+    getUser: builder.query<GetUserResultType, null>({
       query: () => {
         return {
           url: '/users/me',
@@ -160,7 +214,10 @@ export const boombimApi = createApi({
         }
       },
     }),
-    // [User] 관련 post api
+
+    /**
+     * @ User 회원가입
+     */
     postUser: builder.mutation<PostUserResultType, PostUserRequestType>({
       query: (body) => {
         return {
@@ -178,6 +235,14 @@ export const boombimApi = createApi({
         }
       },
     }),
+
+    /**
+     * * FILE UPLOAD DOMAIN
+     */
+
+    /**
+     * @ Image File 업로드
+     */
     // [Upload] 관련 post api
     postUploadImages: builder.mutation<null, PostUploadRequestType>({
       query: ({ id, body }) => {
