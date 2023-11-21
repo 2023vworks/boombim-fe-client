@@ -44,6 +44,7 @@ export default function PortalCamera() {
       dispatch(
         addImage({
           images: imgSrcFormData,
+          previewImages: [img],
         }),
       )
 

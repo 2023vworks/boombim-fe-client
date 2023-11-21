@@ -1,4 +1,6 @@
 import { type Position } from '@/types/map'
+import { isEmptyString } from './common'
+import { type Address, type RegionCode, type RoadAddress } from '../types/feed'
 
 export interface coord2RegionCodeReturnType {
   address_name: string
@@ -54,4 +56,73 @@ export function getRectangleCoordinates({
   }
 
   return pentagonCoordinates
+}
+
+export async function getGeoData({ lng, lat }: { lat: number; lng: number }) {
+  const geocoder = new kakao.maps.services.Geocoder()
+
+  const address = new Promise<kakao.maps.services.Address>((resolve) => {
+    geocoder.coord2Address(lng, lat, (body) => {
+      resolve(body[0]['address'])
+    })
+  })
+
+  const roadAddress = new Promise<kakao.maps.services.RoadAaddress | null>((resolve) => {
+    geocoder.coord2Address(lng, lat, (body) => {
+      resolve(body[0]['road_address'])
+    })
+  })
+
+  const regionInfo = new Promise<kakao.maps.services.RegionCode[]>((resolve) => {
+    geocoder.coord2RegionCode(lng, lat, (body) => {
+      resolve(body)
+    })
+  })
+
+  return await Promise.all([address, roadAddress, regionInfo])
+}
+
+export function convertAddress(address: kakao.maps.services.Address): Address {
+  const convertedDomain: Address = {
+    addressName: isEmptyString(address.address_name),
+    region1DepthName: isEmptyString(address.region_1depth_name),
+    region2DepthName: isEmptyString(address.region_2depth_name),
+    region3DepthName: isEmptyString(address.region_3depth_name),
+    mountainYn: isEmptyString(address.mountain_yn),
+    mainAddressNo: isEmptyString(address.main_address_no),
+    subAddressNo: isEmptyString(address.sub_address_no),
+  }
+  return convertedDomain
+}
+
+export function convertRoadAddress(roadAaddress: kakao.maps.services.RoadAaddress | null): RoadAddress | undefined {
+  if (!roadAaddress) return undefined
+  const convertedDomainRoadAddress: RoadAddress = {
+    addressName: isEmptyString(roadAaddress.address_name),
+    region1DepthName: isEmptyString(roadAaddress.region_1depth_name),
+    region2DepthName: isEmptyString(roadAaddress.region_2depth_name),
+    region3DepthName: isEmptyString(roadAaddress.region_3depth_name),
+    roadName: isEmptyString(roadAaddress.road_name),
+    undergroundYn: roadAaddress.underground_yn,
+    mainBuildingNo: isEmptyString(roadAaddress.main_building_no),
+    subBuildingNo: isEmptyString(roadAaddress.sub_building_no),
+    buildingName: isEmptyString(roadAaddress.building_name),
+    zoneNo: isEmptyString(roadAaddress.zone_no),
+  }
+  return convertedDomainRoadAddress
+}
+
+export function convertRegion(region: kakao.maps.services.RegionCode): RegionCode {
+  const convertedDomainRegion: RegionCode = {
+    regionType: isEmptyString(region.region_type),
+    addressName: isEmptyString(region.address_name),
+    region1DepthName: isEmptyString(region.region_1depth_name),
+    region2DepthName: isEmptyString(region.region_2depth_name),
+    region3DepthName: isEmptyString(region.region_3depth_name),
+    region4DepthName: isEmptyString(region.region_4depth_name),
+    code: isEmptyString(region.code),
+    x: region.x,
+    y: region.y,
+  }
+  return convertedDomainRegion
 }
