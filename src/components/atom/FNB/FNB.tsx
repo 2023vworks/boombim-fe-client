@@ -23,17 +23,19 @@ export const FNB = () => {
         icon: {
           iconType: 'MAP',
           fillColor: theme.color.white,
+          strokeColor: theme.color.black,
           width: '24px',
           height: '24px',
         },
         onClick: () => {
-          handleOpenModal()
+          console.log('hit')
         },
       },
       {
         icon: {
           iconType: 'GRID',
           fillColor: theme.color.white,
+          strokeColor: theme.color.black,
           width: '24px',
           height: '24px',
         },
@@ -44,9 +46,10 @@ export const FNB = () => {
       {
         icon: {
           iconType: 'PLUS_CIRCLE',
-          fillColor: theme.color.white,
-          width: '40px',
-          height: '40px',
+          fillColor: theme.color.mainColor,
+          strokeColor: theme.color.mainColor,
+          width: '45px',
+          height: '45px',
         },
         onClick: () => {
           handleButton()
@@ -56,6 +59,7 @@ export const FNB = () => {
         icon: {
           iconType: 'BELL',
           fillColor: theme.color.white,
+          strokeColor: theme.color.black,
           width: '24px',
           height: '24px',
         },
@@ -67,6 +71,7 @@ export const FNB = () => {
         icon: {
           iconType: 'USER',
           fillColor: theme.color.white,
+          strokeColor: theme.color.black,
           width: '24px',
           height: '24px',
         },
@@ -79,9 +84,6 @@ export const FNB = () => {
   )
 
   const dispatch = useAppDispatch()
-  const handleOpenModal = () => {
-    dispatch(openDrawer({ props: 'dk' }))
-  }
   const handleButton = () => {
     dispatch(
       openModal({

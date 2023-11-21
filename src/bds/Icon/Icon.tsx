@@ -1,15 +1,17 @@
-import ShareIcon from '@assets/icons/share.svg?react'
-import SmileIcon from '@assets/icons/smile.svg?react'
-import ThumbsDownIcon from '@assets/icons/thumbs-down.svg?react'
-import ThumbsUpIcon from '@assets/icons/thumbs-up.svg?react'
-import WhiteCheckIcon from '@assets/icons/white-check.svg?react'
-import BellIcon from '@assets/icons/bell.svg?react'
-import GridIcon from '@assets/icons/grid.svg?react'
-import MapIcon from '@assets/icons/map.svg?react'
-import PlusCircleIcon from '@assets/icons/plus_circle.svg?react'
-import UserIcon from '@assets/icons/user.svg?react'
-import ViewIcon from '@assets/icons/view.svg?react'
-import CommentIcon from '@assets/icons/message-square.svg?react'
+import ShareIcon from '@assets/icons/ico-share.svg?react'
+import SmileIcon from '@assets/icons/ico-smile.svg?react'
+import ThumbsDownIcon from '@assets/icons/ico-thumbs-down.svg?react'
+import ThumbsUpIcon from '@assets/icons/ico-thumbs-up.svg?react'
+import WhiteCheckIcon from '@assets/icons/ico-check.svg?react'
+import BellIcon from '@assets/icons/ico-bell.svg?react'
+import GridIcon from '@assets/icons/ico-grid.svg?react'
+import MapIcon from '@assets/icons/ico-map.svg?react'
+import PlusCircleIcon from '@assets/icons/ico-plus-circle.svg?react'
+import UserIcon from '@assets/icons/ico-user.svg?react'
+import CommentIcon from '@assets/icons/ico-message-square.svg?react'
+import MyLocationCircleIcon from '@assets/icons/ico-my-location-circle.svg?react'
+import MyLocationIcon from '@assets/icons/ico-my-location.svg?react'
+import EyeIcon from '@assets/icons/ico-eye.svg?react'
 
 export const ICON_UNION_TYPE = {
   SHARE: 'SHARE',
@@ -22,20 +24,23 @@ export const ICON_UNION_TYPE = {
   MAP: 'MAP',
   PLUS_CIRCLE: 'PLUS_CIRCLE',
   USER: 'USER',
-  VIEW: 'VIEW',
   COMMENT: 'COMMENT',
+  MY_LOCATION_CIRCLE: 'MY_LOCATION_CIRCLE',
+  MY_LOCATION: 'MY_LOCATION',
+  EYE: 'EYE',
 } as const
 
 export type ICON_TYPE = (typeof ICON_UNION_TYPE)[keyof typeof ICON_UNION_TYPE]
 
 interface Props {
   iconType: ICON_TYPE
-  fillColor: string
+  fillColor?: string
+  strokeColor?: string
   width?: string
   height?: string
 }
 
-const Icon = ({ iconType, fillColor, width = '40px', height = '40px' }: Props) => {
+const Icon = ({ iconType, fillColor, strokeColor, width = '40px', height = '40px' }: Props) => {
   const selectedIcon = (icon: ICON_TYPE) => {
     switch (icon) {
       case 'SHARE':
@@ -58,15 +63,19 @@ const Icon = ({ iconType, fillColor, width = '40px', height = '40px' }: Props) =
         return ThumbsUpIcon
       case 'WHITE_CHECK':
         return WhiteCheckIcon
-      case 'VIEW':
-        return ViewIcon
       case 'COMMENT':
         return CommentIcon
+      case 'MY_LOCATION_CIRCLE':
+        return MyLocationCircleIcon
+      case 'MY_LOCATION':
+        return MyLocationIcon
+      case 'EYE':
+        return EyeIcon
     }
   }
 
   const SelectedIcon = selectedIcon(iconType)
-  return <SelectedIcon fill={fillColor} width={width} height={height} />
+  return <SelectedIcon stroke={strokeColor} fill={fillColor} width={width} height={height} />
 }
 
 export default Icon
