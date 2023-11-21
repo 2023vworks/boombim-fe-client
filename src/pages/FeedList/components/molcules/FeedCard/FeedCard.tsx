@@ -60,7 +60,7 @@ export const FeedCard = ({
       isReadOnly: true,
       infoContent: viewCount,
       iconStyle: {
-        iconType: ICON_UNION_TYPE.VIEW,
+        iconType: ICON_UNION_TYPE.EYE,
         fillColor: theme.color.white,
         width: '12px',
         height: '12px',
