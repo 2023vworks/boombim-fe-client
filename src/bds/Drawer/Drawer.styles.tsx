@@ -11,7 +11,6 @@ export const Container = styled.div<{ $isOpen: boolean }>`
   bottom: 0;
   width: 100%;
   height: calc((100% - 130px) * 0.7);
-  background-color: black;
   z-index: 10000;
   animation-name: ${slideUp};
   animation-duration: 0.2s;
