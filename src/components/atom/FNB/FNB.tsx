@@ -3,9 +3,8 @@ import Icon, { type ICON_TYPE } from '@/bds/Icon/Icon'
 import { useAppDispatch } from '@/store/store'
 import theme from '@/styles/theme'
 import { useMemo } from 'react'
-import { openDrawer } from '@/store/slices/drawer.slice'
-import { useNavigate } from 'react-router-dom'
 import { setMapType } from '@/store/slices/map.slice'
+import { useNavigate } from 'react-router-dom'
 
 interface FNBNavigation {
   icon: {
@@ -30,7 +29,7 @@ export const FNB = () => {
           height: '24px',
         },
         onClick: () => {
-          console.log('hit')
+          handleRouteMap()
         },
       },
       {
@@ -42,7 +41,7 @@ export const FNB = () => {
           height: '24px',
         },
         onClick: () => {
-          console.log('share')
+          handleRouteFeeds()
         },
       },
       {
@@ -93,6 +92,14 @@ export const FNB = () => {
 
   const handleSwitchMap = () => {
     dispatch(setMapType({ mapType: 'PICKMARK' }))
+  }
+
+  const handleRouteMap = () => {
+    navigate('/')
+  }
+
+  const handleRouteFeeds = () => {
+    navigate('/feed-list')
   }
 
   return (
