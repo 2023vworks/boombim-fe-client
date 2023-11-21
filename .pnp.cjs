@@ -61,6 +61,7 @@ const RAW_RUNTIME_STATE =
           ["react-dom", "virtual:8830f40320fc282079ce9d6b8589510b22fc1ac742d47baf5e159c0af3d32930a1e7383a7aceb87f563d2ca1da43225b21454780f1a52ede12eeb64a2e15758d#npm:18.2.0"],\
           ["react-redux", "virtual:8830f40320fc282079ce9d6b8589510b22fc1ac742d47baf5e159c0af3d32930a1e7383a7aceb87f563d2ca1da43225b21454780f1a52ede12eeb64a2e15758d#npm:8.1.3"],\
           ["react-router-dom", "virtual:8830f40320fc282079ce9d6b8589510b22fc1ac742d47baf5e159c0af3d32930a1e7383a7aceb87f563d2ca1da43225b21454780f1a52ede12eeb64a2e15758d#npm:6.18.0"],\
+          ["react-webcam", "virtual:8830f40320fc282079ce9d6b8589510b22fc1ac742d47baf5e159c0af3d32930a1e7383a7aceb87f563d2ca1da43225b21454780f1a52ede12eeb64a2e15758d#npm:7.2.0"],\
           ["storybook", "npm:7.5.2"],\
           ["styled-components", "virtual:8830f40320fc282079ce9d6b8589510b22fc1ac742d47baf5e159c0af3d32930a1e7383a7aceb87f563d2ca1da43225b21454780f1a52ede12eeb64a2e15758d#npm:6.1.0"],\
           ["styled-reset", "virtual:8830f40320fc282079ce9d6b8589510b22fc1ac742d47baf5e159c0af3d32930a1e7383a7aceb87f563d2ca1da43225b21454780f1a52ede12eeb64a2e15758d#npm:4.5.1"],\
@@ -13754,6 +13755,32 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["react-webcam", [\
+      ["npm:7.2.0", {\
+        "packageLocation": "../../../.yarn/berry/cache/react-webcam-npm-7.2.0-4404f3658d-10c0.zip/node_modules/react-webcam/",\
+        "packageDependencies": [\
+          ["react-webcam", "npm:7.2.0"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:8830f40320fc282079ce9d6b8589510b22fc1ac742d47baf5e159c0af3d32930a1e7383a7aceb87f563d2ca1da43225b21454780f1a52ede12eeb64a2e15758d#npm:7.2.0", {\
+        "packageLocation": "./.yarn/__virtual__/react-webcam-virtual-cf4eb08c08/4/.yarn/berry/cache/react-webcam-npm-7.2.0-4404f3658d-10c0.zip/node_modules/react-webcam/",\
+        "packageDependencies": [\
+          ["react-webcam", "virtual:8830f40320fc282079ce9d6b8589510b22fc1ac742d47baf5e159c0af3d32930a1e7383a7aceb87f563d2ca1da43225b21454780f1a52ede12eeb64a2e15758d#npm:7.2.0"],\
+          ["@types/react", "npm:18.2.34"],\
+          ["@types/react-dom", "npm:18.2.14"],\
+          ["react", "npm:18.2.0"],\
+          ["react-dom", "virtual:8830f40320fc282079ce9d6b8589510b22fc1ac742d47baf5e159c0af3d32930a1e7383a7aceb87f563d2ca1da43225b21454780f1a52ede12eeb64a2e15758d#npm:18.2.0"]\
+        ],\
+        "packagePeers": [\
+          "@types/react-dom",\
+          "@types/react",\
+          "react-dom",\
+          "react"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["read-pkg", [\
       ["npm:5.2.0", {\
         "packageLocation": "../../../.yarn/berry/cache/read-pkg-npm-5.2.0-50426bd8dc-10c0.zip/node_modules/read-pkg/",\
@@ -15794,6 +15821,7 @@ const RAW_RUNTIME_STATE =
           ["react-dom", "virtual:8830f40320fc282079ce9d6b8589510b22fc1ac742d47baf5e159c0af3d32930a1e7383a7aceb87f563d2ca1da43225b21454780f1a52ede12eeb64a2e15758d#npm:18.2.0"],\
           ["react-redux", "virtual:8830f40320fc282079ce9d6b8589510b22fc1ac742d47baf5e159c0af3d32930a1e7383a7aceb87f563d2ca1da43225b21454780f1a52ede12eeb64a2e15758d#npm:8.1.3"],\
           ["react-router-dom", "virtual:8830f40320fc282079ce9d6b8589510b22fc1ac742d47baf5e159c0af3d32930a1e7383a7aceb87f563d2ca1da43225b21454780f1a52ede12eeb64a2e15758d#npm:6.18.0"],\
+          ["react-webcam", "virtual:8830f40320fc282079ce9d6b8589510b22fc1ac742d47baf5e159c0af3d32930a1e7383a7aceb87f563d2ca1da43225b21454780f1a52ede12eeb64a2e15758d#npm:7.2.0"],\
           ["storybook", "npm:7.5.2"],\
           ["styled-components", "virtual:8830f40320fc282079ce9d6b8589510b22fc1ac742d47baf5e159c0af3d32930a1e7383a7aceb87f563d2ca1da43225b21454780f1a52ede12eeb64a2e15758d#npm:6.1.0"],\
           ["styled-reset", "virtual:8830f40320fc282079ce9d6b8589510b22fc1ac742d47baf5e159c0af3d32930a1e7383a7aceb87f563d2ca1da43225b21454780f1a52ede12eeb64a2e15758d#npm:4.5.1"],\
