@@ -37,6 +37,8 @@ export const Typography = ({
         return '14px'
       case 'SMALL':
         return '12px'
+      case 'XSMALL':
+        return '10px'
     }
   }, [])
 
@@ -62,6 +64,7 @@ const UNION_FONT_SIZE = {
   H5: 'H5',
   P: 'P',
   SMALL: 'SMALL',
+  XSMALL: 'XSMALL',
 } as const
 
 export type FONT_SIZE = (typeof UNION_FONT_SIZE)[keyof typeof UNION_FONT_SIZE]

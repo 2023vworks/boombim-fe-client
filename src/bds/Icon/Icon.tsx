@@ -8,6 +8,8 @@ import GridIcon from '@assets/icons/grid.svg?react'
 import MapIcon from '@assets/icons/map.svg?react'
 import PlusCircleIcon from '@assets/icons/plus_circle.svg?react'
 import UserIcon from '@assets/icons/user.svg?react'
+import ViewIcon from '@assets/icons/view.svg?react'
+import CommentIcon from '@assets/icons/message-square.svg?react'
 
 export const ICON_UNION_TYPE = {
   SHARE: 'SHARE',
@@ -20,6 +22,8 @@ export const ICON_UNION_TYPE = {
   MAP: 'MAP',
   PLUS_CIRCLE: 'PLUS_CIRCLE',
   USER: 'USER',
+  VIEW: 'VIEW',
+  COMMENT: 'COMMENT',
 } as const
 
 export type ICON_TYPE = (typeof ICON_UNION_TYPE)[keyof typeof ICON_UNION_TYPE]
@@ -54,6 +58,10 @@ const Icon = ({ iconType, fillColor, width = '40px', height = '40px' }: Props) =
         return ThumbsUpIcon
       case 'WHITE_CHECK':
         return WhiteCheckIcon
+      case 'VIEW':
+        return ViewIcon
+      case 'COMMENT':
+        return CommentIcon
     }
   }
 
