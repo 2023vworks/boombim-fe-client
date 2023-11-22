@@ -27,6 +27,7 @@ export default function MyFeedsPage() {
   return (
     <Container>
       {/* {!location && !error && <Loading />} */}
+      {isSuccess && data.data.length === 0 && <Empty text='작성하신 피드가 존재하지 않습니다. ' />}
       {isSuccess &&
         data.data.length > 0 &&
         data.data.map((feed) => (
@@ -45,7 +46,6 @@ export default function MyFeedsPage() {
             selectFeed={goToFeedDetail}
           />
         ))}
-      <Empty text='작성하신 피드가 존재하지 않습니다. ' />
     </Container>
   )
 }

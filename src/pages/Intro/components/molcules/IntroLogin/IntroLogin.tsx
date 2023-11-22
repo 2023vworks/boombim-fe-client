@@ -78,11 +78,11 @@ export const IntroLogin = ({ onNext }: Props): React.ReactNode => {
 
   const handleLogin = ({ userMbti, agreementTerms }: HandleLogin): void => {
     agreementTerms &&
-      postUserTrigger({ mbti: `${userMbti.EI + userMbti.SN + userMbti.TF + userMbti.PJ}`, agreementTerms })
+      postUserTrigger({ mbtiType: `${userMbti.EI + userMbti.SN + userMbti.TF + userMbti.PJ}`, agreementTerms })
         .unwrap()
         .then((res) => {
           setToken(res.data.token)
-          setUserInfo(res.data.nickname, res.data.mbti)
+          setUserInfo(res.data.nickname, res.data.mbtiType)
           processAfterPostUser()
         })
         .catch(() => alert('로그인에 실패하였습니다. 관리자에게 문의바랍니다.'))

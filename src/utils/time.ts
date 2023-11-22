@@ -1,6 +1,6 @@
 interface Props {
-  activationAt: string
-  currentAt: string
+  activationAt: Date
+  currentAt: Date
 }
 
 export default function remainTimeCount({ activationAt, currentAt }: Props): string {
@@ -28,7 +28,7 @@ export default function remainTimeCount({ activationAt, currentAt }: Props): str
   return diffTimeToTTMM
 }
 
-export function elapsedTime(date: string): string {
+export function elapsedTime(date: Date): string {
   const start = new Date(date)
   const end = new Date()
 

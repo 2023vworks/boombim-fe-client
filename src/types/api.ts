@@ -16,7 +16,13 @@ import {
 
 import { type GetGeoMarksResponseDTO, type GetGeoMarksRequestDTO } from '@/types/marker'
 import { type PostUpladImageRequestDTO } from '@/types/upload'
-import { type GetUserResponseDTO, type PostUsersRequestDTO, type PostUsersResponseDTO } from '@/types/user'
+import {
+  type GetUserFeedsResponseDTO,
+  type GetUserFeedsRequestDTO,
+  type GetUserResponseDTO,
+  type PostUsersRequestDTO,
+  type PostUsersResponseDTO,
+} from '@/types/user'
 
 // response error
 
@@ -93,6 +99,12 @@ export interface getMarkersRequestType extends GetGeoMarksRequestDTO {}
 export interface getUserResultType {
   data: GetUserResponseDTO
 }
+
+export interface GetUserFeedsResultType {
+  data: GetUserFeedsResponseDTO[]
+}
+
+export interface GetUserFeedsRequestType extends GetUserFeedsRequestDTO {}
 
 // 유저 post
 

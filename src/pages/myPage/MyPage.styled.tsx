@@ -6,10 +6,13 @@ export const Container = styled.div`
   background-color: #f8f8f8;
 `
 
-export const InfoSection = styled.section``
+export const InfoSection = styled.section`
+  height: 48px;
+`
 
-export const Box = styled.div`
-  width: 100%;
+export const ListSection = styled.section``
+
+export const ListItem = styled.div`
   height: 48px;
   padding: 14px 21px 14px 21px;
   background-color: ${(props) => props.theme.color.white};
