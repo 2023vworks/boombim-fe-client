@@ -28,7 +28,7 @@ export default function remainTimeCount({ activationAt, currentAt }: Props): str
   return diffTimeToTTMM
 }
 
-export function elapsedTime(date: Date): string {
+export function elapsedTime(date: string): string {
   const start = new Date(date)
   const end = new Date()
 
