@@ -39,13 +39,11 @@ export const MainPage = (): React.ReactNode => {
   useEffect(() => {
     if (!map || !currentBounds) return
     const result = trigger({
-      params: {
-        size: 90,
-        minX: currentBounds.southWestPosition.lng,
-        minY: currentBounds.southWestPosition.lat,
-        maxX: currentBounds.northEastPosition.lng,
-        maxY: currentBounds.northEastPosition.lat,
-      },
+      size: 90,
+      minX: currentBounds.southWestPosition.lng,
+      minY: currentBounds.southWestPosition.lat,
+      maxX: currentBounds.northEastPosition.lng,
+      maxY: currentBounds.northEastPosition.lat,
     }).unwrap()
     console.log(result)
   }, [map, currentBounds, currentCenterPosition])

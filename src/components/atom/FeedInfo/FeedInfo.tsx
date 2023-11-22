@@ -11,6 +11,7 @@ export interface InfoProps {
   onClick?: () => void
   iconStyle: {
     iconType: ICON_TYPE
+    strokeColor: string
     fillColor: string
     width: string
     height: string

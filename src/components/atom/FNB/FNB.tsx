@@ -5,6 +5,7 @@ import { useAppDispatch } from '@/store/store'
 import theme from '@/styles/theme'
 import { useMemo } from 'react'
 import { openDrawer } from '@/store/slices/drawer.slice'
+import { useNavigate } from 'react-router-dom'
 
 interface FNBNavigation {
   icon: {
@@ -17,6 +18,7 @@ interface FNBNavigation {
 }
 
 export const FNB = () => {
+  const navigate = useNavigate()
   const FNB_NAVIGATIONS: FNBNavigation[] = useMemo(
     () => [
       {
@@ -76,7 +78,7 @@ export const FNB = () => {
           height: '24px',
         },
         onClick: () => {
-          console.log('share')
+          handleRouteMyPage()
         },
       },
     ],
@@ -84,6 +86,11 @@ export const FNB = () => {
   )
 
   const dispatch = useAppDispatch()
+
+  const handleRouteMyPage = () => {
+    navigate('/my-page')
+  }
+
   const handleButton = () => {
     dispatch(
       openModal({

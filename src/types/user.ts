@@ -8,6 +8,28 @@ export interface GetUserResponseDTO {
   lastFeedWrittenAt: Date
 }
 
+export interface GetUserFeedsResponseDTO {
+  id: number
+  createdAt: string
+  updatedAt: string
+  activity: number
+  content: string
+  hashTags: string[]
+  activationAt: string
+  recommendCount: number
+  unrecommendCount: number
+  reportCount: number
+  viewCount: number
+  commentCount: number
+  geoMarkId: number
+  geoMarkRegion: string
+}
+
+export interface GetUserFeedsRequestDTO {
+  page: number
+  pageSize: number
+}
+
 export interface PostUsersResponseDTO {
   mbti: string
   nickname: string
@@ -15,6 +37,6 @@ export interface PostUsersResponseDTO {
 }
 
 export interface PostUsersRequestDTO {
-  mbti: string
+  mbtiType: string
   agreementTerms: true
 }

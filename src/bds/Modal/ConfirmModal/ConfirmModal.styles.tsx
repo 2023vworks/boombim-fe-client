@@ -9,6 +9,11 @@ export const Top = styled.section`
   margin-bottom: 28px;
 `
 
+export const Description = styled.div`
+  margin-top: 20px;
+  /* padding: 0 16px; */
+`
+
 export const Bottom = styled.section`
   display: flex;
   flex-direction: column;
