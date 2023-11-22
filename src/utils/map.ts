@@ -1,3 +1,4 @@
+/* eslint-disable no-mixed-operators */
 import { type Position } from '@/types/map'
 import { isEmptyString } from './common'
 import { type Address, type RegionCode, type RoadAddress } from '../types/feed'
@@ -58,18 +59,36 @@ export function getRectangleCoordinates({
   return pentagonCoordinates
 }
 
+export function calculateCircleOutline(centerX: number, centerY: number, radius: number) {
+  const numPoints = 100 // 외곽선 좌표를 근사화하기 위해 사용할 점의 수
+  const circleOutline = []
+
+  for (let i = 0; i < numPoints; i++) {
+    const angle = (i / numPoints) * 2 * Math.PI
+    const lat = centerX + radius * 0.0001 * Math.cos(angle)
+    const lng = centerY + radius * 0.00012 * Math.sin(angle)
+
+    // 마이너스 좌표 무시
+    if (lat >= 0 && lng >= 0) {
+      circleOutline.push({ lat, lng })
+    }
+  }
+
+  return circleOutline
+}
+
 export async function getGeoData({ lng, lat }: { lat: number; lng: number }) {
   const geocoder = new kakao.maps.services.Geocoder()
 
   const address = new Promise<kakao.maps.services.Address>((resolve) => {
     geocoder.coord2Address(lng, lat, (body) => {
-      resolve(body[0]['address'])
+      resolve(body[0].address)
     })
   })
 
   const roadAddress = new Promise<kakao.maps.services.RoadAaddress | null>((resolve) => {
     geocoder.coord2Address(lng, lat, (body) => {
-      resolve(body[0]['road_address'])
+      resolve(body[0].road_address)
     })
   })
 
@@ -125,4 +144,37 @@ export function convertRegion(region: kakao.maps.services.RegionCode): RegionCod
     y: region.y,
   }
   return convertedDomainRegion
+}
+
+export function checkOutsidePolygon(
+  point: kakao.maps.LatLng,
+  polygon: kakao.maps.LatLng[] | kakao.maps.LatLng,
+): boolean {
+  if (Array.isArray(polygon)) {
+    const pointX: number = point.getLng()
+    const pointY: number = point.getLat()
+
+    const numVertices: number = polygon.length
+    let outside: boolean = true
+
+    let j: number = numVertices - 1
+    for (let i: number = 0; i < numVertices; i++) {
+      const xi: number = polygon[i].getLng()
+      const yi: number = polygon[i].getLat()
+      const xj: number = polygon[j].getLng()
+      const yj: number = polygon[j].getLat()
+
+      const intersect: boolean = yi > pointY !== yj > pointY && pointX < ((xj - xi) * (pointY - yi)) / (yj - yi) + xi
+
+      if (intersect) {
+        outside = false
+        break
+      }
+
+      j = i
+    }
+
+    return outside
+  }
+  return false
 }

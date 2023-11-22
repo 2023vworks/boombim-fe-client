@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
 export const Container = styled.form`
   width: 100%;
+  background-color: ${(props) => props.theme.color.white};
 `
 
 export const InputSection = styled.section``
@@ -16,7 +17,7 @@ export const ImageList = styled.div`
 
 export const TextField = styled.textarea`
   width: 100%;
-  height: 91px;
+  height: 191px;
   padding: 18px 20px 0px;
   resize: none;
   outline: none;
@@ -32,7 +33,7 @@ export const CountSection = styled.section`
 
 export const ButtonSection = styled.section`
   height: 72px;
-  padding: 0px 12px;
+  padding: 0px 18px;
   background-color: ${(props) => props.theme.color.softGray};
   display: flex;
   align-items: center;

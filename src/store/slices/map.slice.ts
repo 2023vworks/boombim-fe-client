@@ -55,11 +55,11 @@ const mapSlice = createSlice({
     setMapType(state, action: PayloadAction<MapType>) {
       state.mapType = action.payload.mapType
     },
-    pickMarker(state, action: PayloadAction<Pick<MapInitialState, 'currentPickMarkerPosition'>>) {
+    setNewMarker(state, action: PayloadAction<Pick<MapInitialState, 'currentPickMarkerPosition'>>) {
       state.currentPickMarkerPosition = action.payload.currentPickMarkerPosition
     },
   },
 })
 
-export const { setMapSize, setRegion, setCurrentGeoLocation, setMapType } = mapSlice.actions
+export const { setMapSize, setRegion, setCurrentGeoLocation, setMapType, setNewMarker } = mapSlice.actions
 export default mapSlice.reducer

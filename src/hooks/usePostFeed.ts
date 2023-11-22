@@ -9,6 +9,8 @@ import { type Address, type RegionCode, type RoadAddress } from '@/types/feed'
 import { useNavigate } from 'react-router-dom'
 import { getCheckedHashTagArray } from '@/utils/common'
 import { removeImage, resetImage } from '@/store/slices/image.slice'
+import { setMapType } from '@/store/slices/map.slice'
+import { closeDrawer } from '@/store/slices/drawer.slice'
 
 interface ResponseType {
   onChangeText: (value: string) => void
@@ -93,6 +95,8 @@ export default function usePostFeed({ position }: Props): ResponseType {
       .unwrap()
       .then((res) => {
         if (!imageFormdata) {
+          dispatch(setMapType({ mapType: 'NORMAL' }))
+          dispatch(closeDrawer())
           return comfirmPostFeedwithMessage('피드작성이 완료되었습니다.')
         }
         uploadTrigger({ id: res.data.feedId, body: imageFormdata })
@@ -112,9 +116,9 @@ export default function usePostFeed({ position }: Props): ResponseType {
   useEffect(() => {
     return () => {
       setText('')
-      resetImage()
+      onResetImage()
     }
   }, [])
 
-  return { onChangeText, onDeleteImage, onResetImage, submitPostFeed, text }
+  return { onChangeText, onDeleteImage, submitPostFeed, text }
 }

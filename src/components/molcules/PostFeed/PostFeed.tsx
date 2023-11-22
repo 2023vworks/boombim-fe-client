@@ -9,11 +9,10 @@ import { type RootState, useAppSelector, useAppDispatch } from '@/store/store'
 import { openCamera } from '@/store/slices/camera.slice'
 
 export default function PostFeed() {
-  // 전역에서 마커 포지션을 받아서 넘겨줘
-
   const pickMarkerPosition = useAppSelector((state: RootState) => state.map.currentPickMarkerPosition)
+
   const { onChangeText, onDeleteImage, submitPostFeed, text } = usePostFeed({
-    position: { x: 127.10160361906075, y: 37.511235775127325 },
+    position: { x: pickMarkerPosition.x, y: pickMarkerPosition.y },
   })
   const images = useAppSelector((state: RootState) => state.image.previewImages)
   const dispatch = useAppDispatch()
@@ -45,6 +44,7 @@ export default function PostFeed() {
     <Styles.Container onSubmit={submitPostFeed}>
       <Styles.InputSection>
         <Styles.TextField
+          value={text}
           name='content'
           placeholder='텍스트를 입력해 주세요(최대 140자)'
           maxLength={140}

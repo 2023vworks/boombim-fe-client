@@ -29,7 +29,7 @@ export const FNB = () => {
           height: '24px',
         },
         onClick: () => {
-          handleRouteMap()
+          handleSwitchMap()
         },
       },
       {
@@ -53,7 +53,7 @@ export const FNB = () => {
           height: '45px',
         },
         onClick: () => {
-          handleSwitchMap()
+          handleSwitchPickMap()
         },
       },
       {
@@ -90,12 +90,14 @@ export const FNB = () => {
     navigate('/my-page')
   }
 
-  const handleSwitchMap = () => {
+  const handleSwitchPickMap = () => {
+    navigate('/')
     dispatch(setMapType({ mapType: 'PICKMARK' }))
   }
 
-  const handleRouteMap = () => {
+  const handleSwitchMap = () => {
     navigate('/')
+    dispatch(setMapType({ mapType: 'NORMAL' }))
   }
 
   const handleRouteFeeds = () => {
