@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import Empty from '@/components/template/Empty/Empty'
-import { FeedCard } from '@/pages/FeedList/components/molcules/FeedCard/FeedCard'
+import { FeedCard } from '@/pages/feed/components/molcules/FeedCard/FeedCard'
 import { useGetUserFeedsQuery } from '@/store/asyncSlice/asyncSlice'
 import { getUserInfo } from '@/utils/storage'
 import { useEffect, useState } from 'react'

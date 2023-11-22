@@ -50,7 +50,6 @@ export const Map = ({
   useEffect(() => {
     if (!map) return
 
-    console.log('hit')
     if (minLevel) {
       map?.setMinLevel(minLevel)
     }
