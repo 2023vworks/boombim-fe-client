@@ -1,10 +1,9 @@
-import { openModal } from '@/store/slices/modal.slice'
 import * as Styles from './FNB.styles'
 import Icon, { type ICON_TYPE } from '@/bds/Icon/Icon'
 import { useAppDispatch } from '@/store/store'
 import theme from '@/styles/theme'
 import { useMemo } from 'react'
-import { openDrawer } from '@/store/slices/drawer.slice'
+import { setMapType } from '@/store/slices/map.slice'
 import { useNavigate } from 'react-router-dom'
 
 interface FNBNavigation {
@@ -30,7 +29,7 @@ export const FNB = () => {
           height: '24px',
         },
         onClick: () => {
-          console.log('hit')
+          handleSwitchMap()
         },
       },
       {
@@ -42,7 +41,7 @@ export const FNB = () => {
           height: '24px',
         },
         onClick: () => {
-          console.log('share')
+          handleRouteFeeds()
         },
       },
       {
@@ -54,7 +53,7 @@ export const FNB = () => {
           height: '45px',
         },
         onClick: () => {
-          handleButton()
+          handleSwitchPickMap()
         },
       },
       {
@@ -91,27 +90,18 @@ export const FNB = () => {
     navigate('/my-page')
   }
 
-  const handleButton = () => {
-    dispatch(
-      openModal({
-        modalType: 'CONFIRM',
-        props: {
-          title: <>hi</>,
-          confirmOption: {
-            text: '계속 작성하기',
-            onClick: () => {
-              console.log('hit')
-            },
-          },
-          cancleOption: {
-            text: '작성 중단하기',
-            onClick: () => {
-              console.log('중단하기')
-            },
-          },
-        },
-      }),
-    )
+  const handleSwitchPickMap = () => {
+    navigate('/')
+    dispatch(setMapType({ mapType: 'PICKMARK' }))
+  }
+
+  const handleSwitchMap = () => {
+    navigate('/')
+    dispatch(setMapType({ mapType: 'NORMAL' }))
+  }
+
+  const handleRouteFeeds = () => {
+    navigate('/feed-list')
   }
 
   return (

@@ -14,15 +14,15 @@ import {
   type PostFeedRecommendResultType,
   type PostFeedUnRecommendResultType,
   type PostFeedReportRequestType,
-  type getMarkersResultType,
-  type getMarkersRequestType,
-  type postUserResultType,
-  type postUserRequestType,
-  type getUserResultType,
-  type postUploadRequestType,
+  type GetMarkersResultType,
+  type GetMarkersRequestType,
+  type PostUserResultType,
+  type PostUserRequestType,
+  type GetUserResultType,
+  type PostUploadRequestType,
   type GetUserFeedsResultType,
-  type GetUserFeedsRequestType,
 } from '@/types/api'
+
 import { getAccessToken } from '@/utils/storage'
 
 import { type BaseQueryFn, createApi, type FetchArgs, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
@@ -46,7 +46,7 @@ export const boombimApi = createApi({
         return {
           url: '/feeds',
           method: 'GET',
-          params: { ...params },
+          params,
         }
       },
       providesTags: (result, id) => [{ type: 'PostFeed' }],
@@ -81,7 +81,7 @@ export const boombimApi = createApi({
         return {
           url: `/feeds/${id}/comments`,
           method: 'GET',
-          params: { ...params },
+          params,
         }
       },
       providesTags: (result, id) => [{ type: 'PostComment' }],
@@ -92,7 +92,7 @@ export const boombimApi = createApi({
         return {
           url: '/feeds',
           method: 'POST',
-          body: { ...body },
+          body,
         }
       },
       invalidatesTags: ['PostFeed'],
@@ -102,7 +102,7 @@ export const boombimApi = createApi({
         return {
           url: `feeds/${id}/comments`,
           method: 'POST',
-          body: { ...body },
+          body,
         }
       },
       invalidatesTags: ['PostComment'],
@@ -128,22 +128,22 @@ export const boombimApi = createApi({
         return {
           url: `/feeds/${id}/report`,
           method: 'POST',
-          body: { ...body },
+          body,
         }
       },
     }),
     // [Marker] 관련 get api
-    getMarks: builder.query<getMarkersResultType, getMarkersRequestType>({
+    getMarks: builder.query<GetMarkersResultType, GetMarkersRequestType>({
       query: (params) => {
         return {
           url: 'geo-marks/',
+          params,
           method: 'GET',
-          params: { ...params },
         }
       },
     }),
     // [User] 관련 get api
-    getUser: builder.query<getUserResultType, null>({
+    getUser: builder.query<GetUserResultType, void>({
       query: () => {
         return {
           url: '/users/me',
@@ -161,12 +161,12 @@ export const boombimApi = createApi({
       },
     }),
     // [User] 관련 post api
-    postUser: builder.mutation<postUserResultType, postUserRequestType>({
+    postUser: builder.mutation<PostUserResultType, PostUserRequestType>({
       query: (body) => {
         return {
           url: '/users',
           method: 'POST',
-          body: { ...body },
+          body,
         }
       },
     }),
@@ -179,7 +179,7 @@ export const boombimApi = createApi({
       },
     }),
     // [Upload] 관련 post api
-    postUploadImages: builder.mutation<null, postUploadRequestType>({
+    postUploadImages: builder.mutation<null, PostUploadRequestType>({
       query: ({ id, body }) => {
         return {
           headers: {
@@ -187,7 +187,7 @@ export const boombimApi = createApi({
           },
           url: `/feeds/${id}/images`,
           method: 'POST',
-          body: { ...body },
+          body,
         }
       },
     }),

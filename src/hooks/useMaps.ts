@@ -1,15 +1,23 @@
+import { SONGPA_POSITION } from '@/constants/position'
 import { type MapSize, setMapSize } from '@/store/slices/map.slice'
 import { useAppDispatch } from '@/store/store'
+import theme from '@/styles/theme'
+import { calculateCircleOutline, checkOutsidePolygon } from '@/utils/map'
 import { useEffect, useRef, useState } from 'react'
+import first_level_marker_img from '@assets/images/marker_level_1.png'
 
 export const MAP_ID = 'map'
 
 interface ResponseType {
   map: kakao.maps.Map | null
+  circle: kakao.maps.Polygon | null
   containerRef: React.RefObject<HTMLDivElement> | null
   setSize: (props: MapSize) => void
   movePosition: (props: Position) => void
   setMarker: (props: Marker) => void
+  drawCircleHole: ({ lat, lng, radius }: { lat: number; lng: number; radius: number }) => void
+  pickMarker: (position: any) => void
+  newMark: kakao.maps.Marker | null
 }
 
 export interface Marker {
@@ -40,13 +48,15 @@ export interface Position {
 
 export default function useMaps(): ResponseType {
   const [map, setMap] = useState<kakao.maps.Map | null>(null)
+  const [circle, setCircle] = useState<kakao.maps.Polygon | null>(null)
+  const [newMark, setNewMarker] = useState<kakao.maps.Marker | null>(null)
   const containerRef = useRef<HTMLDivElement | null>(null) as React.RefObject<HTMLDivElement>
   const dispatch = useAppDispatch()
 
   useEffect(() => {
     if (containerRef !== null) {
       const container = new kakao.maps.Map(containerRef.current as HTMLElement, {
-        center: new kakao.maps.LatLng(33.450701, 126.570667),
+        center: new kakao.maps.LatLng(37.511235775127325, 127.10160361906075),
       })
 
       setMap(container)
@@ -73,10 +83,72 @@ export default function useMaps(): ResponseType {
         clickable,
       })
       kakao.maps.event.addListener(marker, 'click', onClick)
-
       marker.setMap(map)
     }
   }
 
-  return { map, containerRef, setSize, movePosition, setMarker }
+  const drawCircleHole = ({ lat, lng, radius }: { lat: number; lng: number; radius: number }): void => {
+    if (map) {
+      const circlePosition = calculateCircleOutline(lat, lng, radius)
+
+      const circlePolygonPath = circlePosition.map((position) => {
+        return new kakao.maps.LatLng(position.lat, position.lng)
+      })
+
+      const coverPolygonPath = SONGPA_POSITION.map((position) => {
+        return new kakao.maps.LatLng(position.lat, position.lng)
+      })
+
+      const circlePolygon = new kakao.maps.Polygon({
+        map,
+        path: [coverPolygonPath, circlePolygonPath],
+        strokeWeight: 2,
+        strokeColor: theme.color.mainColor,
+        strokeOpacity: 0.8,
+        strokeStyle: 'longdash',
+        fillColor: theme.color.gray,
+        fillOpacity: 0.7,
+      })
+
+      setCircle(circlePolygon)
+      circlePolygon.setMap(map)
+    }
+  }
+
+  const pickMarker = (position: { Ma: number; La: number }): void => {
+    const newMarkPosition = new kakao.maps.LatLng(position.Ma, position.La)
+
+    if (circle) {
+      const circlePolygonPath = circle.getPath()[1]
+
+      const coverPolygonPath = SONGPA_POSITION.map((position) => {
+        return new kakao.maps.LatLng(position.lat, position.lng)
+      })
+
+      if (checkOutsidePolygon(newMarkPosition, circlePolygonPath)) {
+        alert('영역 이외는 핀 지정이 불가능합니다. ')
+        return
+      }
+      if (checkOutsidePolygon(newMarkPosition, coverPolygonPath)) {
+        alert('해당 지역는 서비스 지역이 아닙니다.')
+        return
+      }
+    }
+
+    const mark = new kakao.maps.Marker({
+      position: newMarkPosition,
+      // !! image import 확인 필요
+      // image: first_level_marker_img,
+    })
+
+    mark.setMap(map)
+    setNewMarker((prev) => {
+      if (prev) {
+        prev.setMap(null)
+      }
+      return mark
+    })
+  }
+
+  return { map, containerRef, setSize, movePosition, setMarker, drawCircleHole, newMark, pickMarker, circle }
 }

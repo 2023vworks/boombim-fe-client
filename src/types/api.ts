@@ -15,10 +15,9 @@ import {
 } from '@/types/feed'
 
 import { type GetGeoMarksResponseDTO, type GetGeoMarksRequestDTO } from '@/types/marker'
-import { type PostUpladImageRequestDTO } from '@/types/upload'
 import {
-  type GetUserFeedsResponseDTO,
   type GetUserFeedsRequestDTO,
+  type GetUserFeedsResponseDTO,
   type GetUserResponseDTO,
   type PostUsersRequestDTO,
   type PostUsersResponseDTO,
@@ -88,15 +87,15 @@ export interface PostFeedReportRequestType {
 
 // 마커 post
 
-export interface getMarkersResultType {
+export interface GetMarkersResultType {
   data: GetGeoMarksResponseDTO[]
 }
 
-export interface getMarkersRequestType extends GetGeoMarksRequestDTO {}
+export interface GetMarkersRequestType extends GetGeoMarksRequestDTO {}
 
 // 유저 get
 
-export interface getUserResultType {
+export interface GetUserResultType {
   data: GetUserResponseDTO
 }
 
@@ -108,15 +107,15 @@ export interface GetUserFeedsRequestType extends GetUserFeedsRequestDTO {}
 
 // 유저 post
 
-export interface postUserResultType {
+export interface PostUserResultType {
   data: PostUsersResponseDTO
 }
 
-export interface postUserRequestType extends PostUsersRequestDTO {}
+export interface PostUserRequestType extends PostUsersRequestDTO {}
 
 // upload post
 
-export interface postUploadRequestType {
+export interface PostUploadRequestType {
   id: number
-  body: PostUpladImageRequestDTO
+  body: FormData
 }

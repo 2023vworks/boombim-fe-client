@@ -12,6 +12,9 @@ import CommentIcon from '@assets/icons/ico-message-square.svg?react'
 import MyLocationCircleIcon from '@assets/icons/ico-my-location-circle.svg?react'
 import MyLocationIcon from '@assets/icons/ico-my-location.svg?react'
 import EyeIcon from '@assets/icons/ico-eye.svg?react'
+import CancelIcon from '@assets/icons/cancel.svg?react'
+import ArrowUpIcon from '@assets/icons/arrow-up.svg?react'
+import CameraIcon from '@assets/icons/camera.svg?react'
 
 export const ICON_UNION_TYPE = {
   SHARE: 'SHARE',
@@ -28,6 +31,9 @@ export const ICON_UNION_TYPE = {
   MY_LOCATION_CIRCLE: 'MY_LOCATION_CIRCLE',
   MY_LOCATION: 'MY_LOCATION',
   EYE: 'EYE',
+  CANCEL: 'CANCEL',
+  ARROW_UP: 'ARROW_UP',
+  CAMERA: 'CAMERA',
 } as const
 
 export type ICON_TYPE = (typeof ICON_UNION_TYPE)[keyof typeof ICON_UNION_TYPE]
@@ -71,6 +77,12 @@ const Icon = ({ iconType, fillColor, strokeColor, width = '40px', height = '40px
         return MyLocationIcon
       case 'EYE':
         return EyeIcon
+      case 'CANCEL':
+        return CancelIcon
+      case 'ARROW_UP':
+        return ArrowUpIcon
+      case 'CAMERA':
+        return CameraIcon
     }
   }
 
