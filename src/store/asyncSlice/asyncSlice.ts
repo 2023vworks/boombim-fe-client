@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-invalid-void-type */
 import {
   type ErrorResponseDTO,
   type GetFeedActivationTimeResultType,
@@ -19,6 +20,8 @@ import {
   type postUserRequestType,
   type getUserResultType,
   type postUploadRequestType,
+  type GetUserFeedsResultType,
+  type GetUserFeedsRequestType,
 } from '@/types/api'
 import { getAccessToken } from '@/utils/storage'
 
@@ -148,6 +151,15 @@ export const boombimApi = createApi({
         }
       },
     }),
+
+    getUserFeeds: builder.query<GetUserFeedsResultType, void>({
+      query: () => {
+        return {
+          url: '/users/me/feeds',
+          method: 'GET',
+        }
+      },
+    }),
     // [User] 관련 post api
     postUser: builder.mutation<postUserResultType, postUserRequestType>({
       query: (body) => {
@@ -195,6 +207,7 @@ export const {
   usePostFeedReportMutation,
   useGetMarksQuery,
   useGetUserQuery,
+  useGetUserFeedsQuery,
   usePostUserMutation,
   useDeleteUserMutation,
   usePostUploadImagesMutation,

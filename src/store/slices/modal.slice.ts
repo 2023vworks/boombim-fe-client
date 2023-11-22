@@ -24,16 +24,21 @@ const modalSlice = createSlice({
     openModal(state, action: PayloadAction<Pick<ModalInitialState, 'modalType' | 'props'>>) {
       const { modalType, props } = action.payload
       state.modalType = modalType
+      state.props.title = props.title
+      state.props.description = props.description
       state.props = props
       state.isOpen = true
     },
     closeModal(state) {
       state.isOpen = false
     },
+    resetModalState(state) {
+      return Object.assign(state, initialState)
+    },
   },
 })
 
-export const { openModal, closeModal } = modalSlice.actions
+export const { openModal, closeModal, resetModalState } = modalSlice.actions
 export default modalSlice.reducer
 
 export const MODAL = {
