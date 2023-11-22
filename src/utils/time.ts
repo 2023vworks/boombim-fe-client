@@ -1,6 +1,6 @@
 interface Props {
-  activationAt: Date
-  currentAt: Date
+  activationAt: string
+  currentAt: string
 }
 
 export default function remainTimeCount({ activationAt, currentAt }: Props): string {
