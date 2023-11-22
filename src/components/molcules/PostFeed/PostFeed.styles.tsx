@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
 export const Container = styled.form`
   width: 100%;
+  height: calc((100% - 85px));
   background-color: ${(props) => props.theme.color.white};
 `
 
@@ -17,7 +18,7 @@ export const ImageList = styled.div`
 
 export const TextField = styled.textarea`
   width: 100%;
-  height: 191px;
+  height: 150px;
   padding: 18px 20px 0px;
   resize: none;
   outline: none;
@@ -32,6 +33,9 @@ export const CountSection = styled.section`
 `
 
 export const ButtonSection = styled.section`
+  position: absolute;
+  bottom: 90px;
+  width: 100%;
   height: 72px;
   padding: 0px 18px;
   background-color: ${(props) => props.theme.color.softGray};
