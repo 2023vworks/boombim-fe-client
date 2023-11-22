@@ -38,6 +38,7 @@ const RAW_RUNTIME_STATE =
           ["@types/node", "npm:20.8.10"],\
           ["@types/react", "npm:18.2.34"],\
           ["@types/react-dom", "npm:18.2.14"],\
+          ["@types/react-transition-group", "npm:4.4.9"],\
           ["@types/styled-components", "npm:5.1.29"],\
           ["@typescript-eslint/eslint-plugin", "virtual:8830f40320fc282079ce9d6b8589510b22fc1ac742d47baf5e159c0af3d32930a1e7383a7aceb87f563d2ca1da43225b21454780f1a52ede12eeb64a2e15758d#npm:6.9.1"],\
           ["@typescript-eslint/parser", "virtual:8830f40320fc282079ce9d6b8589510b22fc1ac742d47baf5e159c0af3d32930a1e7383a7aceb87f563d2ca1da43225b21454780f1a52ede12eeb64a2e15758d#npm:6.9.1"],\
@@ -62,6 +63,7 @@ const RAW_RUNTIME_STATE =
           ["react-redux", "virtual:8830f40320fc282079ce9d6b8589510b22fc1ac742d47baf5e159c0af3d32930a1e7383a7aceb87f563d2ca1da43225b21454780f1a52ede12eeb64a2e15758d#npm:8.1.3"],\
           ["react-router-dom", "virtual:8830f40320fc282079ce9d6b8589510b22fc1ac742d47baf5e159c0af3d32930a1e7383a7aceb87f563d2ca1da43225b21454780f1a52ede12eeb64a2e15758d#npm:6.18.0"],\
           ["react-webcam", "virtual:8830f40320fc282079ce9d6b8589510b22fc1ac742d47baf5e159c0af3d32930a1e7383a7aceb87f563d2ca1da43225b21454780f1a52ede12eeb64a2e15758d#npm:7.2.0"],\
+          ["react-transition-group", "virtual:8830f40320fc282079ce9d6b8589510b22fc1ac742d47baf5e159c0af3d32930a1e7383a7aceb87f563d2ca1da43225b21454780f1a52ede12eeb64a2e15758d#npm:4.4.5"],\
           ["storybook", "npm:7.5.2"],\
           ["styled-components", "virtual:8830f40320fc282079ce9d6b8589510b22fc1ac742d47baf5e159c0af3d32930a1e7383a7aceb87f563d2ca1da43225b21454780f1a52ede12eeb64a2e15758d#npm:6.1.0"],\
           ["styled-reset", "virtual:8830f40320fc282079ce9d6b8589510b22fc1ac742d47baf5e159c0af3d32930a1e7383a7aceb87f563d2ca1da43225b21454780f1a52ede12eeb64a2e15758d#npm:4.5.1"],\
@@ -2745,6 +2747,14 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "../../../.yarn/berry/cache/@babel-runtime-npm-7.23.2-d013d6cf7e-10c0.zip/node_modules/@babel/runtime/",\
         "packageDependencies": [\
           ["@babel/runtime", "npm:7.23.2"],\
+          ["regenerator-runtime", "npm:0.14.0"]\
+        ],\
+        "linkType": "HARD"\
+      }],\
+      ["npm:7.23.4", {\
+        "packageLocation": "../../../../.yarn/berry/cache/@babel-runtime-npm-7.23.4-2e68957572-10c0.zip/node_modules/@babel/runtime/",\
+        "packageDependencies": [\
+          ["@babel/runtime", "npm:7.23.4"],\
           ["regenerator-runtime", "npm:0.14.0"]\
         ],\
         "linkType": "HARD"\
@@ -6546,6 +6556,16 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["@types/react-transition-group", [\
+      ["npm:4.4.9", {\
+        "packageLocation": "../../../../.yarn/berry/cache/@types-react-transition-group-npm-4.4.9-949aeca8e7-10c0.zip/node_modules/@types/react-transition-group/",\
+        "packageDependencies": [\
+          ["@types/react-transition-group", "npm:4.4.9"],\
+          ["@types/react", "npm:18.2.34"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["@types/resolve", [\
       ["npm:1.17.1", {\
         "packageLocation": "../../../.yarn/berry/cache/@types-resolve-npm-1.17.1-9a8396bef2-10c0.zip/node_modules/@types/resolve/",\
@@ -8712,6 +8732,17 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "../../../.yarn/berry/cache/dom-accessibility-api-npm-0.5.16-d3e2310666-10c0.zip/node_modules/dom-accessibility-api/",\
         "packageDependencies": [\
           ["dom-accessibility-api", "npm:0.5.16"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["dom-helpers", [\
+      ["npm:5.2.1", {\
+        "packageLocation": "../../../../.yarn/berry/cache/dom-helpers-npm-5.2.1-b38bb4470b-10c0.zip/node_modules/dom-helpers/",\
+        "packageDependencies": [\
+          ["dom-helpers", "npm:5.2.1"],\
+          ["@babel/runtime", "npm:7.23.4"],\
+          ["csstype", "npm:3.1.2"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -13755,6 +13786,7 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+<<<<<<< HEAD
     ["react-webcam", [\
       ["npm:7.2.0", {\
         "packageLocation": "../../../.yarn/berry/cache/react-webcam-npm-7.2.0-4404f3658d-10c0.zip/node_modules/react-webcam/",\
@@ -13769,6 +13801,26 @@ const RAW_RUNTIME_STATE =
           ["react-webcam", "virtual:8830f40320fc282079ce9d6b8589510b22fc1ac742d47baf5e159c0af3d32930a1e7383a7aceb87f563d2ca1da43225b21454780f1a52ede12eeb64a2e15758d#npm:7.2.0"],\
           ["@types/react", "npm:18.2.34"],\
           ["@types/react-dom", "npm:18.2.14"],\
+=======
+    ["react-transition-group", [\
+      ["npm:4.4.5", {\
+        "packageLocation": "../../../../.yarn/berry/cache/react-transition-group-npm-4.4.5-98ea4ef96e-10c0.zip/node_modules/react-transition-group/",\
+        "packageDependencies": [\
+          ["react-transition-group", "npm:4.4.5"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:8830f40320fc282079ce9d6b8589510b22fc1ac742d47baf5e159c0af3d32930a1e7383a7aceb87f563d2ca1da43225b21454780f1a52ede12eeb64a2e15758d#npm:4.4.5", {\
+        "packageLocation": "./.yarn/__virtual__/react-transition-group-virtual-f341bd7169/5/.yarn/berry/cache/react-transition-group-npm-4.4.5-98ea4ef96e-10c0.zip/node_modules/react-transition-group/",\
+        "packageDependencies": [\
+          ["react-transition-group", "virtual:8830f40320fc282079ce9d6b8589510b22fc1ac742d47baf5e159c0af3d32930a1e7383a7aceb87f563d2ca1da43225b21454780f1a52ede12eeb64a2e15758d#npm:4.4.5"],\
+          ["@babel/runtime", "npm:7.23.4"],\
+          ["@types/react", "npm:18.2.34"],\
+          ["@types/react-dom", "npm:18.2.14"],\
+          ["dom-helpers", "npm:5.2.1"],\
+          ["loose-envify", "npm:1.4.0"],\
+          ["prop-types", "npm:15.8.1"],\
+>>>>>>> 34ef245 (feat: detail logic ,ui (WIP))
           ["react", "npm:18.2.0"],\
           ["react-dom", "virtual:8830f40320fc282079ce9d6b8589510b22fc1ac742d47baf5e159c0af3d32930a1e7383a7aceb87f563d2ca1da43225b21454780f1a52ede12eeb64a2e15758d#npm:18.2.0"]\
         ],\
@@ -15798,6 +15850,7 @@ const RAW_RUNTIME_STATE =
           ["@types/node", "npm:20.8.10"],\
           ["@types/react", "npm:18.2.34"],\
           ["@types/react-dom", "npm:18.2.14"],\
+          ["@types/react-transition-group", "npm:4.4.9"],\
           ["@types/styled-components", "npm:5.1.29"],\
           ["@typescript-eslint/eslint-plugin", "virtual:8830f40320fc282079ce9d6b8589510b22fc1ac742d47baf5e159c0af3d32930a1e7383a7aceb87f563d2ca1da43225b21454780f1a52ede12eeb64a2e15758d#npm:6.9.1"],\
           ["@typescript-eslint/parser", "virtual:8830f40320fc282079ce9d6b8589510b22fc1ac742d47baf5e159c0af3d32930a1e7383a7aceb87f563d2ca1da43225b21454780f1a52ede12eeb64a2e15758d#npm:6.9.1"],\
@@ -15821,7 +15874,11 @@ const RAW_RUNTIME_STATE =
           ["react-dom", "virtual:8830f40320fc282079ce9d6b8589510b22fc1ac742d47baf5e159c0af3d32930a1e7383a7aceb87f563d2ca1da43225b21454780f1a52ede12eeb64a2e15758d#npm:18.2.0"],\
           ["react-redux", "virtual:8830f40320fc282079ce9d6b8589510b22fc1ac742d47baf5e159c0af3d32930a1e7383a7aceb87f563d2ca1da43225b21454780f1a52ede12eeb64a2e15758d#npm:8.1.3"],\
           ["react-router-dom", "virtual:8830f40320fc282079ce9d6b8589510b22fc1ac742d47baf5e159c0af3d32930a1e7383a7aceb87f563d2ca1da43225b21454780f1a52ede12eeb64a2e15758d#npm:6.18.0"],\
+<<<<<<< HEAD
           ["react-webcam", "virtual:8830f40320fc282079ce9d6b8589510b22fc1ac742d47baf5e159c0af3d32930a1e7383a7aceb87f563d2ca1da43225b21454780f1a52ede12eeb64a2e15758d#npm:7.2.0"],\
+=======
+          ["react-transition-group", "virtual:8830f40320fc282079ce9d6b8589510b22fc1ac742d47baf5e159c0af3d32930a1e7383a7aceb87f563d2ca1da43225b21454780f1a52ede12eeb64a2e15758d#npm:4.4.5"],\
+>>>>>>> 34ef245 (feat: detail logic ,ui (WIP))
           ["storybook", "npm:7.5.2"],\
           ["styled-components", "virtual:8830f40320fc282079ce9d6b8589510b22fc1ac742d47baf5e159c0af3d32930a1e7383a7aceb87f563d2ca1da43225b21454780f1a52ede12eeb64a2e15758d#npm:6.1.0"],\
           ["styled-reset", "virtual:8830f40320fc282079ce9d6b8589510b22fc1ac742d47baf5e159c0af3d32930a1e7383a7aceb87f563d2ca1da43225b21454780f1a52ede12eeb64a2e15758d#npm:4.5.1"],\

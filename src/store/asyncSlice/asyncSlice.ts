@@ -277,4 +277,6 @@ export const {
   useDeleteUserMutation,
   usePostUploadImagesMutation,
   useLazyGetMarksQuery,
+  useLazyGetFeedDetailByMarkerIdQuery,
+  useLazyGetFeedCommentsQuery,
 } = boombimApi

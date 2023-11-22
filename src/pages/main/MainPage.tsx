@@ -7,6 +7,11 @@ import { type RootState, useAppSelector, useAppDispatch } from '@/store/store'
 import theme from '@/styles/theme'
 import * as Styles from './MainPage.styled'
 import { type Position, type BoundPosition, MAP_UNION_TYPE } from '@/types/map'
+import { openDrawer } from '@/store/slices/drawer.slice'
+import { setMapSize } from '@/store/slices/map.slice'
+import { setSelectedMarker } from '@/store/slices/mark.slice'
+import { useAppDispatch, useAppSelector } from '@/store/store'
+import { type Position, type BoundPosition } from '@/types/map'
 import { useEffect, useState } from 'react'
 import { setMapType, setNewMarker } from '@/store/slices/map.slice'
 import { openDrawer } from '@/store/slices/drawer.slice'
@@ -17,10 +22,11 @@ export const MainPage = (): React.ReactNode => {
   const [currentBounds, setCurrentBounds] = useState<BoundPosition>()
   const [currentCenterPosition, setCurrentCenterPosition] = useState<Position>()
 
-  const currentGeoLocation = useAppSelector((state: RootState) => state.map.currentGeoLocation)
-  const currentMapType = useAppSelector((state: RootState) => state.map.mapType)
-  const isOpenDrawer = useAppSelector((state: RootState) => state.drawer.isOpen)
+  const currentGeoLocation = useAppSelector((state) => state.map.currentGeoLocation)
+  const currentMapType = useAppSelector((state) => state.map.mapType)
+  const isOpenDrawer = useAppSelector((state) => state.drawer.isOpen)
 
+  const { height } = useAppSelector((state) => state.map)
   const dispatch = useAppDispatch()
 
   const getCurrentBounds = (map: kakao.maps.Map) => {
@@ -48,19 +54,25 @@ export const MainPage = (): React.ReactNode => {
 
   useEffect(() => {
     if (!map || !currentBounds) return
-    const result = trigger({
+    void trigger({
       size: 90,
       minX: currentBounds.southWestPosition.lng,
       minY: currentBounds.southWestPosition.lat,
       maxX: currentBounds.northEastPosition.lng,
       maxY: currentBounds.northEastPosition.lat,
     }).unwrap()
-    console.log(result)
+    const position = {
+      lat: map.getCenter().getLat(),
+      lng: map.getCenter().getLng(),
+    }
+    const moveLatLon = new kakao.maps.LatLng(position.lat, position.lng)
+    map.setCenter(moveLatLon)
   }, [map, currentBounds, currentCenterPosition])
 
   useEffect(() => {
     if (!map || !currentGeoLocation) return
     movePosition(currentGeoLocation)
+    map.relayout()
   }, [currentGeoLocation])
 
   const handleDragEnd = () => {
@@ -121,6 +133,22 @@ export const MainPage = (): React.ReactNode => {
     }
   }, [currentMapType, map, isOpenDrawer, newMark])
 
+  useEffect(() => {
+    if (!map) return
+    map.relayout()
+  }, [currentCenterPosition])
+
+  const handleClickMark = (geoMarkId: number, posiiton: Position) => {
+    if (!map || !containerRef?.current) return
+
+    if (height === '100%') {
+      dispatch(setMapSize({ height: '40%' }))
+    }
+
+    dispatch(setSelectedMarker(geoMarkId))
+    dispatch(openDrawer({ drawerType: 'DETAIL', id: geoMarkId }))
+  }
+
   return (
     <Styles.Container>
       <Map
@@ -130,6 +158,7 @@ export const MainPage = (): React.ReactNode => {
         map={map}
         containerRef={containerRef}
         onDrageEnd={handleDragEnd}
+        onClickMark={handleClickMark}
       />
       {currentMapType === MAP_UNION_TYPE.PICKMARK && (
         <Styles.ButtonBox>

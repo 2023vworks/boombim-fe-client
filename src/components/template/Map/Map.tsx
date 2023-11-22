@@ -20,6 +20,7 @@ interface Props {
 
   onDrageEnd?: () => void
   onClick?: () => void
+  onClickMark: (geoMarkId: number, position: Position) => void
 }
 
 export const Map = ({
@@ -32,6 +33,7 @@ export const Map = ({
   markers,
   onDrageEnd,
   onClick,
+  onClickMark,
 }: Props): React.ReactNode => {
   const { width, height } = useAppSelector((state) => state.map)
 
@@ -76,6 +78,11 @@ export const Map = ({
 
   useEffect(() => {
     if (map) {
+      if (height === '100%') {
+        map.setDraggable(true)
+      } else {
+        map.setDraggable(false)
+      }
       map.relayout()
     }
   }, [width, height])
@@ -101,15 +108,22 @@ export const Map = ({
         position: { lat: marker.y, lng: marker.x },
         img: selectMarkerImage(marker.activity),
         onClick: () => {
-          handleClickMarker(map, { lat: marker.y, lng: marker.x })
+          handleClickMarker(map, { lat: marker.y, lng: marker.x }, marker.id)
         },
       })
     })
   }, [markers, map])
 
-  const handleClickMarker = (map: kakao.maps.Map, position: Position) => {
+  const handleClickMarker = (map: kakao.maps.Map, position: Position, geoMarkId: number) => {
+    if (!containerRef?.current) return
     const newPosition = new kakao.maps.LatLng(position.lat, position.lng)
-    map.panTo(newPosition)
+    const moveMap = () => {
+      map?.relayout()
+      map.panTo(newPosition)
+    }
+    containerRef?.current.addEventListener('transitionend', moveMap, { once: true })
+
+    onClickMark(geoMarkId, position)
   }
 
   const selectMarkerImage = (activity: number) => {
@@ -128,5 +142,5 @@ export const Map = ({
     }
   }
 
-  return <div id={MAP_ID} ref={containerRef} onClick={onClick} style={{ width, height }}></div>
+  return <div id={MAP_ID} ref={containerRef} onClick={onClick} style={{ width, height, transition: 'all 0.25s' }}></div>
 }

@@ -7,12 +7,13 @@ import Icon, { type ICON_TYPE } from '@/bds/Icon/Icon'
 export interface InfoProps {
   infoType: string
   isReadOnly: boolean
-  infoContent: number | string
+  infoContent: number | string | undefined
   onClick?: () => void
   iconStyle: {
     iconType: ICON_TYPE
     strokeColor: string
     fillColor: string
+    strokeColor: string
     width: string
     height: string
   }

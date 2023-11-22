@@ -32,20 +32,6 @@ export interface Position {
   lng: number
 }
 
-/**
- * @ Update Map Center (완)
- * @ Update Style Options (완)
- * @ Set isPanto (완)
- * @ Event onDragEnd (완)
- * @ Event onClick (완)
- * @ Set Max Zoom Level (완)
- * @ Set Min Zoom Level (완)
- * @ Set Zoom Level (완)
- * @ Set Draggable (완)
- * @ Set Custom Marker (완)
- * * Set Polygon (완)
- */
-
 export default function useMaps(): ResponseType {
   const [map, setMap] = useState<kakao.maps.Map | null>(null)
   const [circle, setCircle] = useState<kakao.maps.Polygon | null>(null)
