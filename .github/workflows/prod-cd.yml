@@ -64,6 +64,9 @@ jobs:
           yarn install
 
       - name: Build React
+        env:
+          VITE_APP_TITLE: ${{ secrets.VITE_APP_TITLE }}
+          VITE_APP_KAKAO_MAP_KEY: ${{ secrets.VITE_APP_KAKAO_MAP_KEY }}
         run: |
           yarn build
 
