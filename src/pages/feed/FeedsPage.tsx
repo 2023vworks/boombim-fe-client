@@ -33,6 +33,7 @@ export const FeedsPage = (): React.ReactNode => {
 
   const goToFeedDetail = (feedId: number): void => {
     // setSelectedFeed(feedId)
+    console.log(feedId)
     navigate('/')
   }
 

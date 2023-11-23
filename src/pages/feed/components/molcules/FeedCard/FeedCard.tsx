@@ -39,6 +39,7 @@ export const FeedCard = ({
       infoContent: recommendCount,
       iconStyle: {
         iconType: ICON_UNION_TYPE.THUMBS_UP,
+        strokeColor: theme.color.black,
         fillColor: theme.color.white,
         width: '12px',
         height: '12px',
@@ -50,6 +51,7 @@ export const FeedCard = ({
       infoContent: commentCount,
       iconStyle: {
         iconType: ICON_UNION_TYPE.COMMENT,
+        strokeColor: theme.color.black,
         fillColor: theme.color.white,
         width: '12px',
         height: '12px',
@@ -61,6 +63,7 @@ export const FeedCard = ({
       infoContent: viewCount,
       iconStyle: {
         iconType: ICON_UNION_TYPE.EYE,
+        strokeColor: theme.color.black,
         fillColor: theme.color.white,
         width: '12px',
         height: '12px',

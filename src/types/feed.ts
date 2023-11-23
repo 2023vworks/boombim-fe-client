@@ -158,7 +158,7 @@ export interface PostFeedReportRequestDTO {
 }
 
 export interface RegionCode {
-  regioninterface: string
+  regionType: string
   addressName: string
   region1DepthName: string
   region2DepthName: string

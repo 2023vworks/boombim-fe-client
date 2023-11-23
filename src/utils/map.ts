@@ -1,7 +1,7 @@
 /* eslint-disable no-mixed-operators */
-import { type Position } from '@/types/map'
+import { RegionCode, type Position } from '@/types/map'
 import { isEmptyString } from './common'
-import { type Address, type RegionCode, type RoadAddress } from '../types/feed'
+import { type Address, type RoadAddress } from '../types/feed'
 
 export interface coord2RegionCodeReturnType {
   address_name: string

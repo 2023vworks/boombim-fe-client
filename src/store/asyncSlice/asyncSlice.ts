@@ -49,7 +49,7 @@ export const boombimApi = createApi({
           params,
         }
       },
-      providesTags: (result, id) => [{ type: 'PostFeed' }],
+      providesTags: () => [{ type: 'PostFeed' }],
     }),
     getFeedDetail: builder.query<GetFeedDetailResultType, number>({
       query: (id) => {
@@ -84,7 +84,7 @@ export const boombimApi = createApi({
           params,
         }
       },
-      providesTags: (result, id) => [{ type: 'PostComment' }],
+      providesTags: () => [{ type: 'PostComment' }],
     }),
     // [Feed] 관련 post apis
     postFeed: builder.mutation<PostFeedResultType, PostFeedRequestType>({

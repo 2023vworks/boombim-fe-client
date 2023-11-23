@@ -13,7 +13,7 @@ import { openDrawer } from '@/store/slices/drawer.slice'
 
 export const MainPage = (): React.ReactNode => {
   // State
-  const { map, containerRef, movePosition, setMarker, drawCircleHole, newMark, pickMarker, circle } = useMaps()
+  const { map, containerRef, movePosition, drawCircleHole, newMark, pickMarker, circle } = useMaps()
   const [currentBounds, setCurrentBounds] = useState<BoundPosition>()
   const [currentCenterPosition, setCurrentCenterPosition] = useState<Position>()
 

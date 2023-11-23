@@ -31,7 +31,7 @@ export interface GetUserFeedsRequestDTO {
 }
 
 export interface PostUsersResponseDTO {
-  mbti: string
+  mbtiType: string
   nickname: string
   token: string
 }
