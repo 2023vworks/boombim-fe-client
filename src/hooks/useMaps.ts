@@ -4,7 +4,6 @@ import { useAppDispatch } from '@/store/store'
 import theme from '@/styles/theme'
 import { calculateCircleOutline, checkOutsidePolygon } from '@/utils/map'
 import { useEffect, useRef, useState } from 'react'
-import first_level_marker_img from '@assets/images/marker_level_1.png'
 
 export const MAP_ID = 'map'
 
