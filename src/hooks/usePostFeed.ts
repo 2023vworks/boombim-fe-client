@@ -5,12 +5,13 @@ import { useGetUserQuery, usePostFeedMutation, usePostUploadImagesMutation } fro
 import { convertAddress, convertRegion, convertRoadAddress, getGeoData } from '../utils/map'
 import { type RootState, useAppSelector, useAppDispatch } from '@/store/store'
 
-import { type Address, type RegionCode, type RoadAddress } from '@/types/feed'
+import { type Address, type RoadAddress } from '@/types/feed'
 import { useNavigate } from 'react-router-dom'
 import { getCheckedHashTagArray } from '@/utils/common'
 import { removeImage, resetImage } from '@/store/slices/image.slice'
 import { setMapSize, setMapType } from '@/store/slices/map.slice'
 import { closeDrawer } from '@/store/slices/drawer.slice'
+import { type RegionCode } from '@/types/map'
 
 interface ResponseType {
   onChangeText: (value: string) => void
