@@ -29,9 +29,11 @@ const Header = styled.section`
   margin-bottom: 4px;
 `
 const Body = styled.section<{ type: string }>`
-  max-width: 100%;
+  max-width: 90%;
   padding: 9.6px 17px;
   border-radius: ${(props) => (props.type === 'NORMAL' ? '0px 10px 10px 10px' : '10px 0px 10px 10px')};
-  background: #0000000d;
   background: ${(props) => (props.type === 'NORMAL' ? '#0000000d' : 'white')};
+
+  white-space: normal;
+  word-wrap: break-word;
 `

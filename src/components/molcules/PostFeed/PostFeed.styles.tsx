@@ -44,20 +44,20 @@ export const ButtonSection = styled.section`
   justify-content: space-between;
 `
 
-export const IconWrapper = styled.div<{ WrapperColor: string }>`
+export const IconWrapper = styled.div<{ $WrapperColor: string }>`
   width: 40px;
   height: 40px;
-  background-color: ${(props) => props.WrapperColor};
+  background-color: ${(props) => props.$WrapperColor};
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 40px;
 `
 
-export const SubmitWrapper = styled.input<{ WrapperColor: string }>`
+export const SubmitWrapper = styled.input<{ $WrapperColor: string }>`
   width: 40px;
   height: 40px;
-  background-color: ${(props) => props.WrapperColor};
+  background-color: ${(props) => props.$WrapperColor};
   display: flex;
   align-items: center;
   justify-content: center;

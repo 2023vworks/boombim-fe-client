@@ -160,7 +160,7 @@ export const MainPage = (): React.ReactNode => {
     if (!map || !containerRef?.current) return
 
     if (height === '100%') {
-      dispatch(setMapSize({ height: '35%' }))
+      dispatch(setMapSize({ height: '40%' }))
     }
 
     dispatch(setSelectedMarker(geoMarkId))

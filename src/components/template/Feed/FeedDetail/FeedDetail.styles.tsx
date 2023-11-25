@@ -64,11 +64,3 @@ export const InputSection = styled.section`
 export const IntersectTarget = styled.div`
   height: 1px;
 `
-
-export const TopLeftButton = styled.div`
-  width: 100%;
-  background-color: transparent;
-  z-index: 10001;
-  margin-bottom: 9px;
-  padding-left: 14px;
-`

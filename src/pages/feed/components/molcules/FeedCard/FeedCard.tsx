@@ -56,7 +56,7 @@ export const FeedCard = ({
       isReadOnly: true,
       infoContent: commentCount ?? unRecommendCount,
       iconStyle: {
-        iconType: commentCount ? ICON_UNION_TYPE.COMMENT : ICON_UNION_TYPE.THUMBS_UP,
+        iconType: commentCount ? ICON_UNION_TYPE.COMMENT : ICON_UNION_TYPE.THUMBS_DOWN,
         fillColor: theme.color.white,
         strokeColor: theme.color.black,
         width: '12px',

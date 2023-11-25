@@ -12,8 +12,11 @@ export default function FeedHeadInfo({ title, description }: Props) {
       <Typography size='P' fontWeight={600}>
         {title}
       </Typography>
-      {description && <VerticalLine>|</VerticalLine>}
-      {description && <Typography size={'SMALL'}>{description ?? ''}</Typography>}
+      {description && (
+        <Typography color='gray' size={'XSMALL'} fontWeight={350}>
+          {description ?? ''}
+        </Typography>
+      )}
     </Container>
   )
 }
@@ -21,8 +24,5 @@ export default function FeedHeadInfo({ title, description }: Props) {
 const Container = styled.section`
   display: flex;
   align-items: center;
-`
-const VerticalLine = styled.div`
-  margin: 0 4px;
-  font-size: 17px;
+  gap: 6px;
 `

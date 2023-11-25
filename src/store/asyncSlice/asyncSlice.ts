@@ -197,7 +197,7 @@ export const boombimApi = createApi({
     /**
      * @ User 조회
      */
-    getUser: builder.query<GetUserResultType, null>({
+    getUser: builder.query<GetUserResultType, void>({
       query: () => {
         return {
           url: '/users/me',
