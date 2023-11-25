@@ -8,7 +8,7 @@ interface Props {
 export default function Empty({ text }: Props) {
   return (
     <Styles.Container>
-      <Typography size={'P'} color={'gray'}>
+      <Typography size={'P'} color={'gray200'}>
         {text}
       </Typography>
     </Styles.Container>

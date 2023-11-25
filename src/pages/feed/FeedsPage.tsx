@@ -6,6 +6,7 @@ import * as Styles from './FeedsPage.styled'
 import { useNavigate } from 'react-router-dom'
 import { useGetFeedsQuery } from '@/store/asyncSlice/asyncSlice'
 import { getRectangleCoordinates } from '@/utils/map'
+import Empty from '@/components/template/Empty/Empty'
 // import { Loading } from '@/components/atom/Loading/Loading'
 
 export const FeedsPage = (): React.ReactNode => {
@@ -89,7 +90,7 @@ export const FeedsPage = (): React.ReactNode => {
 
   return (
     <Styles.Container>
-      {/* {!location && !error && <Loading />} */}
+      {isSuccess && data.data.length === 0 && <Empty text={'주위에 아무 피드도 없어요. 🥲'} />}
       {isSuccess &&
         data.data.map((feed) => (
           <FeedCard
