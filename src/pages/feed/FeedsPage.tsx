@@ -21,7 +21,7 @@ export const FeedsPage = (): React.ReactNode => {
 
   const getDongName = async (dongCor: { lat: number; lng: number }): Promise<string> => {
     return await new Promise<string>((resolve, reject) => {
-      geocoder.coord2RegionCode(dongCor.lat, dongCor.lng, (e) => {
+      geocoder.coord2RegionCode(dongCor.lng, dongCor.lat, (e) => {
         if (e[1]) {
           resolve(e[1].region_3depth_name)
         } else {
@@ -40,8 +40,8 @@ export const FeedsPage = (): React.ReactNode => {
     {
       page: 1,
       pageSize: 10,
-      centerX: location?.lat ?? 127.10160361906075,
-      centerY: location?.lng ?? 37.511235775127325,
+      centerX: location?.lng ?? 127.10160361906075,
+      centerY: location?.lat ?? 37.511235775127325,
       regionType: 'H',
       dongs: currentDongs,
     },
@@ -73,6 +73,7 @@ export const FeedsPage = (): React.ReactNode => {
 
     Promise.all(nearbyDongNames)
       .then((dongName) => {
+        console.log('dongName', dongName)
         setCurrentDongs(dongName)
       })
       .catch((err) => {

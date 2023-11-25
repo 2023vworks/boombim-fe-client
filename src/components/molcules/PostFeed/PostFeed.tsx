@@ -65,14 +65,14 @@ export default function PostFeed() {
           return (
             <Styles.IconWrapper
               key={interaction.icon.iconType}
-              WrapperColor={interaction.wrapperColor}
+              $WrapperColor={interaction.wrapperColor}
               onClick={interaction.onClick}
             >
               <Icon {...interaction.icon} />
             </Styles.IconWrapper>
           )
         })}
-        <Styles.IconWrapper WrapperColor={theme.color.mainColor} onClick={submitPostFeed}>
+        <Styles.IconWrapper $WrapperColor={theme.color.mainColor} onClick={submitPostFeed}>
           <Icon iconType={ICON_UNION_TYPE.ARROW_UP} fillColor={theme.color.white} width='24px' height='24px' />
         </Styles.IconWrapper>
       </Styles.ButtonSection>

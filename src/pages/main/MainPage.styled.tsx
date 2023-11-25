@@ -10,7 +10,6 @@ export type BUTTON_WRAPPER_TYPE = (typeof BUTTON_WRAPPER_UNION_TYPE)[keyof typeo
 export const Container = styled.div`
   width: 100%;
   height: 100%;
-  position: relative;
 `
 
 export const ButtonBox = styled.div`

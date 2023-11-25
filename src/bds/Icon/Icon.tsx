@@ -15,6 +15,9 @@ import EyeIcon from '@assets/icons/ico-eye.svg?react'
 import CancelIcon from '@assets/icons/cancel.svg?react'
 import ArrowUpIcon from '@assets/icons/arrow-up.svg?react'
 import CameraIcon from '@assets/icons/camera.svg?react'
+import AlertCircleIcon from '@assets/icons/ico-alert-circle.svg?react'
+import FillCommentIcon from '@assets/icons/ico-fill-comment.svg?react'
+import ArrowLeftIcon from '@assets/icons/ico-arrow-left.svg?react'
 
 export const ICON_UNION_TYPE = {
   SHARE: 'SHARE',
@@ -34,6 +37,9 @@ export const ICON_UNION_TYPE = {
   CANCEL: 'CANCEL',
   ARROW_UP: 'ARROW_UP',
   CAMERA: 'CAMERA',
+  ALERT_CIRCLE: 'ALERT_CIRCLE',
+  FILL_COMMENT: 'FILL_COMMENT',
+  ARROW_LEFT: 'ARROW_LEFT',
 } as const
 
 export type ICON_TYPE = (typeof ICON_UNION_TYPE)[keyof typeof ICON_UNION_TYPE]
@@ -49,33 +55,33 @@ interface Props {
 const Icon = ({ iconType, fillColor, strokeColor, width = '40px', height = '40px' }: Props) => {
   const selectedIcon = (icon: ICON_TYPE) => {
     switch (icon) {
-      case 'SHARE':
+      case ICON_UNION_TYPE.SHARE:
         return ShareIcon
-      case 'BELL':
+      case ICON_UNION_TYPE.BELL:
         return BellIcon
-      case 'GRID':
+      case ICON_UNION_TYPE.GRID:
         return GridIcon
-      case 'MAP':
+      case ICON_UNION_TYPE.MAP:
         return MapIcon
-      case 'PLUS_CIRCLE':
+      case ICON_UNION_TYPE.PLUS_CIRCLE:
         return PlusCircleIcon
-      case 'USER':
+      case ICON_UNION_TYPE.USER:
         return UserIcon
-      case 'SMILE':
+      case ICON_UNION_TYPE.SMILE:
         return SmileIcon
-      case 'THUMBS_DOWN':
+      case ICON_UNION_TYPE.THUMBS_DOWN:
         return ThumbsDownIcon
-      case 'THUMBS_UP':
+      case ICON_UNION_TYPE.THUMBS_UP:
         return ThumbsUpIcon
-      case 'WHITE_CHECK':
+      case ICON_UNION_TYPE.WHITE_CHECK:
         return WhiteCheckIcon
-      case 'COMMENT':
+      case ICON_UNION_TYPE.COMMENT:
         return CommentIcon
-      case 'MY_LOCATION_CIRCLE':
+      case ICON_UNION_TYPE.MY_LOCATION_CIRCLE:
         return MyLocationCircleIcon
-      case 'MY_LOCATION':
+      case ICON_UNION_TYPE.MY_LOCATION:
         return MyLocationIcon
-      case 'EYE':
+      case ICON_UNION_TYPE.EYE:
         return EyeIcon
       case 'CANCEL':
         return CancelIcon
@@ -83,6 +89,12 @@ const Icon = ({ iconType, fillColor, strokeColor, width = '40px', height = '40px
         return ArrowUpIcon
       case 'CAMERA':
         return CameraIcon
+      case ICON_UNION_TYPE.ALERT_CIRCLE:
+        return AlertCircleIcon
+      case ICON_UNION_TYPE.FILL_COMMENT:
+        return FillCommentIcon
+      case ICON_UNION_TYPE.ARROW_LEFT:
+        return ArrowLeftIcon
     }
   }
 

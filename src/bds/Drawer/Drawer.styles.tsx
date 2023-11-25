@@ -1,18 +1,17 @@
-import styled, { keyframes } from 'styled-components'
+import styled from 'styled-components'
 
-const slideUp = keyframes`
-  0% { bottom: -700px}
-  50% {bottom: -350px}
-  100% {bottom: 0}
-`
-
-export const Container = styled.div<{ $isOpen: boolean }>`
-  position: absolute;
-  bottom: 0;
+export const Container = styled.div`
   width: 100%;
-  height: calc((100% - 130px) * 0.7);
-  z-index: 10000;
-  animation-name: ${slideUp};
-  animation-duration: 0.2s;
-  animation-timing-function: ease-in;
+  height: 100%;
+`
+export const ButtonSection = styled.section`
+  width: 100%;
+  position: absolute;
+  top: -50px;
+  left: 10px;
+`
+export const DrawerSection = styled.section`
+  width: 100%;
+  height: 100%;
+  background-color: white;
 `

@@ -12,11 +12,13 @@ interface Props {
   content: string
   recommendCount: number
   viewCount: number
-  commentCount: number
+  commentCount?: number
+  unRecommendCount?: number
   geoMarkId: number
   activationAt: string
   createdAt: string
-  selectFeed: (id: number) => void
+  thumbnailImages?: string[]
+  selectFeed?: (id: number) => void
 }
 
 export const FeedCard = ({
@@ -28,9 +30,13 @@ export const FeedCard = ({
   commentCount,
   recommendCount,
   geoMarkId,
-  selectFeed,
+  selectFeed = () => {
+    console.log('hit')
+  },
   activationAt,
+  unRecommendCount,
   createdAt,
+  thumbnailImages,
 }: Props): React.ReactNode => {
   const FEED_INFOS: InfoProps[] = [
     {
@@ -40,6 +46,7 @@ export const FeedCard = ({
       iconStyle: {
         iconType: ICON_UNION_TYPE.THUMBS_UP,
         fillColor: theme.color.white,
+        strokeColor: theme.color.black,
         width: '12px',
         height: '12px',
       },
@@ -47,10 +54,11 @@ export const FeedCard = ({
     {
       infoType: 'comment',
       isReadOnly: true,
-      infoContent: commentCount,
+      infoContent: commentCount ?? unRecommendCount,
       iconStyle: {
-        iconType: ICON_UNION_TYPE.COMMENT,
+        iconType: commentCount ? ICON_UNION_TYPE.COMMENT : ICON_UNION_TYPE.THUMBS_DOWN,
         fillColor: theme.color.white,
+        strokeColor: theme.color.black,
         width: '12px',
         height: '12px',
       },
@@ -62,6 +70,7 @@ export const FeedCard = ({
       iconStyle: {
         iconType: ICON_UNION_TYPE.EYE,
         fillColor: theme.color.white,
+        strokeColor: theme.color.black,
         width: '12px',
         height: '12px',
       },
@@ -76,6 +85,17 @@ export const FeedCard = ({
     >
       <FeedHeader activity={activity} name={name} dong={dong} creactedAt={createdAt} activationAt={activationAt} />
       <FeedContent content={content} isEllipsis={true} />
+      {thumbnailImages &&
+        thumbnailImages?.length > 0 &&
+        thumbnailImages.map((image) => {
+          return (
+            <Styles.ImageSectiion key={image}>
+              <Styles.ImageBox>
+                <Styles.Image src={`${import.meta.env.VITE_APP_IMAGE_URL}VITE_APP_IMAGE_URL`} />
+              </Styles.ImageBox>
+            </Styles.ImageSectiion>
+          )
+        })}
       <FeedInfo infos={FEED_INFOS} />
     </Styles.Container>
   )

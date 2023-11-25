@@ -4,7 +4,6 @@ import { useAppDispatch } from '@/store/store'
 import theme from '@/styles/theme'
 import { calculateCircleOutline, checkOutsidePolygon } from '@/utils/map'
 import { useEffect, useRef, useState } from 'react'
-import first_level_marker_img from '@assets/images/marker_level_1.png'
 
 export const MAP_ID = 'map'
 
@@ -32,20 +31,6 @@ export interface Position {
   lng: number
 }
 
-/**
- * @ Update Map Center (완)
- * @ Update Style Options (완)
- * @ Set isPanto (완)
- * @ Event onDragEnd (완)
- * @ Event onClick (완)
- * @ Set Max Zoom Level (완)
- * @ Set Min Zoom Level (완)
- * @ Set Zoom Level (완)
- * @ Set Draggable (완)
- * @ Set Custom Marker (완)
- * * Set Polygon (완)
- */
-
 export default function useMaps(): ResponseType {
   const [map, setMap] = useState<kakao.maps.Map | null>(null)
   const [circle, setCircle] = useState<kakao.maps.Polygon | null>(null)
@@ -57,6 +42,7 @@ export default function useMaps(): ResponseType {
     if (containerRef !== null) {
       const container = new kakao.maps.Map(containerRef.current as HTMLElement, {
         center: new kakao.maps.LatLng(37.511235775127325, 127.10160361906075),
+        disableDoubleClick: true,
       })
 
       setMap(container)

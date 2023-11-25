@@ -21,7 +21,7 @@ const drawerSlice = createSlice({
   name: 'drawerSlice',
   initialState,
   reducers: {
-    openDrawer(state, action: PayloadAction<Pick<DrawerInitialState, 'drawerType'>>) {
+    openDrawer(state, action: PayloadAction<{ drawerType: DrawerType }>) {
       const { drawerType } = action.payload
       state.drawerType = drawerType
       state.isOpen = true
