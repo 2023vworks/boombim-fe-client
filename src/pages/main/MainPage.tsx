@@ -120,6 +120,7 @@ export const MainPage = (): React.ReactNode => {
 
   const handleCancelMark = (): void => {
     dispatch(setMapType({ mapType: 'NORMAL' }))
+    circle?.setMap(null)
   }
 
   useEffect(() => {
@@ -159,7 +160,7 @@ export const MainPage = (): React.ReactNode => {
     if (!map || !containerRef?.current) return
 
     if (height === '100%') {
-      dispatch(setMapSize({ height: '40%' }))
+      dispatch(setMapSize({ height: '35%' }))
     }
 
     dispatch(setSelectedMarker(geoMarkId))

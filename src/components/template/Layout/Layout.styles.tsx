@@ -39,3 +39,11 @@ export const DrawerContainer = styled.section`
   position: relative;
   z-index: 12;
 `
+export const IntroPageContainer = styled.div`
+  position: absolute;
+  left: 0;
+  z-index: 201;
+  width: 100%;
+  height: 100vh;
+  background-color: white;
+`

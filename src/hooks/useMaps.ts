@@ -4,7 +4,6 @@ import { useAppDispatch } from '@/store/store'
 import theme from '@/styles/theme'
 import { calculateCircleOutline, checkOutsidePolygon } from '@/utils/map'
 import { useEffect, useRef, useState } from 'react'
-import first_level_marker_img from '@assets/images/marker_level_1.png'
 
 export const MAP_ID = 'map'
 
@@ -43,6 +42,7 @@ export default function useMaps(): ResponseType {
     if (containerRef !== null) {
       const container = new kakao.maps.Map(containerRef.current as HTMLElement, {
         center: new kakao.maps.LatLng(37.511235775127325, 127.10160361906075),
+        disableDoubleClick: true,
       })
 
       setMap(container)
