@@ -10,7 +10,7 @@ export const Container = styled.section`
 `
 
 export const MainContainer = styled.section`
-  width: 600px;
+  width: 400px;
   height: 100%;
   position: relative;
 `

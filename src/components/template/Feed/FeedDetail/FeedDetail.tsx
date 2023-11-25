@@ -3,7 +3,6 @@ import { useGetFeedCommentsQuery, useLazyGetFeedDetailByMarkerIdQuery } from '@/
 import { useAppDispatch, useAppSelector } from '@/store/store'
 import { useEffect, useState } from 'react'
 import * as Styles from './FeedDetail.styles'
-import { FeedCard } from '@/pages/FeedList/components/molcules/FeedCard/FeedCard'
 import Icon, { ICON_UNION_TYPE } from '@/bds/Icon/Icon'
 import CommentItem from '@/components/molcules/CommentItem/CommentItem'
 import theme from '@/styles/theme'
@@ -14,6 +13,7 @@ import { INTERACTION_UNION_TYPE } from '@/constants/feed'
 import { closeDrawer } from '@/store/slices/drawer.slice'
 import useUserInteraction from '@/hooks/useUserInteraction'
 import { setMapSize } from '@/store/slices/map.slice'
+import { FeedCard } from '@/pages/feed/components/molcules/FeedCard/FeedCard'
 
 const INTERACTION_CONFIG = [
   { interactionType: INTERACTION_UNION_TYPE.SHARE },
@@ -24,7 +24,7 @@ const INTERACTION_CONFIG = [
 
 export const FeedDetail = () => {
   const dispatch = useAppDispatch()
-  const geoMarkId = useAppSelector((state) => state.drawer.id)
+  const geoMarkId = useAppSelector((state) => state.marker.selectedMarker)
   const [state, setState] = useState(false)
   const [inputValue, setInputValue] = useState('')
   const [commentConfig, setCommentConfig] = useState<{

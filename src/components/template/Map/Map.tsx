@@ -77,13 +77,13 @@ export const Map = ({
   }, [draggable, map])
 
   useEffect(() => {
+    if (!containerRef?.current) return
     if (map) {
       if (height === '100%') {
         map.setDraggable(true)
       } else {
         map.setDraggable(false)
       }
-      map.relayout()
     }
   }, [width, height])
 
@@ -142,5 +142,5 @@ export const Map = ({
     }
   }
 
-  return <div id={MAP_ID} ref={containerRef} onClick={onClick} style={{ width, height, transition: 'all 0.25s' }}></div>
+  return <div id={MAP_ID} ref={containerRef} onClick={onClick} style={{ width, height, transition: 'all 0.3s' }}></div>
 }

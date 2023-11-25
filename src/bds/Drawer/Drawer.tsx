@@ -15,13 +15,7 @@ export const Drawer = () => {
   }, [isOpenDrawer])
 
   return (
-    <Transition
-      in={isOpenDrawer}
-      timeout={{ enter: 300, exit: 300 }}
-      onExited={() => {
-        setClassState('')
-      }}
-    >
+    <Transition in={isOpenDrawer} timeout={{ enter: 250, exit: 250 }}>
       <Styles.Container>
         <div className={classState} style={{ height: '100%' }}>
           {drawerType === 'DETAIL' ? <FeedDetail /> : <PostFeed />}

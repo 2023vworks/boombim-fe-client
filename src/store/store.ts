@@ -15,7 +15,6 @@ const store = configureStore({
     camera: cameraSlice,
     drawer: drawerSlice,
     image: imageSlice,
-    drawer: drawerSlice,
     marker: markerSlice,
     [boombimApi.reducerPath]: boombimApi.reducer,
   },

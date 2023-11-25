@@ -3,22 +3,18 @@ import Icon from '@/bds/Icon/Icon'
 import { Map } from '@/components/template/Map/Map'
 import useMaps from '@/hooks/useMaps'
 import { useLazyGetMarksQuery } from '@/store/asyncSlice/asyncSlice'
-import { type RootState, useAppSelector, useAppDispatch } from '@/store/store'
+import { useAppSelector, useAppDispatch } from '@/store/store'
 import theme from '@/styles/theme'
 import * as Styles from './MainPage.styled'
 import { type Position, type BoundPosition, MAP_UNION_TYPE } from '@/types/map'
 import { openDrawer } from '@/store/slices/drawer.slice'
-import { setMapSize } from '@/store/slices/map.slice'
+import { setMapSize, setMapType, setNewMarker } from '@/store/slices/map.slice'
 import { setSelectedMarker } from '@/store/slices/mark.slice'
-import { useAppDispatch, useAppSelector } from '@/store/store'
-import { type Position, type BoundPosition } from '@/types/map'
 import { useEffect, useState } from 'react'
-import { setMapType, setNewMarker } from '@/store/slices/map.slice'
-import { openDrawer } from '@/store/slices/drawer.slice'
 
 export const MainPage = (): React.ReactNode => {
   // State
-  const { map, containerRef, movePosition, setMarker, drawCircleHole, newMark, pickMarker, circle } = useMaps()
+  const { map, containerRef, movePosition, drawCircleHole, newMark, pickMarker, circle } = useMaps()
   const [currentBounds, setCurrentBounds] = useState<BoundPosition>()
   const [currentCenterPosition, setCurrentCenterPosition] = useState<Position>()
 
@@ -52,6 +48,21 @@ export const MainPage = (): React.ReactNode => {
 
   const [trigger, { data }] = useLazyGetMarksQuery()
 
+  const reloadMap = () => {
+    if (!map) return
+    map.relayout()
+  }
+
+  useEffect(() => {
+    if (!containerRef?.current) return
+    containerRef?.current.addEventListener('transitionend', handleCenterPosition)
+
+    return () => {
+      if (!containerRef?.current) return
+      containerRef?.current.removeEventListener('transitionend', handleCenterPosition)
+    }
+  }, [])
+
   useEffect(() => {
     if (!map || !currentBounds) return
     void trigger({
@@ -61,12 +72,6 @@ export const MainPage = (): React.ReactNode => {
       maxX: currentBounds.northEastPosition.lng,
       maxY: currentBounds.northEastPosition.lat,
     }).unwrap()
-    const position = {
-      lat: map.getCenter().getLat(),
-      lng: map.getCenter().getLng(),
-    }
-    const moveLatLon = new kakao.maps.LatLng(position.lat, position.lng)
-    map.setCenter(moveLatLon)
   }, [map, currentBounds, currentCenterPosition])
 
   useEffect(() => {
@@ -81,13 +86,25 @@ export const MainPage = (): React.ReactNode => {
       lat: map.getCenter().getLat(),
       lng: map.getCenter().getLng(),
     }
-    const moveLatLon = new kakao.maps.LatLng(position.lat, position.lng)
+    const moveLatLng = new kakao.maps.LatLng(position.lat, position.lng)
 
     const currentBounds = getCurrentBounds(map)
     setCurrentBounds(currentBounds as BoundPosition)
 
     setCurrentCenterPosition(position)
-    map.setCenter(moveLatLon)
+    map.setCenter(moveLatLng)
+  }
+
+  const handleCenterPosition = () => {
+    if (!map) return
+    const position = {
+      lat: map.getCenter().getLat(),
+      lng: map.getCenter().getLng(),
+    }
+
+    setCurrentCenterPosition(position)
+    reloadMap()
+    // map.relayout()
   }
 
   const handlePickMarker = function (mouseEvent: { latLng: { Ma: number; La: number } }): void {
@@ -138,7 +155,7 @@ export const MainPage = (): React.ReactNode => {
     map.relayout()
   }, [currentCenterPosition])
 
-  const handleClickMark = (geoMarkId: number, posiiton: Position) => {
+  const handleClickMark = (geoMarkId: number) => {
     if (!map || !containerRef?.current) return
 
     if (height === '100%') {
@@ -146,7 +163,7 @@ export const MainPage = (): React.ReactNode => {
     }
 
     dispatch(setSelectedMarker(geoMarkId))
-    dispatch(openDrawer({ drawerType: 'DETAIL', id: geoMarkId }))
+    dispatch(openDrawer({ drawerType: 'DETAIL' }))
   }
 
   return (
