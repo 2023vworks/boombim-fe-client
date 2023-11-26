@@ -1,18 +1,21 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
 interface initialStateType {
-  selectedMarker: null | number
+  selectedMarkerId: null | number
+  isFromFeeds: boolean
 }
 const initialState: initialStateType = {
-  selectedMarker: null,
+  selectedMarkerId: null,
+  isFromFeeds: false,
 }
 
 const markerSlice = createSlice({
   name: 'markerSlice',
   initialState,
   reducers: {
-    setSelectedMarker: (state, action: PayloadAction<number>) => {
-      state.selectedMarker = action.payload
+    setSelectedMarker: (state, action: PayloadAction<{ selectedMarkerId: number; isFromFeeds?: boolean }>) => {
+      state.selectedMarkerId = action.payload.selectedMarkerId
+      state.isFromFeeds = action.payload.isFromFeeds ?? false
     },
   },
 })

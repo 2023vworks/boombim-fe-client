@@ -45,6 +45,7 @@ export default function useMaps(): ResponseType {
       const container = new kakao.maps.Map(containerRef.current as HTMLElement, {
         center: new kakao.maps.LatLng(37.511235775127325, 127.10160361906075),
         disableDoubleClick: true,
+        level: 4,
       })
 
       setMap(container)
