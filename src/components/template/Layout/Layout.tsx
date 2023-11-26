@@ -23,6 +23,11 @@ export const Layout = ({ children }: Props): React.ReactNode => {
     setScreenSize()
   }, [])
 
+  useEffect(() => {
+    if (isUser === null) return
+    handleConfirm()
+  }, [isUser])
+
   const handleConfirm = () => {
     dispatch(confirmService())
   }
