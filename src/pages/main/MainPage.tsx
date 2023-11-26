@@ -1,6 +1,6 @@
 /* eslint-disable multiline-ternary */
 import Icon from '@/bds/Icon/Icon'
-import { Map } from '@/components/template/Map/Map'
+import { type ConvertedMarker, Map } from '@/components/template/Map/Map'
 import useMaps from '@/hooks/useMaps'
 import { useLazyGetMarksQuery } from '@/store/asyncSlice/asyncSlice'
 import { useAppSelector, useAppDispatch } from '@/store/store'
@@ -14,9 +14,10 @@ import { useEffect, useState } from 'react'
 
 export const MainPage = (): React.ReactNode => {
   // State
-  const { map, containerRef, movePosition, drawCircleHole, newMark, pickMarker, circle } = useMaps()
+  const { map, containerRef, movePosition, drawCircleHole, newMarker, pickMarker, circle } = useMaps()
   const [currentBounds, setCurrentBounds] = useState<BoundPosition>()
   const [currentCenterPosition, setCurrentCenterPosition] = useState<Position>()
+  const [convertedMarkers, setConvertedMarkers] = useState<ConvertedMarker[]>([])
 
   const currentGeoLocation = useAppSelector((state) => state.map.currentGeoLocation)
   const currentMapType = useAppSelector((state) => state.map.mapType)
@@ -75,6 +76,20 @@ export const MainPage = (): React.ReactNode => {
   }, [map, currentBounds, currentCenterPosition])
 
   useEffect(() => {
+    if (!data) return
+
+    let markers = []
+    if (currentMapType === 'PICKMARK') {
+      markers = data.data.map((marker) => {
+        return { ...marker, opacity: 0.5, clickable: false }
+      })
+    } else {
+      markers = [...data.data]
+    }
+    setConvertedMarkers(markers)
+  }, [data, currentMapType])
+
+  useEffect(() => {
     if (!map || !currentGeoLocation) return
     movePosition(currentGeoLocation)
     map.relayout()
@@ -97,6 +112,7 @@ export const MainPage = (): React.ReactNode => {
 
   const handleCenterPosition = () => {
     if (!map) return
+
     const position = {
       lat: map.getCenter().getLat(),
       lng: map.getCenter().getLng(),
@@ -112,9 +128,21 @@ export const MainPage = (): React.ReactNode => {
   }
 
   const handleConfirmMark = (mark: kakao.maps.Marker | null): void => {
-    if (!mark) return
-    const markPosition = mark.getPosition()
-    dispatch(setNewMarker({ currentPickMarkerPosition: { x: markPosition.getLng(), y: markPosition.getLat() } }))
+    if (!mark || !containerRef?.current) return
+
+    const newMarkPosition = mark.getPosition()
+
+    const moveMap = () => {
+      map?.relayout()
+      map?.panTo(newMarkPosition)
+    }
+    containerRef?.current.addEventListener('transitionend', moveMap, { once: true })
+
+    if (height === '100%') {
+      dispatch(setMapSize({ height: '40%' }))
+    }
+
+    dispatch(setNewMarker({ currentPickMarkerPosition: { x: newMarkPosition.getLng(), y: newMarkPosition.getLat() } }))
     dispatch(openDrawer({ drawerType: 'FEED_CREATE_TYPE' }))
   }
 
@@ -124,7 +152,7 @@ export const MainPage = (): React.ReactNode => {
     circle?.setMap(null)
     map?.setDraggable(true)
     map?.setZoomable(true)
-    newMark?.setMap(null)
+    newMarker?.setMap(null)
   }
 
   useEffect(() => {
@@ -138,13 +166,13 @@ export const MainPage = (): React.ReactNode => {
   }, [currentMapType, map])
 
   useEffect(() => {
-    if (map && currentMapType === MAP_UNION_TYPE.NORMAL && circle && newMark) {
+    if (map && currentMapType === MAP_UNION_TYPE.NORMAL && circle && newMarker) {
       circle.setMap(null)
       map.setDraggable(true)
       map.setZoomable(true)
-      newMark.setMap(null)
+      newMarker.setMap(null)
     }
-  }, [currentMapType, map, circle, newMark])
+  }, [currentMapType, map, circle, newMarker])
 
   useEffect(() => {
     if (map && currentMapType === MAP_UNION_TYPE.PICKMARK && !isOpenDrawer) {
@@ -153,7 +181,7 @@ export const MainPage = (): React.ReactNode => {
     return () => {
       map && kakao.maps.event.removeListener(map, 'click', handlePickMarker)
     }
-  }, [currentMapType, map, isOpenDrawer, newMark])
+  }, [currentMapType, map, isOpenDrawer, newMarker])
 
   useEffect(() => {
     if (!map) return
@@ -174,7 +202,7 @@ export const MainPage = (): React.ReactNode => {
   return (
     <Styles.Container>
       <Map
-        markers={data?.data}
+        convertedMarkers={convertedMarkers}
         maxLevel={4}
         minLevel={2}
         map={map}
@@ -187,7 +215,7 @@ export const MainPage = (): React.ReactNode => {
           <Styles.ButtonWraaper
             $type={'MAIN'}
             onClick={() => {
-              handleConfirmMark(newMark)
+              handleConfirmMark(newMarker)
             }}
           >
             <Icon

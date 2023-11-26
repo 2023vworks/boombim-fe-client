@@ -188,6 +188,7 @@ export const boombimApi = createApi({
           method: 'GET',
         }
       },
+      providesTags: (result, id) => [{ type: 'PostFeed' }],
     }),
 
     /**

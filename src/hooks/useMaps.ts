@@ -1,9 +1,10 @@
-import { SONGPA_POSITION } from '@/constants/position'
+import { SEOUL_POSITION } from '@/constants/position'
 import { type MapSize, setMapSize } from '@/store/slices/map.slice'
 import { useAppDispatch } from '@/store/store'
 import theme from '@/styles/theme'
 import { calculateCircleOutline, checkOutsidePolygon } from '@/utils/map'
 import { useEffect, useRef, useState } from 'react'
+import marker_level_1 from '@/assets/images/marker_level_1.png'
 
 export const MAP_ID = 'map'
 
@@ -16,12 +17,13 @@ interface ResponseType {
   setMarker: (props: Marker) => void
   drawCircleHole: ({ lat, lng, radius }: { lat: number; lng: number; radius: number }) => void
   pickMarker: (position: any) => void
-  newMark: kakao.maps.Marker | null
+  newMarker: kakao.maps.Marker | null
 }
 
 export interface Marker {
   position: Position
   img?: kakao.maps.MarkerImage
+  opacity?: number
   clickable?: boolean
   onClick: () => void
 }
@@ -34,7 +36,7 @@ export interface Position {
 export default function useMaps(): ResponseType {
   const [map, setMap] = useState<kakao.maps.Map | null>(null)
   const [circle, setCircle] = useState<kakao.maps.Polygon | null>(null)
-  const [newMark, setNewMarker] = useState<kakao.maps.Marker | null>(null)
+  const [newMarker, setNewMarker] = useState<kakao.maps.Marker | null>(null)
   const containerRef = useRef<HTMLDivElement | null>(null) as React.RefObject<HTMLDivElement>
   const dispatch = useAppDispatch()
 
@@ -75,13 +77,13 @@ export default function useMaps(): ResponseType {
 
   const drawCircleHole = ({ lat, lng, radius }: { lat: number; lng: number; radius: number }): void => {
     if (map) {
-      const circlePosition = calculateCircleOutline(lat, lng, radius)
-
-      const circlePolygonPath = circlePosition.map((position) => {
+      const coverPolygonPath = SEOUL_POSITION.map((position) => {
         return new kakao.maps.LatLng(position.lat, position.lng)
       })
 
-      const coverPolygonPath = SONGPA_POSITION.map((position) => {
+      const circlePosition = calculateCircleOutline(lat, lng, radius)
+
+      const circlePolygonPath = circlePosition.map((position) => {
         return new kakao.maps.LatLng(position.lat, position.lng)
       })
 
@@ -89,9 +91,8 @@ export default function useMaps(): ResponseType {
         map,
         path: [coverPolygonPath, circlePolygonPath],
         strokeWeight: 2,
-        strokeColor: theme.color.mainColor,
-        strokeOpacity: 0.8,
-        strokeStyle: 'longdash',
+        strokeColor: theme.color.gray,
+        strokeOpacity: 0.7,
         fillColor: theme.color.gray,
         fillOpacity: 0.7,
       })
@@ -107,7 +108,7 @@ export default function useMaps(): ResponseType {
     if (circle) {
       const circlePolygonPath = circle.getPath()[1]
 
-      const coverPolygonPath = SONGPA_POSITION.map((position) => {
+      const coverPolygonPath = SEOUL_POSITION.map((position) => {
         return new kakao.maps.LatLng(position.lat, position.lng)
       })
 
@@ -120,11 +121,12 @@ export default function useMaps(): ResponseType {
         return
       }
     }
+    const imageSize = new kakao.maps.Size(40, 45)
+    const markImg = new kakao.maps.MarkerImage(marker_level_1, imageSize)
 
     const mark = new kakao.maps.Marker({
       position: newMarkPosition,
-      // !! image import 확인 필요
-      // image: first_level_marker_img,
+      image: markImg,
     })
 
     mark.setMap(map)
@@ -136,5 +138,5 @@ export default function useMaps(): ResponseType {
     })
   }
 
-  return { map, containerRef, setSize, movePosition, setMarker, drawCircleHole, newMark, pickMarker, circle }
+  return { map, containerRef, setSize, movePosition, setMarker, drawCircleHole, newMarker, pickMarker, circle }
 }
