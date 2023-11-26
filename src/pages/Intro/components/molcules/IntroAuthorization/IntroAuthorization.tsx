@@ -5,6 +5,7 @@ import { Typography } from '@/bds/Typography/Typography'
 import { useAppDispatch } from '@/store/store'
 import { setRegion } from '@/store/slices/map.slice'
 import { convertKorRegion, type coord2RegionCodeReturnType } from '@/utils/map'
+import { useEffect } from 'react'
 
 interface Props {
   onNext: () => void
@@ -42,9 +43,11 @@ export const IntroAuthorization = ({ onNext }: Props): React.ReactNode => {
         })
         .catch((e) => alert('카메라 권한 허용을 하지 않는다면, 앱 이용에 제한이 있을 수 있습니다.'))
     }
-
-    onNext()
   }
+
+  useEffect(() => {
+    requestAuthorization()
+  }, [])
 
   return (
     <Styles.Container>
@@ -80,7 +83,7 @@ export const IntroAuthorization = ({ onNext }: Props): React.ReactNode => {
           </Styles.DetailDescriptionSection>
         </Styles.DescriptionSection>
         <Styles.ButtonSection>
-          <Button text='권한 동의하기' onClick={requestAuthorization} width={320} height={42} buttonType='PRIMARY' />
+          <Button text='권한 동의하기' onClick={onNext} width={320} height={42} buttonType='PRIMARY' />
         </Styles.ButtonSection>
       </Styles.Wrapper>
     </Styles.Container>
