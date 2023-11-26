@@ -6,6 +6,10 @@ import { useMemo } from 'react'
 import { setMapType } from '@/store/slices/map.slice'
 import { useNavigate } from 'react-router-dom'
 
+// !! 지원하지 않는 지역 혹은 위치권한 비활성화 로직 - 원활한 테스트를 위해 메이저 전 주석 처리
+// import { SEOUL_POSITION } from '@/constants/position'
+// import { checkOutsidePolygon } from '@/utils/map'
+
 interface FNBNavigation {
   icon: {
     iconType: ICON_TYPE
@@ -18,6 +22,10 @@ interface FNBNavigation {
 
 export const FNB = () => {
   const navigate = useNavigate()
+
+  // !! 지원하지 않는 지역 혹은 위치권한 비활성화 로직 - 원활한 테스트를 위해 메이저 전 주석 처리
+  // const currentGeoLocation = useAppSelector((state) => state.map.currentGeoLocation)
+
   const FNB_NAVIGATIONS: FNBNavigation[] = useMemo(
     () => [
       {
@@ -92,6 +100,25 @@ export const FNB = () => {
 
   const handleSwitchPickMap = () => {
     navigate('/')
+
+    // !! 지원하지 않는 지역 혹은 위치권한 비활성화 로직 - 원활한 테스트를 위해 메이저 전 주석 처리
+    // if (!currentGeoLocation) {
+    //   alert('위치 권한을 허용하지 않으면 이용에 제한이 있습니다.')
+    //   return
+    // }
+
+    // const currentPosition = new kakao.maps.LatLng(currentGeoLocation.lat, currentGeoLocation.lng)
+    // const coverPolygonPath = SEOUL_POSITION.map((position) => {
+    //   return new kakao.maps.LatLng(position.lat, position.lng)
+    // })
+
+    // const isDisablePickMarker = checkOutsidePolygon(currentPosition, coverPolygonPath)
+
+    // if (isDisablePickMarker) {
+    //   alert('지원하지 않는 지역입니다.')
+    //   return
+    // }
+
     dispatch(setMapType({ mapType: 'PICKMARK' }))
   }
 
