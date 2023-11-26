@@ -16,11 +16,7 @@ const INTRO_STEP = {
 
 type INTRO_STEP_ENUM = (typeof INTRO_STEP)[keyof typeof INTRO_STEP]
 
-interface Props {
-  onConfirm: () => void
-}
-
-export const IntroPage = ({ onConfirm }: Props): React.ReactNode => {
+export const IntroPage = (): React.ReactNode => {
   const navigate = useNavigate()
   const [step, setStep] = useState<INTRO_STEP_ENUM>(INTRO_STEP.START)
 
@@ -58,7 +54,6 @@ export const IntroPage = ({ onConfirm }: Props): React.ReactNode => {
           <IntroLogin
             onNext={() => {
               navigate('/')
-              onConfirm()
             }}
           />
         )

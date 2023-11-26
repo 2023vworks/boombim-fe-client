@@ -90,7 +90,7 @@ export default function usePostFeed({ position }: Props): ResponseType {
       dispatch(setMapType({ mapType: 'NORMAL' }))
       dispatch(setMapSize({ height: '100%' }))
       dispatch(closeDrawer())
-      return comfirmPostFeedwithMessage('피드작성이 완료되었습니다.')
+      comfirmPostFeedwithMessage('피드작성이 완료되었습니다.')
     }
 
     const checkedDupShopText = getCheckedHashTagArray(text)
@@ -102,12 +102,12 @@ export default function usePostFeed({ position }: Props): ResponseType {
       .unwrap()
       .then((res) => {
         if (!imageFormdata) {
-          closePostFeed()
+          return closePostFeed()
         }
         uploadTrigger({ id: res.data.feedId, body: imageFormdata })
           .unwrap()
           .then(() => {
-            closePostFeed()
+            return closePostFeed()
           })
           .catch((err) => {
             return comfirmPostFeedwithMessage(err.message)
