@@ -7,6 +7,7 @@ import drawerSlice from './slices/drawer.slice'
 import imageSlice from '@/store/slices/image.slice'
 import cameraSlice from '@/store/slices/camera.slice'
 import markerSlice from './slices/mark.slice'
+import introSlice from './slices/intro.slice'
 
 const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ const store = configureStore({
     drawer: drawerSlice,
     image: imageSlice,
     marker: markerSlice,
+    intro: introSlice,
     [boombimApi.reducerPath]: boombimApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
