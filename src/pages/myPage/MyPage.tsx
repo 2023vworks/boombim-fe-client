@@ -8,7 +8,7 @@ import { INITIAL_USER, deleteCookie, logout, resetUserInfo } from '@/utils/stora
 export const MyPage = (): React.ReactNode => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const [deleteUserTriger, _deleteUser] = useDeleteUserMutation()
+  const [deleteUserTriger] = useDeleteUserMutation()
 
   const leaveBoombim = (): void => {
     deleteUserTriger()
@@ -76,7 +76,7 @@ export const MyPage = (): React.ReactNode => {
 
   return (
     <Styles.Container>
-      <Styles.InfoSection></Styles.InfoSection>
+      {/* <Styles.InfoSection></Styles.InfoSection> */}
       <Styles.ListSection>
         <Styles.ListItem
           onClick={() => {
