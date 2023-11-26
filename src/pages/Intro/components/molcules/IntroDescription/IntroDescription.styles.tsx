@@ -14,7 +14,7 @@ export const Wrapper = styled.div`
   height: 287px;
 `
 
-export const Title = styled.p`
+export const Title = styled.section`
   margin-bottom: 22px;
 `
 

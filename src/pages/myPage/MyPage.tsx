@@ -5,18 +5,22 @@ import { useNavigate } from 'react-router-dom'
 import { closeModal, openModal, resetModalState } from '@/store/slices/modal.slice'
 import { useAppDispatch } from '@/store/store'
 import { INITIAL_USER, deleteCookie, logout, resetUserInfo } from '@/utils/storage'
+import { unConfirmService } from '@/store/slices/intro.slice'
 export const MyPage = (): React.ReactNode => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const [deleteUserTriger, _deleteUser] = useDeleteUserMutation()
+  const [deleteUserTriger] = useDeleteUserMutation()
 
   const leaveBoombim = (): void => {
     deleteUserTriger()
       .then(() => {
-        navigate('/')
         resetUserInfo()
         logout()
         deleteCookie(INITIAL_USER)
+      })
+      .then(() => {
+        dispatch(unConfirmService())
+        navigate('/')
       })
       .catch(() => {
         alert('떠나기에 실패하였습니다. 관리자에게 문의 바랍니다.')
@@ -41,6 +45,7 @@ export const MyPage = (): React.ReactNode => {
             text: '서비스 종료하기',
             onClick: () => {
               leaveBoombim()
+              dispatch(closeModal())
             },
           },
         },
@@ -65,8 +70,7 @@ export const MyPage = (): React.ReactNode => {
           cancleOption: {
             text: '떠나기',
             onClick: () => {
-              dispatch(resetModalState())
-              openLeaveModal()
+              newOpenModal()
             },
           },
         },
@@ -74,9 +78,17 @@ export const MyPage = (): React.ReactNode => {
     )
   }
 
+  const newOpenModal = () => {
+    dispatch(resetModalState())
+    dispatch(closeModal())
+    setTimeout(() => {
+      openLeaveModal()
+    }, 100)
+  }
+
   return (
     <Styles.Container>
-      <Styles.InfoSection></Styles.InfoSection>
+      {/* <Styles.InfoSection></Styles.InfoSection> */}
       <Styles.ListSection>
         <Styles.ListItem
           onClick={() => {
