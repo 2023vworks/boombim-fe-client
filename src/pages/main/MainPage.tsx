@@ -120,7 +120,11 @@ export const MainPage = (): React.ReactNode => {
 
   const handleCancelMark = (): void => {
     dispatch(setMapType({ mapType: 'NORMAL' }))
+
     circle?.setMap(null)
+    map?.setDraggable(true)
+    map?.setZoomable(true)
+    newMark?.setMap(null)
   }
 
   useEffect(() => {
