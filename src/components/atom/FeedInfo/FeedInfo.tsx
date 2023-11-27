@@ -13,7 +13,6 @@ export interface InfoProps {
     iconType: ICON_TYPE
     strokeColor: string
     fillColor: string
-    strokeColor: string
     width: string
     height: string
   }
