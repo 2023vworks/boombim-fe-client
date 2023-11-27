@@ -1,0 +1,82 @@
+name: PROD[BOOMBIM] - Build and Deploy
+
+on:
+  push:
+    tags:
+      - v[0-9]+.[0-9]+.[0-9]+
+      - v[0-9]+.[0-9]+.[0-9]+-beta.[0-9]+
+
+env:
+  AWS_S3_BUCKET_URL: s3://heat-it
+  AWS_CLOUDFRONT_DISTRIBUTION_ID: E2HB9HA8REH6YB
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup node version
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.14.2
+
+      - name: Install dependencies
+        run: |
+          yarn install
+
+      - name: Build React
+        run: |
+          yarn build
+
+  deploy:
+    needs: build
+    name: Deploy
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup node version
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.14.2
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
+
+      - name: Install dependencies
+        run: |
+          yarn install
+
+      - name: Build React
+        env:
+          VITE_APP_TITLE: ${{ secrets.VITE_APP_TITLE }}
+          VITE_APP_KAKAO_MAP_KEY: ${{ secrets.VITE_APP_KAKAO_MAP_KEY }}
+        run: |
+          yarn build
+
+      - name: Copy files to the test website with the AWS CLI
+        run: |
+          aws s3 cp ./dist ${{ env.AWS_S3_BUCKET_URL }} --recursive
+
+      - name: Invalidate Cloudfront Cache
+        uses: chetan/invalidate-cloudfront-action@master
+        env:
+          DISTRIBUTION: ${{ env.AWS_CLOUDFRONT_DISTRIBUTION_ID }}
+          PATHS: '/*'
+        continue-on-error: true

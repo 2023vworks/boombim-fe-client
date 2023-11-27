@@ -54,7 +54,7 @@ export const boombimApi = createApi({
           params,
         }
       },
-      providesTags: (result, id) => [{ type: 'PostFeed' }],
+      providesTags: () => [{ type: 'PostFeed' }],
     }),
 
     /**
@@ -105,7 +105,7 @@ export const boombimApi = createApi({
           params,
         }
       },
-      providesTags: (result, id) => [{ type: 'PostComment' }],
+      providesTags: () => [{ type: 'PostComment' }],
     }),
 
     /**
