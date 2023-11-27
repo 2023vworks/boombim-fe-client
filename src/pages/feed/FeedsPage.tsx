@@ -7,16 +7,18 @@ import { useNavigate } from 'react-router-dom'
 import { useGetFeedsQuery } from '@/store/asyncSlice/asyncSlice'
 import { getRectangleCoordinates } from '@/utils/map'
 import Empty from '@/components/template/Empty/Empty'
+import { useAppDispatch } from '@/store/store'
+import { setSelectedMarker } from '@/store/slices/mark.slice'
 // import { Loading } from '@/components/atom/Loading/Loading'
 
 export const FeedsPage = (): React.ReactNode => {
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
 
   const [currentDongs, setCurrentDongs] = useState<string[]>([])
   const [querySkip, setQuerySkip] = useState<boolean>(true)
 
   const { location, error } = useGeoLocation()
-  //   const { setSelectedFeed } = useFeed()
 
   const geocoder = new kakao.maps.services.Geocoder()
 
@@ -33,7 +35,7 @@ export const FeedsPage = (): React.ReactNode => {
   }
 
   const goToFeedDetail = (feedId: number): void => {
-    // setSelectedFeed(feedId)
+    dispatch(setSelectedMarker({ selectedMarkerId: feedId, isFromFeeds: true }))
     navigate('/')
   }
 
@@ -51,14 +53,14 @@ export const FeedsPage = (): React.ReactNode => {
 
   useEffect(() => {
     let nearbyDongCors: Array<{
-      lat: number
       lng: number
+      lat: number
     }> = []
 
     if (error) {
       nearbyDongCors = getRectangleCoordinates({
-        currentLat: 127.1016036190607,
-        currentLng: 37.51123577512732,
+        currentLat: 37.51123577512732,
+        currentLng: 127.1016036190607,
         radiusInMeters: 300,
       })
     }
@@ -74,7 +76,6 @@ export const FeedsPage = (): React.ReactNode => {
 
     Promise.all(nearbyDongNames)
       .then((dongName) => {
-        console.log('dongName', dongName)
         setCurrentDongs(dongName)
       })
       .catch((err) => {

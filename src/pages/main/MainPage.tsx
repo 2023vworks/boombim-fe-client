@@ -1,6 +1,6 @@
 /* eslint-disable multiline-ternary */
 import Icon from '@/bds/Icon/Icon'
-import { Map } from '@/components/template/Map/Map'
+import { type ConvertedMarker, Map } from '@/components/template/Map/Map'
 import useMaps from '@/hooks/useMaps'
 import { useLazyGetMarksQuery } from '@/store/asyncSlice/asyncSlice'
 import { useAppSelector, useAppDispatch } from '@/store/store'
@@ -14,13 +14,15 @@ import { useEffect, useState } from 'react'
 
 export const MainPage = (): React.ReactNode => {
   // State
-  const { map, containerRef, movePosition, drawCircleHole, newMark, pickMarker, circle } = useMaps()
+  const { map, containerRef, movePosition, drawCircleHole, newMarker, pickMarker, circle } = useMaps()
   const [currentBounds, setCurrentBounds] = useState<BoundPosition>()
   const [currentCenterPosition, setCurrentCenterPosition] = useState<Position>()
+  const [convertedMarkers, setConvertedMarkers] = useState<ConvertedMarker[]>([])
 
   const currentGeoLocation = useAppSelector((state) => state.map.currentGeoLocation)
   const currentMapType = useAppSelector((state) => state.map.mapType)
   const isOpenDrawer = useAppSelector((state) => state.drawer.isOpen)
+  const selectedMarker = useAppSelector((state) => state.marker)
 
   const { height } = useAppSelector((state) => state.map)
   const dispatch = useAppDispatch()
@@ -40,45 +42,12 @@ export const MainPage = (): React.ReactNode => {
     }
   }
 
-  useEffect(() => {
-    if (!map) return
-    const currentBounds = getCurrentBounds(map)
-    setCurrentBounds(currentBounds as BoundPosition)
-  }, [map])
-
   const [trigger, { data }] = useLazyGetMarksQuery()
 
   const reloadMap = () => {
     if (!map) return
     map.relayout()
   }
-
-  useEffect(() => {
-    if (!containerRef?.current) return
-    containerRef?.current.addEventListener('transitionend', handleCenterPosition)
-
-    return () => {
-      if (!containerRef?.current) return
-      containerRef?.current.removeEventListener('transitionend', handleCenterPosition)
-    }
-  }, [])
-
-  useEffect(() => {
-    if (!map || !currentBounds) return
-    void trigger({
-      size: 90,
-      minX: currentBounds.southWestPosition.lng,
-      minY: currentBounds.southWestPosition.lat,
-      maxX: currentBounds.northEastPosition.lng,
-      maxY: currentBounds.northEastPosition.lat,
-    }).unwrap()
-  }, [map, currentBounds, currentCenterPosition])
-
-  useEffect(() => {
-    if (!map || !currentGeoLocation) return
-    movePosition(currentGeoLocation)
-    map.relayout()
-  }, [currentGeoLocation])
 
   const handleDragEnd = () => {
     if (!map) return
@@ -97,6 +66,7 @@ export const MainPage = (): React.ReactNode => {
 
   const handleCenterPosition = () => {
     if (!map) return
+
     const position = {
       lat: map.getCenter().getLat(),
       lng: map.getCenter().getLng(),
@@ -112,9 +82,21 @@ export const MainPage = (): React.ReactNode => {
   }
 
   const handleConfirmMark = (mark: kakao.maps.Marker | null): void => {
-    if (!mark) return
-    const markPosition = mark.getPosition()
-    dispatch(setNewMarker({ currentPickMarkerPosition: { x: markPosition.getLng(), y: markPosition.getLat() } }))
+    if (!mark || !containerRef?.current) return
+
+    const newMarkPosition = mark.getPosition()
+
+    const moveMap = () => {
+      map?.relayout()
+      map?.panTo(newMarkPosition)
+    }
+    containerRef?.current.addEventListener('transitionend', moveMap, { once: true })
+
+    if (height === '100%') {
+      dispatch(setMapSize({ height: '40%' }))
+    }
+
+    dispatch(setNewMarker({ currentPickMarkerPosition: { x: newMarkPosition.getLng(), y: newMarkPosition.getLat() } }))
     dispatch(openDrawer({ drawerType: 'FEED_CREATE_TYPE' }))
   }
 
@@ -124,9 +106,105 @@ export const MainPage = (): React.ReactNode => {
     circle?.setMap(null)
     map?.setDraggable(true)
     map?.setZoomable(true)
-    newMark?.setMap(null)
+    newMarker?.setMap(null)
   }
 
+  const handleClickMark = (geoMarkId: number) => {
+    if (!map || !containerRef?.current) return
+
+    if (height === '100%') {
+      dispatch(setMapSize({ height: '40%' }))
+    }
+
+    dispatch(setSelectedMarker({ selectedMarkerId: geoMarkId }))
+    dispatch(openDrawer({ drawerType: 'DETAIL' }))
+  }
+
+  /**
+   * @ 현재 실제 위치를 가지고 올때 지도를 재구성
+   */
+  useEffect(() => {
+    if (!map || !currentGeoLocation) return
+    movePosition(currentGeoLocation)
+    map.relayout()
+  }, [currentGeoLocation])
+
+  /**
+   * @ 보여지는 지도의 center가 변경될 때 지도를 재구성
+   */
+  useEffect(() => {
+    if (!map) return
+    map.relayout()
+  }, [currentCenterPosition])
+
+  /**
+   * @ Map의 현재 bound set
+   */
+  useEffect(() => {
+    if (!map) return
+    const currentBounds = getCurrentBounds(map)
+    setCurrentBounds(currentBounds as BoundPosition)
+  }, [map])
+
+  /**
+   * @ Map의 transition이 끝날 때 center position을 설정하는 event 등록
+   */
+  useEffect(() => {
+    if (!containerRef?.current) return
+    containerRef?.current.addEventListener('transitionend', handleCenterPosition)
+
+    return () => {
+      if (!containerRef?.current) return
+      containerRef?.current.removeEventListener('transitionend', handleCenterPosition)
+    }
+  }, [])
+
+  /**
+   * @ Map의 center positio과 bound가 변경될 때 markers 조회
+   */
+  useEffect(() => {
+    if (!map || !currentBounds) return
+    void trigger({
+      size: 90,
+      minX: currentBounds.southWestPosition.lng,
+      minY: currentBounds.southWestPosition.lat,
+      maxX: currentBounds.northEastPosition.lng,
+      maxY: currentBounds.northEastPosition.lat,
+    }).unwrap()
+  }, [map, currentBounds, currentCenterPosition])
+
+  /**
+   * @ Map Type이 마커를 찍는 type으로 변경될 때 markers를 convert
+   */
+  useEffect(() => {
+    if (!data) return
+
+    let markers = []
+    if (currentMapType === 'PICKMARK') {
+      markers = data.data.map((marker) => {
+        return { ...marker, opacity: 0.5, clickable: false }
+      })
+    } else {
+      markers = [...data.data]
+    }
+    setConvertedMarkers(markers)
+  }, [data, currentMapType])
+
+  /**
+   * @ Map Type이 Normal 변경될 때 지도를 이동 제한 해제, 원 지우시
+   */
+  useEffect(() => {
+    if (map && currentMapType === MAP_UNION_TYPE.NORMAL && circle && newMarker) {
+      circle.setMap(null)
+      map.setDraggable(true)
+      map.setZoomable(true)
+      newMarker.setMap(null)
+    }
+  }, [currentMapType, map, circle, newMarker])
+
+  /**
+   * @ Map Type이 Pick marker로 변경될 때 지도를 이동, 확대 제한, 원 그리기
+   */
   useEffect(() => {
     if (map && currentMapType === MAP_UNION_TYPE.PICKMARK) {
       const center = map.getCenter()
@@ -137,15 +215,9 @@ export const MainPage = (): React.ReactNode => {
     }
   }, [currentMapType, map])
 
-  useEffect(() => {
-    if (map && currentMapType === MAP_UNION_TYPE.NORMAL && circle && newMark) {
-      circle.setMap(null)
-      map.setDraggable(true)
-      map.setZoomable(true)
-      newMark.setMap(null)
-    }
-  }, [currentMapType, map, circle, newMark])
-
+  /**
+   * @ Map Type이 Pick marker로 변경될 때 원 내부 event( 마커 생성 ) 등록
+   */
   useEffect(() => {
     if (map && currentMapType === MAP_UNION_TYPE.PICKMARK && !isOpenDrawer) {
       kakao.maps.event.addListener(map, 'click', handlePickMarker)
@@ -153,28 +225,44 @@ export const MainPage = (): React.ReactNode => {
     return () => {
       map && kakao.maps.event.removeListener(map, 'click', handlePickMarker)
     }
-  }, [currentMapType, map, isOpenDrawer, newMark])
+  }, [currentMapType, map, isOpenDrawer, newMarker])
 
+  /**
+   * @ 피드 모아보기에서 메인페이지 피드 상세로 이동
+   */
   useEffect(() => {
-    if (!map) return
-    map.relayout()
-  }, [currentCenterPosition])
-
-  const handleClickMark = (geoMarkId: number) => {
-    if (!map || !containerRef?.current) return
-
-    if (height === '100%') {
-      dispatch(setMapSize({ height: '40%' }))
+    if (!map || !containerRef?.current || !selectedMarker.isFromFeeds || !selectedMarker.selectedMarkerId || !data) {
+      return
     }
 
-    dispatch(setSelectedMarker(geoMarkId))
-    dispatch(openDrawer({ drawerType: 'DETAIL' }))
-  }
+    if (data.data.length === 0) {
+      alert('해당 마커가 존재하지 않습니다. ')
+      return
+    }
+
+    const selectedMarkerInfo = data.data.filter((marker) => {
+      return marker.id === selectedMarker.selectedMarkerId
+    })
+
+    if (selectedMarkerInfo.length === 0) {
+      alert('해당 마커가 존재하지 않습니다. ')
+      return
+    }
+
+    const newPosition = new kakao.maps.LatLng(selectedMarkerInfo[0].y, selectedMarkerInfo[0].x)
+    const moveMap = () => {
+      map?.relayout()
+      map?.panTo(newPosition)
+    }
+    containerRef?.current.addEventListener('transitionend', moveMap, { once: true })
+
+    handleClickMark(selectedMarker.selectedMarkerId)
+  }, [selectedMarker, data])
 
   return (
     <Styles.Container>
       <Map
-        markers={data?.data}
+        convertedMarkers={convertedMarkers}
         maxLevel={4}
         minLevel={2}
         map={map}
@@ -187,7 +275,7 @@ export const MainPage = (): React.ReactNode => {
           <Styles.ButtonWraaper
             $type={'MAIN'}
             onClick={() => {
-              handleConfirmMark(newMark)
+              handleConfirmMark(newMarker)
             }}
           >
             <Icon

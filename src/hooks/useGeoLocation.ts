@@ -1,4 +1,5 @@
 import { type Position } from '@/types/map'
+import { INITIAL_USER, getCookie } from '@/utils/storage'
 import { useEffect, useState } from 'react'
 
 export default function useGeoLocation() {
@@ -6,6 +7,7 @@ export default function useGeoLocation() {
   const [error, setError] = useState('')
 
   useEffect(() => {
+    if (getCookie(INITIAL_USER) === null) return
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {

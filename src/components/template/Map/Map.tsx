@@ -2,19 +2,24 @@ import { MAP_ID, type Marker } from '@/hooks/useMaps'
 import { useAppSelector } from '@/store/store'
 import { type Position } from '@/types/map'
 import { type GetGeoMarksResponseDTO } from '@/types/marker'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import marker_level_1 from '@/assets/images/marker_level_1.png'
 import marker_level_2 from '@/assets/images/marker_level_2.png'
 import marker_level_3 from '@/assets/images/marker_level_3.png'
 import marker_level_4 from '@/assets/images/marker_level_4.png'
 import marker_level_5 from '@/assets/images/marker_level_5.png'
 
+export interface ConvertedMarker extends GetGeoMarksResponseDTO {
+  opacity?: number
+  clickable?: boolean
+}
+
 interface Props {
   minLevel?: number
   maxLevel?: number
   currentZoomLevel?: number
   draggable?: boolean
-  markers?: GetGeoMarksResponseDTO[]
+  convertedMarkers?: ConvertedMarker[]
   containerRef: React.RefObject<HTMLDivElement> | null
   map: kakao.maps.Map | null
 
@@ -30,12 +35,13 @@ export const Map = ({
   maxLevel,
   currentZoomLevel,
   draggable,
-  markers,
+  convertedMarkers,
   onDrageEnd,
   onClick,
   onClickMark,
 }: Props): React.ReactNode => {
   const { width, height } = useAppSelector((state) => state.map)
+  const [markers, setMarkers] = useState<Array<kakao.maps.Marker | null>>([])
 
   // Set Drag-End Event
   useEffect(() => {
@@ -87,34 +93,54 @@ export const Map = ({
     }
   }, [width, height])
 
-  const setMarker = ({ img, position, clickable = true, onClick }: Marker): void => {
-    if (map) {
-      const marker = new kakao.maps.Marker({
-        map,
-        image: img,
-        position: new kakao.maps.LatLng(position.lat, position.lng),
-        clickable,
-      })
-      kakao.maps.event.addListener(marker, 'click', onClick)
-
-      marker.setMap(map)
-    }
+  const makeMarker = ({ img, position, opacity = 1, clickable = true, onClick }: Marker): kakao.maps.Marker | null => {
+    if (!map) return null
+    const marker = new kakao.maps.Marker({
+      map,
+      image: img,
+      opacity,
+      position: new kakao.maps.LatLng(position.lat, position.lng),
+      clickable,
+    })
+    kakao.maps.event.addListener(marker, 'click', onClick)
+    return marker
   }
 
   useEffect(() => {
-    if (!markers || !map) return
-    markers.forEach((marker) => {
-      setMarker({
+    if (!convertedMarkers || !map) return
+    const newMarkers = convertedMarkers.map((marker) => {
+      return makeMarker({
         position: { lat: marker.y, lng: marker.x },
         img: selectMarkerImage(marker.activity),
+        opacity: marker.opacity ?? 1,
+        clickable: marker.clickable ?? true,
         onClick: () => {
           handleClickMarker(map, { lat: marker.y, lng: marker.x }, marker.id)
         },
       })
     })
+
+    setMarkers((prevMarkers) => {
+      if (prevMarkers) {
+        prevMarkers.forEach((marker) => {
+          if (!marker) return
+          marker.setMap(null)
+        })
+      }
+      return newMarkers
+    })
+  }, [convertedMarkers, map])
+
+  useEffect(() => {
+    if (!map) return
+
+    markers.forEach((marker) => {
+      if (!marker) return
+      marker.setMap(map)
+    })
   }, [markers, map])
 
-  const handleClickMarker = (map: kakao.maps.Map, position: Position, geoMarkId: number) => {
+  const handleClickMarker = (map: kakao.maps.Map, position: Position, geoMarkId: number): void => {
     if (!containerRef?.current) return
     const newPosition = new kakao.maps.LatLng(position.lat, position.lng)
     const moveMap = () => {

@@ -26,7 +26,7 @@ const INTERACTION_CONFIG = [
 ]
 
 export const FeedDetail = () => {
-  const geoMarkId = useAppSelector((state) => state.marker.selectedMarker)
+  const geoMarkId = useAppSelector((state) => state.marker.selectedMarkerId)
   const [state, setState] = useState(false)
   const [inputValue, setInputValue] = useState('')
 

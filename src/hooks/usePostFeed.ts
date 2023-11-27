@@ -9,7 +9,7 @@ import { type Address, type RegionCode, type RoadAddress } from '@/types/feed'
 import { useNavigate } from 'react-router-dom'
 import { getCheckedHashTagArray } from '@/utils/common'
 import { removeImage, resetImage } from '@/store/slices/image.slice'
-import { setMapType } from '@/store/slices/map.slice'
+import { setMapSize, setMapType } from '@/store/slices/map.slice'
 import { closeDrawer } from '@/store/slices/drawer.slice'
 
 interface ResponseType {
@@ -86,6 +86,13 @@ export default function usePostFeed({ position }: Props): ResponseType {
       y: position.y,
     }
 
+    const closePostFeed = (): void => {
+      dispatch(setMapType({ mapType: 'NORMAL' }))
+      dispatch(setMapSize({ height: '100%' }))
+      dispatch(closeDrawer())
+      comfirmPostFeedwithMessage('피드작성이 완료되었습니다.')
+    }
+
     const checkedDupShopText = getCheckedHashTagArray(text)
     feedTrigger({
       content: text,
@@ -95,14 +102,12 @@ export default function usePostFeed({ position }: Props): ResponseType {
       .unwrap()
       .then((res) => {
         if (!imageFormdata) {
-          dispatch(setMapType({ mapType: 'NORMAL' }))
-          dispatch(closeDrawer())
-          return comfirmPostFeedwithMessage('피드작성이 완료되었습니다.')
+          return closePostFeed()
         }
         uploadTrigger({ id: res.data.feedId, body: imageFormdata })
           .unwrap()
           .then(() => {
-            return comfirmPostFeedwithMessage('피드작성이 완료되었습니다.')
+            return closePostFeed()
           })
           .catch((err) => {
             return comfirmPostFeedwithMessage(err.message)

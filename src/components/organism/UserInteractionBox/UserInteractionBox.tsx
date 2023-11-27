@@ -4,19 +4,14 @@ import { useAppSelector } from '@/store/store'
 import useUserInteraction from '@/hooks/useUserInteraction'
 import { INTERACTION_UNION_TYPE, type INTERACTION_TYPE } from '@/constants/feed'
 import Icon, { ICON_UNION_TYPE } from '@/bds/Icon/Icon'
-import { useEffect } from 'react'
 
 interface Props {
   interactionConfigs: Array<{ interactionType: INTERACTION_TYPE }>
 }
 
 export default function UserInteractionBox({ interactionConfigs }: Props) {
-  const selectedMarkerId = useAppSelector((state) => state.marker.selectedMarker)
+  const selectedMarkerId = useAppSelector((state) => state.marker.selectedMarkerId)
   const { webShare, recommendFeed, unRecommendFeed, reportFeed } = useUserInteraction()
-
-  useEffect(() => {
-    console.log(selectedMarkerId)
-  }, [selectedMarkerId])
 
   const INTERACTION_INFOS = {
     [INTERACTION_UNION_TYPE.USER_REPORT]: {
