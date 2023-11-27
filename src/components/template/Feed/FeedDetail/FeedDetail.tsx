@@ -42,8 +42,13 @@ export const FeedDetail = () => {
   const [trigger, { data }] = useLazyGetFeedDetailByMarkerIdQuery()
   useEffect(() => {
     if (!geoMarkId) return
+    console.log(geoMarkId)
     void trigger(geoMarkId).unwrap()
   }, [geoMarkId])
+
+  useEffect(() => {
+    console.log(data?.data)
+  }, [data])
 
   const {
     data: commentList,

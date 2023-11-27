@@ -5,7 +5,7 @@ import { IntroStart } from './components/molcules/IntroStart/IntroStart'
 import { IntroDescription } from './components/molcules/IntroDescription/IntroDescription'
 import { IntroAuthorization } from './components/molcules/IntroAuthorization/IntroAuthorization'
 import { IntroLogin } from './components/molcules/IntroLogin/IntroLogin'
-import { useNavigate } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom'
 
 const INTRO_STEP = {
   START: 'START',
@@ -16,8 +16,8 @@ const INTRO_STEP = {
 
 type INTRO_STEP_ENUM = (typeof INTRO_STEP)[keyof typeof INTRO_STEP]
 
-export const IntroPage = (): React.ReactNode => {
-  const navigate = useNavigate()
+export const IntroPage = ({ onConfirm }: { onConfirm: () => void }): React.ReactNode => {
+  // const navigate = useNavigate()
   const [step, setStep] = useState<INTRO_STEP_ENUM>(INTRO_STEP.START)
 
   const IntroComponent = useCallback(() => {
@@ -53,7 +53,7 @@ export const IntroPage = (): React.ReactNode => {
         return (
           <IntroLogin
             onNext={() => {
-              navigate('/')
+              onConfirm()
             }}
           />
         )
