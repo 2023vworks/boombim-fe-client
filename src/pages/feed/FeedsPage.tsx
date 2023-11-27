@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import useGeoLocation from '@/hooks/useGeoLocation'
-// import Loading from '@/components/atoms/Loading/Loading'
 import { FeedCard } from '@/pages/feed/components/molcules/FeedCard/FeedCard'
 import * as Styles from './FeedsPage.styled'
 import { useNavigate } from 'react-router-dom'
@@ -9,7 +8,7 @@ import { getRectangleCoordinates } from '@/utils/map'
 import Empty from '@/components/template/Empty/Empty'
 import { useAppDispatch } from '@/store/store'
 import { setSelectedMarker } from '@/store/slices/mark.slice'
-// import { Loading } from '@/components/atom/Loading/Loading'
+import { setCurrentDongList } from '@/store/slices/map.slice'
 
 export const FeedsPage = (): React.ReactNode => {
   const navigate = useNavigate()
@@ -84,6 +83,7 @@ export const FeedsPage = (): React.ReactNode => {
   }, [location, error])
 
   useEffect(() => {
+    dispatch(setCurrentDongList({ list: currentDongs }))
     if (currentDongs.length !== 0) {
       setQuerySkip(false)
     }
@@ -98,7 +98,7 @@ export const FeedsPage = (): React.ReactNode => {
             key={feed.id}
             geoMarkId={feed.geoMarkId}
             activity={feed.activity}
-            name={`${feed.user.mbtiType}#${feed.user.nickname}`}
+            name={feed.user ? `${feed.user.mbtiType}#${feed.user.nickname}` : '떠나간 유저'}
             dong={feed.geoMarkRegion}
             activationAt={feed.activationAt}
             createdAt={feed.createdAt}

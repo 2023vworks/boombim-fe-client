@@ -17,6 +17,7 @@ interface MapInitialState {
   currentRegion: Region
   currentGeoLocation: Position | null
   mapType: MAP_TYPE
+  currentDongList: string[] | null
   currentPickMarkerPosition: { x: number; y: number }
 }
 
@@ -32,6 +33,7 @@ const initialState: MapInitialState = {
   currentGeoLocation: null,
   mapType: 'NORMAL',
   currentPickMarkerPosition: { x: 0, y: 0 },
+  currentDongList: null,
 }
 
 const mapSlice = createSlice({
@@ -58,8 +60,12 @@ const mapSlice = createSlice({
     setNewMarker(state, action: PayloadAction<Pick<MapInitialState, 'currentPickMarkerPosition'>>) {
       state.currentPickMarkerPosition = action.payload.currentPickMarkerPosition
     },
+    setCurrentDongList(state, action: PayloadAction<{ list: string[] }>) {
+      state.currentDongList = action.payload.list
+    },
   },
 })
 
-export const { setMapSize, setRegion, setCurrentGeoLocation, setMapType, setNewMarker } = mapSlice.actions
+export const { setMapSize, setRegion, setCurrentGeoLocation, setMapType, setNewMarker, setCurrentDongList } =
+  mapSlice.actions
 export default mapSlice.reducer

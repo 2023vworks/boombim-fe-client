@@ -13,7 +13,11 @@ export const Header = styled.section`
 `
 
 export const DisplayBoard = styled.section`
+  display: flex;
+  align-items: center;
+  gap: 8px;
   width: 100%;
   height: 38px;
+  padding-left: 18px;
   border: 1px solid #000000bf;
 `
