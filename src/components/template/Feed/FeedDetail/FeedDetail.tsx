@@ -83,7 +83,7 @@ export const FeedDetail = () => {
         {data && (
           <FeedCard
             activity={data?.data[0].activity}
-            name={`${data?.data[0].user.mbtiType}#${data?.data[0].user.nickname}`}
+            name={data.data[0].user ? `${data?.data[0].user.mbtiType}#${data?.data[0].user.nickname}` : '떠나간 유저'}
             dong={data.data[0].geoMark.regionInfo.region3DepthName}
             content={data.data[0].content}
             viewCount={data.data[0].viewCount}

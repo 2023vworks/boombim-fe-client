@@ -2,7 +2,7 @@ export interface GetUserResponseDTO {
   id: number
   createdAt: Date
   updatedAt: Date
-  mbti: string
+  mbtiType: string
   nickname: string
   feedWritingCount: number
   lastFeedWrittenAt: Date

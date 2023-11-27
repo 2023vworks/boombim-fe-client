@@ -74,7 +74,6 @@ export const MainPage = (): React.ReactNode => {
 
     setCurrentCenterPosition(position)
     reloadMap()
-    // map.relayout()
   }
 
   const handlePickMarker = function (mouseEvent: { latLng: { Ma: number; La: number } }): void {

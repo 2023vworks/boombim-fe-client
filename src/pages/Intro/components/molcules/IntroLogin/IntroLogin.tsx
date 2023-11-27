@@ -33,7 +33,7 @@ export const IntroLogin = ({ onNext }: Props): React.ReactNode => {
     PJ: 'P',
   })
 
-  const [postUserTrigger, _postUser] = usePostUserMutation()
+  const [postUserTrigger] = usePostUserMutation()
 
   const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>): void => {
     const value = e.target.value
