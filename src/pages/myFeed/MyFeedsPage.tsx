@@ -14,7 +14,7 @@ export default function MyFeedsPage() {
 
   const navigate = useNavigate()
 
-  const goToFeedDetail = (feedId: number): void => {
+  const goToFeedDetail = (): void => {
     // setSelectedFeed(feedId)
     navigate('/')
   }
