@@ -51,25 +51,11 @@ export const FeedsPage = (): React.ReactNode => {
   )
 
   useEffect(() => {
-    let nearbyDongCors: Array<{
-      lng: number
-      lat: number
-    }> = []
-
-    if (error) {
-      nearbyDongCors = getRectangleCoordinates({
-        currentLat: 37.51123577512732,
-        currentLng: 127.1016036190607,
-        radiusInMeters: 300,
-      })
-    }
-    if (location.lat !== 0 && location.lng !== 0) {
-      nearbyDongCors = getRectangleCoordinates({
-        currentLat: location.lat,
-        currentLng: location.lng,
-        radiusInMeters: 300,
-      })
-    }
+    const nearbyDongCors = getRectangleCoordinates({
+      currentLat: location ? location.lat : 37.51123577512732,
+      currentLng: location ? location.lng : 127.1016036190607,
+      radiusInMeters: 300,
+    })
 
     const nearbyDongNames = nearbyDongCors.map(async (nearbyDongCor) => await getDongName(nearbyDongCor))
 
