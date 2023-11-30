@@ -6,23 +6,26 @@ interface Props {
 export default function remainTimeCount({ activationAt, currentAt }: Props): string {
   const activationDate = new Date(activationAt)
   const currentDate = new Date(currentAt)
-  const diffTime = new Date(activationDate.getTime() - currentDate.getTime())
-
-  // const diffDate = diffTime / (24 * 60 * 60 * 1000)
-  // const diffHour = diffTime / (60 * 60 * 1000)
-  // const diffMin = diffTime / (60 * 1000)
-
-  // console.log(Math.floor(diffTime / (60 * 60 * 1000)) * 60)
-
   let diffTimeToTTMM
-  if (diffTime.getHours() > 0) {
-    diffTimeToTTMM = `${Math.floor(diffTime.getHours()) * 60 + diffTime.getMinutes()}:${
-      diffTime.getSeconds() < 10 ? `0${diffTime.getSeconds()}` : diffTime.getSeconds()
-    }`
+
+  if (activationDate < currentDate) {
+    diffTimeToTTMM = '00:00'
+    return diffTimeToTTMM
+  }
+  const diffTime = activationDate.getTime() - currentDate.getTime()
+
+  const secondsDifference = diffTime / 1000
+  const minutesDifference = secondsDifference / 60
+  const hoursDifference = minutesDifference / 60
+
+  const hours = Math.floor(hoursDifference)
+  const minutes = Math.floor(minutesDifference % 60)
+  const seconds = Math.floor(secondsDifference % 60)
+
+  if (hours > 0) {
+    diffTimeToTTMM = `${Math.floor(hours) * 60 + minutes}:${seconds < 10 ? `0${seconds}` : seconds}`
   } else {
-    diffTimeToTTMM = `${diffTime.getMinutes() < 10 ? `0${diffTime.getMinutes()}` : diffTime.getMinutes()}:${
-      diffTime.getSeconds() < 10 ? `0${diffTime.getSeconds()}` : diffTime.getSeconds()
-    }`
+    diffTimeToTTMM = `${minutes < 10 ? `0${minutes}` : minutes}:${seconds < 10 ? `0${seconds}` : seconds}`
   }
 
   return diffTimeToTTMM

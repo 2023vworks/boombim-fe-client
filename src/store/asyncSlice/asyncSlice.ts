@@ -38,7 +38,7 @@ export const boombimApi = createApi({
       return headers
     },
   }) as BaseQueryFn<string | FetchArgs, unknown, ErrorResponseDTO>,
-  tagTypes: ['PostComment', 'PostFeed'],
+  tagTypes: ['PostComment', 'PostFeed', 'getFeedDetail'],
   endpoints: (builder) => ({
     /**
      * * FEED DOMAIN
@@ -67,6 +67,7 @@ export const boombimApi = createApi({
           method: 'GET',
         }
       },
+      providesTags: () => [{ type: 'getFeedDetail' }],
     }),
 
     /**
@@ -80,6 +81,7 @@ export const boombimApi = createApi({
           params: { geoMarkId: id },
         }
       },
+      providesTags: () => [{ type: 'getFeedDetail' }],
     }),
 
     /**
@@ -146,6 +148,7 @@ export const boombimApi = createApi({
           method: 'POST',
         }
       },
+      invalidatesTags: ['getFeedDetail'],
     }),
 
     /**
@@ -158,6 +161,7 @@ export const boombimApi = createApi({
           method: 'POST',
         }
       },
+      invalidatesTags: ['getFeedDetail'],
     }),
 
     /**
