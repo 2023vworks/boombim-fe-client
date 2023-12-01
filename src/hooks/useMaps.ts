@@ -1,4 +1,4 @@
-import { SEOUL_POSITION } from '@/constants/position'
+import { INITIAL_POSITION, SEOUL_POSITION } from '@/constants/position'
 import { type MapSize, setMapSize } from '@/store/slices/map.slice'
 import { useAppDispatch } from '@/store/store'
 import theme from '@/styles/theme'
@@ -43,7 +43,7 @@ export default function useMaps(): ResponseType {
   useEffect(() => {
     if (containerRef !== null) {
       const container = new kakao.maps.Map(containerRef.current as HTMLElement, {
-        center: new kakao.maps.LatLng(37.511235775127325, 127.10160361906075),
+        center: new kakao.maps.LatLng(INITIAL_POSITION.lat, INITIAL_POSITION.lng),
         disableDoubleClick: true,
         level: 4,
       })

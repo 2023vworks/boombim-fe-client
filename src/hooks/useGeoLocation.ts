@@ -1,3 +1,4 @@
+import { INITIAL_POSITION } from '@/constants/position'
 import { type Position } from '@/types/map'
 import { INITIAL_USER, getCookie } from '@/utils/storage'
 import { useEffect, useState } from 'react'
@@ -35,6 +36,11 @@ export default function useGeoLocation() {
           })
         },
         (err) => {
+          // !! 위치 권한 비허용 - 초기 잠실 좌표 설정
+          setLocation({
+            lat: INITIAL_POSITION.lat,
+            lng: INITIAL_POSITION.lng,
+          })
           setError(err.message)
         },
       )

@@ -9,6 +9,7 @@ import Empty from '@/components/template/Empty/Empty'
 import { useAppDispatch } from '@/store/store'
 import { setSelectedMarker } from '@/store/slices/mark.slice'
 import { setCurrentDongList } from '@/store/slices/map.slice'
+import { INITIAL_POSITION } from '@/constants/position'
 
 export const FeedsPage = (): React.ReactNode => {
   const navigate = useNavigate()
@@ -42,8 +43,8 @@ export const FeedsPage = (): React.ReactNode => {
     {
       page: 1,
       pageSize: 10,
-      centerX: location?.lng ?? 127.10160361906075,
-      centerY: location?.lat ?? 37.511235775127325,
+      centerX: location?.lng ?? INITIAL_POSITION.lng,
+      centerY: location?.lat ?? INITIAL_POSITION.lat,
       regionType: 'H',
       dongs: currentDongs,
     },
@@ -52,8 +53,8 @@ export const FeedsPage = (): React.ReactNode => {
 
   useEffect(() => {
     const nearbyDongCors = getRectangleCoordinates({
-      currentLat: location ? location.lat : 37.51123577512732,
-      currentLng: location ? location.lng : 127.1016036190607,
+      currentLat: location ? location.lat : INITIAL_POSITION.lat,
+      currentLng: location ? location.lng : INITIAL_POSITION.lng,
       radiusInMeters: 300,
     })
 
