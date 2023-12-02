@@ -1,5 +1,5 @@
 /* eslint-disable no-mixed-operators */
-import { RegionCode, type Position } from '@/types/map'
+import { type RegionCode, type Position } from '@/types/map'
 import { isEmptyString } from './common'
 import { type Address, type RoadAddress } from '../types/feed'
 
@@ -150,31 +150,42 @@ export function checkOutsidePolygon(
   point: kakao.maps.LatLng,
   polygon: kakao.maps.LatLng[] | kakao.maps.LatLng,
 ): boolean {
-  if (Array.isArray(polygon)) {
-    const pointX: number = point.getLng()
-    const pointY: number = point.getLat()
+  if (!Array.isArray(polygon) || polygon.length < 3) {
+    // 다각형이 아니거나 세 개 미만의 좌표로 이루어진 경우 처리
+    return true // 범위를 벗어났다고 간주
+  }
 
-    const numVertices: number = polygon.length
-    let outside: boolean = true
+  const numVertices = polygon.length - 1 // 다각형의 변의 수
+  let intersectionCount = 0
+  let vertex1 = polygon[0]
 
-    let j: number = numVertices - 1
-    for (let i: number = 0; i < numVertices; i++) {
-      const xi: number = polygon[i].getLng()
-      const yi: number = polygon[i].getLat()
-      const xj: number = polygon[j].getLng()
-      const yj: number = polygon[j].getLat()
+  for (let i = 1; i <= numVertices; i++) {
+    const vertex2 = polygon[i % numVertices]
 
-      const intersect: boolean = yi > pointY !== yj > pointY && pointX < ((xj - xi) * (pointY - yi)) / (yj - yi) + xi
+    const isPointBetweenLatitudes =
+      point.getLat() > Math.min(vertex1.getLat(), vertex2.getLat()) &&
+      point.getLat() <= Math.max(vertex1.getLat(), vertex2.getLat())
 
-      if (intersect) {
-        outside = false
-        break
+    const isPointToLeftOfEdge = point.getLng() <= Math.max(vertex1.getLng(), vertex2.getLng())
+
+    const isVertex1NotEqualVertex2 = vertex1.getLat() !== vertex2.getLat()
+
+    if (isPointBetweenLatitudes && isPointToLeftOfEdge && isVertex1NotEqualVertex2) {
+      const xIntersection =
+        ((point.getLat() - vertex1.getLat()) * (vertex2.getLng() - vertex1.getLng())) /
+          (vertex2.getLat() - vertex1.getLat()) +
+        vertex1.getLng()
+
+      const isPointLeftOfEdge = vertex1.getLng() === vertex2.getLng() || point.getLng() <= xIntersection
+
+      if (isPointLeftOfEdge) {
+        intersectionCount += 1
       }
-
-      j = i
     }
 
-    return outside
+    vertex1 = vertex2
   }
-  return false
+
+  // 교차 횟수가 홀수이면 내부에 있음, 짝수이면 외부에 있음
+  return intersectionCount % 2 === 0
 }
