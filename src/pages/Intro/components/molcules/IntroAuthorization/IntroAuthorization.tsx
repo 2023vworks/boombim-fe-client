@@ -2,7 +2,7 @@ import { Button } from '@/bds/Button/Button'
 import * as Styles from './IntroAuthorization.styles'
 import { Typography } from '@/bds/Typography/Typography'
 import { useAppDispatch } from '@/store/store'
-import { setRegion } from '@/store/slices/map.slice'
+import { setCurrentGeoLocation, setRegion } from '@/store/slices/map.slice'
 import { convertKorRegion, type coord2RegionCodeReturnType } from '@/utils/map'
 
 interface Props {
@@ -13,6 +13,7 @@ export const IntroAuthorization = ({ onNext }: Props): React.ReactNode => {
   const dispatch = useAppDispatch()
 
   const regionCallbackHandler = (res: coord2RegionCodeReturnType[]) => {
+    dispatch(setCurrentGeoLocation({ lng: res[0].x, lat: res[0].y }))
     dispatch(setRegion({ bupRegion: res[0].region_3depth_name, hangRegoin: res[1].region_3depth_name }))
   }
 

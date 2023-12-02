@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from '@/store/store'
 import { useDisplayBoard } from '@/hooks/useDisplayBoard'
 
 export const GNB = (): React.ReactNode => {
-  const { location, error } = useGeoLocation()
+  const { location } = useGeoLocation()
   const currentRegion = useAppSelector((state) => state.map.currentRegion)
   const dispatch = useAppDispatch()
 
@@ -19,7 +19,7 @@ export const GNB = (): React.ReactNode => {
   }
 
   useEffect(() => {
-    if (error || !location) return
+    if (!location) return
 
     convertKorRegion(location, regionCallbackHandler)
     dispatch(setCurrentGeoLocation(location))

@@ -126,7 +126,7 @@ export const MainPage = (): React.ReactNode => {
     if (!map || !currentGeoLocation) return
     movePosition(currentGeoLocation)
     map.relayout()
-  }, [currentGeoLocation])
+  }, [currentGeoLocation, map])
 
   /**
    * @ 보여지는 지도의 center가 변경될 때 지도를 재구성
