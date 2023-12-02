@@ -1,6 +1,5 @@
 import { Typography } from '@/bds/Typography/Typography'
 import * as Styles from './MyPage.styled'
-import { useDeleteUserMutation } from '@/store/asyncSlice/asyncSlice'
 import { useNavigate } from 'react-router-dom'
 import { closeModal, openModal, resetModalState } from '@/store/slices/modal.slice'
 import { useAppDispatch } from '@/store/store'
@@ -9,22 +8,13 @@ import { unConfirmService } from '@/store/slices/intro.slice'
 export const MyPage = (): React.ReactNode => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const [deleteUserTriger] = useDeleteUserMutation()
 
   const leaveBoombim = (): void => {
-    deleteUserTriger()
-      .then(() => {
-        resetUserInfo()
-        logout()
-        deleteCookie(INITIAL_USER)
-      })
-      .then(() => {
-        dispatch(unConfirmService())
-        navigate('/')
-      })
-      .catch(() => {
-        alert('떠나기에 실패하였습니다. 관리자에게 문의 바랍니다.')
-      })
+    resetUserInfo()
+    logout()
+    deleteCookie(INITIAL_USER)
+    dispatch(unConfirmService())
+    navigate('/')
   }
 
   const openLeaveModal = () => {

@@ -232,14 +232,18 @@ export const boombimApi = createApi({
         }
       },
     }),
-    deleteUser: builder.mutation<null, void>({
-      query: () => {
-        return {
-          url: '/users/me',
-          method: 'DELETE',
-        }
-      },
-    }),
+
+    /**
+     * ! 스펙 아웃
+     */
+    // deleteUser: builder.mutation<null, void>({
+    //   query: () => {
+    //     return {
+    //       url: '/users/me',
+    //       method: 'DELETE',
+    //     }
+    //   },
+    // }),
 
     /**
      * * FILE UPLOAD DOMAIN
@@ -279,7 +283,7 @@ export const {
   useGetUserQuery,
   useGetUserFeedsQuery,
   usePostUserMutation,
-  useDeleteUserMutation,
+  // useDeleteUserMutation,
   usePostUploadImagesMutation,
   useLazyGetMarksQuery,
   useLazyGetFeedDetailByMarkerIdQuery,
