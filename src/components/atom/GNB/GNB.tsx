@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from '@/store/store'
 import { useDisplayBoard } from '@/hooks/useDisplayBoard'
 
 export const GNB = (): React.ReactNode => {
-  const { location, error } = useGeoLocation()
+  const { location } = useGeoLocation()
   const currentRegion = useAppSelector((state) => state.map.currentRegion)
   const dispatch = useAppDispatch()
 
@@ -19,7 +19,7 @@ export const GNB = (): React.ReactNode => {
   }
 
   useEffect(() => {
-    if (error) return
+    if (!location) return
 
     convertKorRegion(location, regionCallbackHandler)
     dispatch(setCurrentGeoLocation(location))
@@ -29,7 +29,7 @@ export const GNB = (): React.ReactNode => {
     <Styles.Container>
       <Styles.Header>
         <Typography size='H5' fontWeight={700} color={'black'}>
-          {!location.lat ? '위치 정보를 불러오고 있습니다.' : currentRegion.hangRegoin ?? currentRegion.bupRegion}
+          {!location ? '위치 정보를 불러오고 있습니다.' : currentRegion.hangRegoin ?? currentRegion.bupRegion}
         </Typography>
       </Styles.Header>
       <Styles.DisplayBoard>

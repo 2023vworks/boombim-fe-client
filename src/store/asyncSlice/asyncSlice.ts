@@ -38,7 +38,7 @@ export const boombimApi = createApi({
       return headers
     },
   }) as BaseQueryFn<string | FetchArgs, unknown, ErrorResponseDTO>,
-  tagTypes: ['PostComment', 'PostFeed'],
+  tagTypes: ['PostComment', 'PostFeed', 'getFeedDetail'],
   endpoints: (builder) => ({
     /**
      * * FEED DOMAIN
@@ -67,6 +67,7 @@ export const boombimApi = createApi({
           method: 'GET',
         }
       },
+      providesTags: () => [{ type: 'getFeedDetail' }],
     }),
 
     /**
@@ -80,6 +81,7 @@ export const boombimApi = createApi({
           params: { geoMarkId: id },
         }
       },
+      providesTags: () => [{ type: 'getFeedDetail' }],
     }),
 
     /**
@@ -146,6 +148,7 @@ export const boombimApi = createApi({
           method: 'POST',
         }
       },
+      invalidatesTags: ['getFeedDetail'],
     }),
 
     /**
@@ -158,6 +161,7 @@ export const boombimApi = createApi({
           method: 'POST',
         }
       },
+      invalidatesTags: ['getFeedDetail'],
     }),
 
     /**
@@ -228,14 +232,18 @@ export const boombimApi = createApi({
         }
       },
     }),
-    deleteUser: builder.mutation<null, void>({
-      query: () => {
-        return {
-          url: '/users/me',
-          method: 'DELETE',
-        }
-      },
-    }),
+
+    /**
+     * ! 스펙 아웃
+     */
+    // deleteUser: builder.mutation<null, void>({
+    //   query: () => {
+    //     return {
+    //       url: '/users/me',
+    //       method: 'DELETE',
+    //     }
+    //   },
+    // }),
 
     /**
      * * FILE UPLOAD DOMAIN
@@ -275,7 +283,7 @@ export const {
   useGetUserQuery,
   useGetUserFeedsQuery,
   usePostUserMutation,
-  useDeleteUserMutation,
+  // useDeleteUserMutation,
   usePostUploadImagesMutation,
   useLazyGetMarksQuery,
   useLazyGetFeedDetailByMarkerIdQuery,

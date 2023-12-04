@@ -126,7 +126,7 @@ export const MainPage = (): React.ReactNode => {
     if (!map || !currentGeoLocation) return
     movePosition(currentGeoLocation)
     map.relayout()
-  }, [currentGeoLocation])
+  }, [currentGeoLocation, map])
 
   /**
    * @ 보여지는 지도의 center가 변경될 때 지도를 재구성
@@ -205,14 +205,16 @@ export const MainPage = (): React.ReactNode => {
    * @ Map Type이 Pick marker로 변경될 때 지도를 이동, 확대 제한, 원 그리기
    */
   useEffect(() => {
-    if (map && currentMapType === MAP_UNION_TYPE.PICKMARK) {
-      const center = map.getCenter()
-      drawCircleHole({ lat: center.getLat(), lng: center.getLng(), radius: 25 })
+    if (map && currentMapType === MAP_UNION_TYPE.PICKMARK && currentGeoLocation) {
+      drawCircleHole({ lat: currentGeoLocation.lat, lng: currentGeoLocation.lng, radius: 25 })
+      const currentCenter = new kakao.maps.LatLng(currentGeoLocation.lat, currentGeoLocation.lng)
+      pickMarker(currentCenter)
+      map.setCenter(currentCenter)
       map.setLevel(3)
       map.setDraggable(false)
       map.setZoomable(false)
     }
-  }, [currentMapType, map])
+  }, [currentMapType, map, currentGeoLocation])
 
   /**
    * @ Map Type이 Pick marker로 변경될 때 원 내부 event( 마커 생성 ) 등록

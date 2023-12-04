@@ -2,9 +2,8 @@ import { Button } from '@/bds/Button/Button'
 import * as Styles from './IntroAuthorization.styles'
 import { Typography } from '@/bds/Typography/Typography'
 import { useAppDispatch } from '@/store/store'
-import { setRegion } from '@/store/slices/map.slice'
+import { setCurrentGeoLocation, setRegion } from '@/store/slices/map.slice'
 import { convertKorRegion, type coord2RegionCodeReturnType } from '@/utils/map'
-import { useEffect } from 'react'
 
 interface Props {
   onNext: () => void
@@ -14,11 +13,12 @@ export const IntroAuthorization = ({ onNext }: Props): React.ReactNode => {
   const dispatch = useAppDispatch()
 
   const regionCallbackHandler = (res: coord2RegionCodeReturnType[]) => {
+    dispatch(setCurrentGeoLocation({ lng: res[0].x, lat: res[0].y }))
     dispatch(setRegion({ bupRegion: res[0].region_3depth_name, hangRegoin: res[1].region_3depth_name }))
   }
 
-  const requestAuthorization = () => {
-    if (navigator.geolocation) {
+  const requestLocation = async () => {
+    return await new Promise((resolve, reject) => {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           convertKorRegion(
@@ -28,29 +28,44 @@ export const IntroAuthorization = ({ onNext }: Props): React.ReactNode => {
             },
             regionCallbackHandler,
           )
+          resolve('위치 권한 허용')
         },
         () => {
-          alert('위치 권한 허용을 하지 않는다면, 앱 이용에 제한이 있을 수 있습니다.')
+          reject(Error('위치 권한 허용을 하지 않는다면, 앱 이용에 제한이 있을 수 있습니다.'))
         },
       )
-    } else {
-      alert('위치 권한 허용을 하지 않는다면, 앱 이용에 제한이 있을 수 있습니다.')
-    }
-
-    if (navigator.mediaDevices) {
-      navigator.mediaDevices
-        .getUserMedia({
-          video: { width: 400, height: 400 },
-        })
-        .catch(() => {
-          alert('카메라 권한 허용을 하지 않는다면, 앱 이용에 제한이 있을 수 있습니다.')
-        })
-    }
+    })
   }
 
-  useEffect(() => {
-    requestAuthorization()
-  }, [])
+  const requestCamera = async () => {
+    return await new Promise((resolve, reject) => {
+      navigator.mediaDevices
+        .getUserMedia({ video: { width: 400, height: 400 } })
+        .then(() => {
+          resolve('카메라 권한 허용')
+        })
+        .catch(() => {
+          reject(Error('카메라 권한 허용을 하지 않는다면, 앱 이용에 제한이 있을 수 있습니다.'))
+        })
+    })
+  }
+
+  const authorizationHandler = (): void => {
+    const authorizations = [requestLocation(), requestCamera()]
+
+    Promise.allSettled(authorizations)
+      .then((res) => {
+        res.forEach((res) => {
+          res.status === 'rejected' && alert(res.reason)
+        })
+      })
+      .catch(() => {
+        console.log('권한 허용에 실패하였습니다.')
+      })
+      .finally(() => {
+        onNext()
+      })
+  }
 
   return (
     <Styles.Container>
@@ -86,7 +101,7 @@ export const IntroAuthorization = ({ onNext }: Props): React.ReactNode => {
           </Styles.DetailDescriptionSection>
         </Styles.DescriptionSection>
         <Styles.ButtonSection>
-          <Button text='권한 동의하기' onClick={onNext} width={320} height={42} buttonType='PRIMARY' />
+          <Button text='권한 동의하기' onClick={authorizationHandler} width={320} height={42} buttonType='PRIMARY' />
         </Styles.ButtonSection>
       </Styles.Wrapper>
     </Styles.Container>

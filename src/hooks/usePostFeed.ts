@@ -30,10 +30,8 @@ export default function usePostFeed({ position }: Props): ResponseType {
   const { data: userInfo } = useGetUserQuery()
   const navigate = useNavigate()
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [feedTrigger, _postFeed] = usePostFeedMutation()
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [uploadTrigger, _upload] = usePostUploadImagesMutation()
+  const [feedTrigger] = usePostFeedMutation()
+  const [uploadTrigger] = usePostUploadImagesMutation()
 
   const dispatch = useAppDispatch()
 

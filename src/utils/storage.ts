@@ -18,7 +18,6 @@ export const setCookie = ({ key, value, expires }: setCookieParameter): void => 
 
 export const getCookie = (key: string): string | null => {
   const cookies = document.cookie.match('(^|;) ?' + key + '=([^;]*)(;|$)')
-  console.log(cookies)
   return cookies ? cookies[2] : null
 }
 

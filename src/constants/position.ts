@@ -1,5 +1,8 @@
 import { type Position } from '@/types/map'
 
+// * 정책 상 지도의 초기 좌표( 잠실 롯데 타워 )
+export const INITIAL_POSITION = { lat: 37.511235775127325, lng: 127.10160361906075 }
+
 export const SONGPA_POSITION: Position[] = [
   { lat: 37.49906574506561, lng: 127.16100515065362 },
   { lat: 37.48958280758275, lng: 127.1583847070467 },

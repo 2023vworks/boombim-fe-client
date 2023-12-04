@@ -30,9 +30,7 @@ export const FeedCard = ({
   commentCount,
   recommendCount,
   geoMarkId,
-  selectFeed = () => {
-    console.log('hit')
-  },
+  selectFeed,
   activationAt,
   unRecommendCount,
   createdAt,
@@ -80,7 +78,7 @@ export const FeedCard = ({
   return (
     <Styles.Container
       onClick={() => {
-        selectFeed(geoMarkId)
+        selectFeed && selectFeed(geoMarkId)
       }}
     >
       <FeedHeader activity={activity} name={name} dong={dong} creactedAt={createdAt} activationAt={activationAt} />

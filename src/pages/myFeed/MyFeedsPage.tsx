@@ -5,17 +5,20 @@ import { useGetUserFeedsQuery } from '@/store/asyncSlice/asyncSlice'
 import { getUserInfo } from '@/utils/storage'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useAppDispatch } from '@/store/store'
 import styled from 'styled-components'
+import { setSelectedMarker } from '@/store/slices/mark.slice'
 
 export default function MyFeedsPage() {
+  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+
   const [userName, setUserName] = useState<string>('')
 
   const { data, isSuccess } = useGetUserFeedsQuery()
 
-  const navigate = useNavigate()
-
-  const goToFeedDetail = (): void => {
-    // setSelectedFeed(feedId)
+  const goToFeedDetail = (id: number): void => {
+    dispatch(setSelectedMarker({ selectedMarkerId: id, isFromFeeds: true }))
     navigate('/')
   }
 
