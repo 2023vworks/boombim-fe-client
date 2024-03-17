@@ -24,6 +24,15 @@ export const Wrapper = styled.div`
   align-items: center;
 `
 
+export const Header = styled.div`
+  width: 370px;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: end;
+`
+
 export const ButtonSection = styled.section`
   width: 300px;
   height: 100px;
@@ -35,6 +44,7 @@ export const ButtonSection = styled.section`
 `
 
 export const ButtonBox = styled.div`
+  cursor: pointer;
   width: 50px;
   height: 50px;
   background-color: white;

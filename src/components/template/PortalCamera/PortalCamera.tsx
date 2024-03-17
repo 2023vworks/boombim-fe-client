@@ -23,6 +23,10 @@ export default function PortalCamera() {
     screenShoot && setImgSrc(screenShoot)
   }, [webcamRef])
 
+  const cancelCapture = (): void => {
+    dispatch(closeCamera())
+  }
+
   const retake = (): void => {
     setImgSrc(null)
   }
@@ -59,6 +63,12 @@ export default function PortalCamera() {
     ? ReactDOM.createPortal(
         <Styles.Container>
           <Styles.Wrapper>
+            <Styles.Header>
+              <Styles.ButtonBox onClick={cancelCapture}>
+                <Icon iconType={ICON_UNION_TYPE.CANCEL} width='24px' height='24px' />
+              </Styles.ButtonBox>
+            </Styles.Header>
+
             {imgSrc && (
               <img
                 src={imgSrc}
