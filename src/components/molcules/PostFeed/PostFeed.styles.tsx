@@ -1,12 +1,18 @@
 import styled from 'styled-components'
 
-export const Container = styled.form`
+export const Container = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  height: calc((100% - 85px));
-  background-color: ${(props) => props.theme.color.white};
+  height: 100%;
+
+  -ms-overflow-style: none;
 `
 
-export const InputSection = styled.section``
+export const InputSection = styled.section`
+  flex: 1;
+`
 
 export const ImageList = styled.div`
   height: 90px;
@@ -26,22 +32,22 @@ export const TextField = styled.textarea`
 `
 
 export const CountSection = styled.section`
-  height: 20px;
   display: flex;
-  padding: 0px 20px;
+  gap: 10px;
+  display: flex;
+  padding: 5px 20px;
   justify-content: space-between;
 `
 
 export const ButtonSection = styled.section`
-  position: absolute;
-  bottom: 90px;
+  position: sticky;
+  bottom: 0;
   width: 100%;
-  height: 72px;
-  padding: 0px 18px;
-  background-color: ${(props) => props.theme.color.softGray};
+  padding: 14px 12px 11px 12px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background-color: ${(props) => props.theme.color.gray100};
 `
 
 export const IconWrapper = styled.div<{ $WrapperColor: string }>`
