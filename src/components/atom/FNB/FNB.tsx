@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import { SEOUL_POSITION } from '@/constants/position'
 import { checkOutsidePolygon } from '@/utils/map'
 import useGeoLocation from '@/hooks/useGeoLocation'
+import { closeModal, openModal } from '@/store/slices/modal.slice'
 
 interface FNBNavigation {
   icon: {
@@ -71,7 +72,7 @@ export const FNB = () => {
           height: '24px',
         },
         onClick: () => {
-          console.log('share')
+          handleRouteAlramPage()
         },
       },
       {
@@ -91,6 +92,28 @@ export const FNB = () => {
   )
 
   const dispatch = useAppDispatch()
+
+  const handleRouteAlramPage = () => {
+    openDisableFeature()
+  }
+
+  const openDisableFeature = () => {
+    dispatch(
+      openModal({
+        modalType: 'ALERT',
+        props: {
+          title: '🚧 지금은 공사중입니다',
+          description: '해당 기능은 추후 업데이트될 예정입니다.',
+          confirmOption: {
+            text: '닫기',
+            onClick: () => {
+              dispatch(closeModal())
+            },
+          },
+        },
+      }),
+    )
+  }
 
   const handleRouteMyPage = () => {
     navigate('/my-page')

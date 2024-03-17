@@ -16,7 +16,7 @@ const PortalModal = () => {
       case 'CONFIRM':
         return <ConfirmModal {...props} />
     }
-  }, [modalType])
+  }, [modalType, props])
 
   const modalRoot = document.querySelector('#modal-root') as HTMLElement
 
