@@ -76,6 +76,24 @@ export const MyPage = (): React.ReactNode => {
     }, 100)
   }
 
+  const openDisableFeature = () => {
+    dispatch(
+      openModal({
+        modalType: 'ALERT',
+        props: {
+          title: '🚧 지금은 공사중입니다',
+          description: '해당 기능은 추후 업데이트될 예정입니다.',
+          confirmOption: {
+            text: '닫기',
+            onClick: () => {
+              dispatch(closeModal())
+            },
+          },
+        },
+      }),
+    )
+  }
+
   return (
     <Styles.Container>
       {/* <Styles.InfoSection></Styles.InfoSection> */}
@@ -87,7 +105,7 @@ export const MyPage = (): React.ReactNode => {
         >
           <Typography size={'SMALL'}>🔥 내가 쓴 피드 보기</Typography>
         </Styles.ListItem>
-        <Styles.ListItem>
+        <Styles.ListItem onClick={openDisableFeature}>
           <Typography size={'SMALL'}>✉️️ 붐빔 팀에 응원 메세지 보내기</Typography>
         </Styles.ListItem>
         <Styles.ListItem onClick={handleConfirmLeave}>
