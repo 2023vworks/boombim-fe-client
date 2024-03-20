@@ -1,6 +1,8 @@
 import { Button } from '@/bds/Button/Button'
 import * as Styles from './IntroAuthorization.styles'
 import { Typography } from '@/bds/Typography/Typography'
+
+import { useState } from 'react'
 import { useAppDispatch } from '@/store/store'
 import { setCurrentGeoLocation, setRegion } from '@/store/slices/map.slice'
 import { convertKorRegion, type coord2RegionCodeReturnType } from '@/utils/map'
@@ -10,6 +12,8 @@ interface Props {
 }
 
 export const IntroAuthorization = ({ onNext }: Props): React.ReactNode => {
+  const [isLoading, setIsLoading] = useState(false)
+
   const dispatch = useAppDispatch()
 
   const regionCallbackHandler = (res: coord2RegionCodeReturnType[]) => {
@@ -51,8 +55,8 @@ export const IntroAuthorization = ({ onNext }: Props): React.ReactNode => {
   }
 
   const authorizationHandler = (): void => {
+    setIsLoading(true)
     const authorizations = [requestLocation(), requestCamera()]
-
     Promise.allSettled(authorizations)
       .then((res) => {
         res.forEach((res) => {
@@ -63,12 +67,21 @@ export const IntroAuthorization = ({ onNext }: Props): React.ReactNode => {
         console.log('권한 허용에 실패하였습니다.')
       })
       .finally(() => {
+        setIsLoading(false)
         onNext()
       })
   }
 
   return (
     <Styles.Container>
+      {isLoading && (
+        <>
+          <Styles.Overlay />
+          <Styles.SpinerWrap>
+            <Styles.Spiner />
+          </Styles.SpinerWrap>
+        </>
+      )}
       <Styles.Wrapper>
         <Styles.Title>
           <Typography size={'P'}> 붐빔을 즐기기 위해 필요한 권한들을 안내드려요 😊</Typography>
