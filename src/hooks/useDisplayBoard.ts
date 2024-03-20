@@ -28,7 +28,11 @@ export const useDisplayBoard = () => {
     const mbti = userInfo?.data.mbtiType
     switch (checkedDisplayBoard) {
       case 'MAIN':
-        setDisplayBoard({ title: '🔥 BOOM', description: '오프라인의 붐빔을 온라인에서 확인하세요.' })
+        // setDisplayBoard({ title: '🔥 BOOM', description: '오프라인의 붐빔을 온라인에서 확인하세요.' })
+        setDisplayBoard({
+          title: '🔥 BOOM',
+          description: '현재는 위치 권한 미허용시 잠실 롯데타워로 위치가 지정이 됩니다.',
+        })
         return
 
       case 'PICK_MARKER':

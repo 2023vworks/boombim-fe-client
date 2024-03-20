@@ -5,9 +5,9 @@ import theme from '@/styles/theme'
 import { useMemo } from 'react'
 import { setMapType } from '@/store/slices/map.slice'
 import { useNavigate } from 'react-router-dom'
-import { SEOUL_POSITION } from '@/constants/position'
-import { checkOutsidePolygon } from '@/utils/map'
-import useGeoLocation from '@/hooks/useGeoLocation'
+// import { SEOUL_POSITION } from '@/constants/position'
+// import { checkOutsidePolygon } from '@/utils/map'
+// import useGeoLocation from '@/hooks/useGeoLocation'
 import { closeModal, openModal } from '@/store/slices/modal.slice'
 
 interface FNBNavigation {
@@ -23,7 +23,7 @@ interface FNBNavigation {
 export const FNB = () => {
   const navigate = useNavigate()
 
-  const { trigerGetGeoLocation } = useGeoLocation()
+  // const { trigerGetGeoLocation } = useGeoLocation()
 
   const FNB_NAVIGATIONS: FNBNavigation[] = useMemo(
     () => [
@@ -119,27 +119,32 @@ export const FNB = () => {
     navigate('/my-page')
   }
 
-  const getGeoLocationSuccessCallbackHandler = (position: { lat: number; lng: number }): void => {
-    const currentPosition = new kakao.maps.LatLng(position.lat, position.lng)
-    const coverPolygonPath = SEOUL_POSITION.map((position) => {
-      return new kakao.maps.LatLng(position.lat, position.lng)
-    })
+  // !마커 생성 제한 로직
 
-    const isDisablePickMarker = checkOutsidePolygon(currentPosition, coverPolygonPath)
-    if (isDisablePickMarker) {
-      alert('지원하지 않는 지역입니다.')
-    } else {
-      navigate('/')
-      dispatch(setMapType({ mapType: 'PICKMARK' }))
-    }
-  }
+  // const getGeoLocationSuccessCallbackHandler = (position: { lat: number; lng: number }): void => {
+  //   const currentPosition = new kakao.maps.LatLng(position.lat, position.lng)
+  //   const coverPolygonPath = SEOUL_POSITION.map((position) => {
+  //     return new kakao.maps.LatLng(position.lat, position.lng)
+  //   })
 
-  const getGeoLocationFailCallbackHandler = (): void => {
-    alert('위치 권한을 허용하지 않으면 이용에 제한이 있습니다.')
-  }
+  //   const isDisablePickMarker = checkOutsidePolygon(currentPosition, coverPolygonPath)
+  //   if (isDisablePickMarker) {
+  //     alert('지원하지 않는 지역입니다.')
+  //   } else {
+  //     navigate('/')
+  //     dispatch(setMapType({ mapType: 'PICKMARK' }))
+  //   }
+  // }
+
+  // const getGeoLocationFailCallbackHandler = (): void => {
+  //   alert('위치 권한을 허용하지 않으면 이용에 제한이 있습니다.')
+  // }
 
   const handleSwitchPickMap = (): void => {
-    trigerGetGeoLocation(getGeoLocationSuccessCallbackHandler, getGeoLocationFailCallbackHandler)
+    navigate('/')
+    dispatch(setMapType({ mapType: 'PICKMARK' }))
+
+    // trigerGetGeoLocation(getGeoLocationSuccessCallbackHandler, getGeoLocationFailCallbackHandler)
   }
 
   const handleSwitchMap = () => {

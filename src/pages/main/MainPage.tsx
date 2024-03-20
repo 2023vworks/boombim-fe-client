@@ -205,7 +205,8 @@ export const MainPage = (): React.ReactNode => {
    * @ Map Type이 Pick marker로 변경될 때 지도를 이동, 확대 제한, 원 그리기
    */
   useEffect(() => {
-    if (map && currentMapType === MAP_UNION_TYPE.PICKMARK && currentGeoLocation) {
+    if (map && currentMapType === MAP_UNION_TYPE.PICKMARK && currentGeoLocation && height === '100%') {
+      circle?.setMap(null)
       drawCircleHole({ lat: currentGeoLocation.lat, lng: currentGeoLocation.lng, radius: 25 })
       const currentCenter = new kakao.maps.LatLng(currentGeoLocation.lat, currentGeoLocation.lng)
       pickMarker(currentCenter)
@@ -214,7 +215,7 @@ export const MainPage = (): React.ReactNode => {
       map.setDraggable(false)
       map.setZoomable(false)
     }
-  }, [currentMapType, map, currentGeoLocation])
+  }, [currentMapType, map, currentGeoLocation, height])
 
   /**
    * @ Map Type이 Pick marker로 변경될 때 원 내부 event( 마커 생성 ) 등록
